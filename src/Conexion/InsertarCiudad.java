@@ -26,7 +26,7 @@ public class InsertarCiudad {
 
     public static void main(String[] args) {
         // Ejemplo: insertar una ciudad
-        insertarCiudad("C001", "Lima");
-        insertarCiudad("C002", "Cusco");
+        insertarCiudad("C005", "Lima");
+        insertarCiudad("C006", "Cusco");
     }
 }
