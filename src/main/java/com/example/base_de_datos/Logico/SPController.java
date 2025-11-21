@@ -1,6 +1,6 @@
 package com.example.base_de_datos.Logico;
 
-import com.example.base_de_datos.Conexion.ConexionBaseDeDatos;
+import com.example.base_de_datos.Conexion.Conexion;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,7 +46,7 @@ public class SPController extends Application {
 
     public void mostrarSP() {
         try {
-            Connection conn = ConexionBaseDeDatos.getConnection();
+            Connection conn = Conexion.getConnection();
             if (conn == null) return;
 
             CallableStatement cs = conn.prepareCall("{call dbo.tabJueg}");

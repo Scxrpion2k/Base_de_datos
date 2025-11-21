@@ -13,18 +13,17 @@ import javafx.util.Duration;
 
 public class PaginaPrincipal extends Application {
 
-    private StackPane content; // Zona donde se cargan las vistas
+    private StackPane content;
     private ContextMenu activeMenu = null;
     @Override
     public void start(Stage stage) {
 
         BorderPane root = new BorderPane();
 
-        // Crear menú superior
+
         HBox topMenu = createTopMenu(stage);
         root.setTop(topMenu);
 
-        // Contenedor central
         content = new StackPane();
         root.setCenter(content);
 
@@ -36,9 +35,7 @@ public class PaginaPrincipal extends Application {
         stage.show();
     }
 
-    // ============================================================
-    //  MENÚ SUPERIOR
-    // ============================================================
+
 
     private HBox createTopMenu(Stage stage) {
 
@@ -49,28 +46,28 @@ public class PaginaPrincipal extends Application {
         Label title = new Label("🏀 TORNEO BASKET");
         title.setStyle("-fx-text-fill: white; -fx-font-size: 18px;");
 
-        // Botones principales
+
         Button btnCiudad = createMenuButton("Ciudades");
         Button btnEquipo = createMenuButton("Equipos");
         Button btnJugador = createMenuButton("Jugadores");
         Button btnJuego = createMenuButton("Juegos");
         Button btnEstadistica = createMenuButton("Estadísticas");
 
-        // Submenús
+
         addHoverMenu(btnCiudad, "Registrar Ciudad", "Listar Ciudades");
         addHoverMenu(btnEquipo, "Registrar Equipo", "Listar Equipos");
         addHoverMenu(btnJugador, "Registrar Jugador", "Listar Jugadores");
         addHoverMenu(btnJuego, "Registrar Juego", "Listar Juegos");
         addHoverMenu(btnEstadistica, "Registrar Estadística", "Listar Estadísticas");
 
-        // Espaciador
+
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        // Botón usuario
+
         Button btnConfig = createMenuButton("Usuario");
 
-        // Botón salir
+
         Button btnSalir = new Button("Salir");
         btnSalir.setStyle("-fx-background-color: #F0B501; -fx-text-fill: black; -fx-font-weight: bold;");
         btnSalir.setOnAction(e -> stage.close());
@@ -85,10 +82,6 @@ public class PaginaPrincipal extends Application {
 
         return menu;
     }
-
-    // ============================================================
-    //  BOTONES DEL MENÚ PRINCIPAL (ESTILO NBA)
-    // ============================================================
 
     private Button createMenuButton(String text) {
         Button btn = new Button(text);
@@ -114,10 +107,6 @@ public class PaginaPrincipal extends Application {
         return btn;
     }
 
-    // ============================================================
-    //  SUBMENÚS (HOVER)
-    // ============================================================
-
     private void addHoverMenu(Button button, String... options) {
 
         ContextMenu menu = new ContextMenu();
@@ -128,7 +117,6 @@ public class PaginaPrincipal extends Application {
             menu.getItems().add(item);
         }
 
-        // Mostrar menú al pasar mouse
         button.setOnMouseEntered(e -> {
 
             // Si otro menú está abierto → cerrarlo antes
@@ -145,12 +133,11 @@ public class PaginaPrincipal extends Application {
             }
         });
 
-        // Cerrar solo si sales del botón Y del menú
+
         button.setOnMouseExited(e -> {
             PauseTransition delay = new PauseTransition(Duration.millis(160));
             delay.setOnFinished(ev -> {
 
-                // si saliste del botón y NO entraste al menú
                 if (!button.isHover() && !menu.isShowing()) {
                     menu.hide();
                 }
@@ -158,7 +145,6 @@ public class PaginaPrincipal extends Application {
             delay.play();
         });
 
-        // Cuando el menú se oculta → limpiar estado
         menu.setOnHidden(e -> {
             if (activeMenu == menu) {
                 activeMenu = null;
@@ -167,11 +153,6 @@ public class PaginaPrincipal extends Application {
 
     }
 
-
-
-    // ============================================================
-    //  CARGAR VISTAS DINÁMICAS
-    // ============================================================
 
     private void handleMenuSelection(String option) {
 
@@ -236,10 +217,6 @@ public class PaginaPrincipal extends Application {
             e.printStackTrace();
         }
     }
-
-    // ============================================================
-    //  MAIN
-    // ============================================================
 
     public static void main(String[] args) {
         launch();
