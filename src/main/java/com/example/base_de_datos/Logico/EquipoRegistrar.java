@@ -15,7 +15,7 @@ public class EquipoRegistrar {
 
     @FXML private TextField txtIdEquipo;
     @FXML private TextField txtNombreEquipo;
-    @FXML private ComboBox<String> cmbCiudad;
+    @FXML private ComboBox<CiudadItem> cmbCiudad;
 
     @FXML
     public void initialize() {
@@ -23,39 +23,65 @@ public class EquipoRegistrar {
     }
 
     private void cargarCiudades() {
+
         try {
             Connection con = Conexion.getConnection();
-            ResultSet rs = con.createStatement().executeQuery("SELECT nombre_ciudad FROM Ciudad");
+
+            if (con == null) {
+                System.out.println("ERROR: getConnection() devolvió null");
+                return;
+            }
+
+            ResultSet rs = con.createStatement().executeQuery(
+                    "SELECT idCiudad, nombreCiudad FROM Ciudad"
+            );
+
+            boolean hayCiudades = false;
 
             while (rs.next()) {
-                cmbCiudad.getItems().add(rs.getString(1));
+                hayCiudades = true;
+
+                String id = rs.getString("idCiudad");
+                String nombre = rs.getString("nombreCiudad");
+
+
+                cmbCiudad.getItems().add(new CiudadItem(id, nombre));
+            }
+
+            if (!hayCiudades) {
+                System.out.println("NO HAY CIUDADES EN LA TABLA");
             }
 
         } catch (Exception e) {
+            System.out.println("ERROR en cargarCiudades:");
             e.printStackTrace();
         }
     }
 
+
+
     @FXML
     private void guardarEquipo() {
+
         String id = txtIdEquipo.getText();
         String nombre = txtNombreEquipo.getText();
-        String ciudad = cmbCiudad.getValue();
+        CiudadItem ciudad = cmbCiudad.getValue(); // objeto CiudadItem
 
         if (id.isEmpty() || nombre.isEmpty() || ciudad == null) {
             showAlert("Todos los campos son obligatorios.");
             return;
         }
 
+        String ciudadId = ciudad.getId();
+
         try {
             Connection con = Conexion.getConnection();
 
             String sql = "INSERT INTO Equipo (idEquipo, nombreEquipo, idCiudad) VALUES (?, ?, ?)";
-            assert con != null;
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, id);
             ps.setString(2, nombre);
-            ps.setString(3, ciudad);
+            ps.setString(3, ciudadId);
 
             ps.executeUpdate();
 
@@ -74,6 +100,7 @@ public class EquipoRegistrar {
         txtNombreEquipo.clear();
         cmbCiudad.getSelectionModel().clearSelection();
     }
+
 
     private void showAlert(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mensaje, ButtonType.OK);
