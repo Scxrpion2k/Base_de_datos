@@ -29,7 +29,10 @@ public class SPController extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/SPView.fxml"));
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/Visual/SPView.fxml")
+        );
+
         AnchorPane root = loader.load();
 
         SPController controller = loader.getController();
@@ -39,6 +42,7 @@ public class SPController extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
 
     public void mostrarSP() {
         try {
