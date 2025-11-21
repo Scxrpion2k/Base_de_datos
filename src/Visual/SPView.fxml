@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="788.0" prefWidth="1135.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="Logico.SPController">
+    <TableView fx:id="tableView" layoutX="5.0" layoutY="5.0" prefHeight="779.0" prefWidth="1124.0" />
+</AnchorPane>
