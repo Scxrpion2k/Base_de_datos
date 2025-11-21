@@ -119,7 +119,6 @@ public class PaginaPrincipal extends Application {
 
         button.setOnMouseEntered(e -> {
 
-            // Si otro menú está abierto → cerrarlo antes
             if (activeMenu != null && activeMenu != menu) {
                 activeMenu.hide();
             }
@@ -206,7 +205,7 @@ public class PaginaPrincipal extends Application {
             }
 
             if (fxml != null) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/" + fxml));
                 Pane view = loader.load();
 
                 content.getChildren().clear();
