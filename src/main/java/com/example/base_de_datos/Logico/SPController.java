@@ -1,6 +1,6 @@
-package Logico;
+package com.example.base_de_datos.Logico;
 
-import Conexion.ConexionBaseDeDatos;
+import com.example.base_de_datos.Conexion.ConexionBaseDeDatos;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

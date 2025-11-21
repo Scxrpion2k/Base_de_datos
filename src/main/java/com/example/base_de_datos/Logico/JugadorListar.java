@@ -1,4 +1,4 @@
-package Logico;
+package com.example.base_de_datos.Logico;
 
 
 import javafx.application.Application;
@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class CiudadListar extends Application {
+class JugadorListar extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -16,7 +16,7 @@ public class CiudadListar extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Visual/CiudadVisualListar.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/Visual/JugadorVisualListar.fxml"));
 
 
             Scene scene = new Scene(root);

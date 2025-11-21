@@ -1,4 +1,4 @@
-package Logico;
+package com.example.base_de_datos.Logico;
 
 
 import javafx.application.Application;
