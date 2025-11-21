@@ -7,13 +7,12 @@
 <?import javafx.scene.layout.BorderPane?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/25">
    <top>
-      <TitledPane animated="false" text="Ciudad" BorderPane.alignment="CENTER">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="598.0" />
-        </content>
-      </TitledPane>
+       <TitledPane animated="false" text="Ciudad" BorderPane.alignment="CENTER">
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="598.0"/>
+       </TitledPane>
    </top>
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">

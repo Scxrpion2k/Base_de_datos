@@ -7,16 +7,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 class EstadisticaJuegoRegistrar extends Application {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Visual/EstadisticaJuegoRegistrarVisual.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Visual/EstadisticaJuegoRegistrarVisual.fxml")));
 
 
             Scene scene = new Scene(root);
