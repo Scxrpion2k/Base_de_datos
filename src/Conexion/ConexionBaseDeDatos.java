@@ -28,6 +28,7 @@ public class ConexionBaseDeDatos {
     }
 
     public static void main(String[] args) {
+
         getConnection();
     }
 }
