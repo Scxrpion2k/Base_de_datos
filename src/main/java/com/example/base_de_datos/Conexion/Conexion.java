@@ -7,14 +7,15 @@ import java.sql.SQLException;
 public class Conexion {
 
     private static final String URL =
-            "jdbc:sqlserver://wbrg0001.database.windows.net:1433;"
-                    + "database=Torneo(WBRG0001);"
-                    + "user=wbrg0001@wbrg0001;"
-                    + "password=Wilmer1904;"
-                    + "encrypt=true;"
-                    + "trustServerCertificate=false;"
-                    + "hostNameInCertificate=*.database.windows.net;"
-                    + "loginTimeout=30;";
+            "jdbc:sqlserver://drvr0001.database.windows.net:1433;" +
+                    "database=Torneo(DRVR0001);" +
+                    "user=drvr0001@drvr0001;" +
+                    "password=Daury201;" +
+                    "encrypt=true;" +
+                    "trustServerCertificate=false;" +
+                    "hostNameInCertificate=*.database.windows.net;" +
+                    "loginTimeout=30;";
+
 
     public static Connection getConnection() {
         try {

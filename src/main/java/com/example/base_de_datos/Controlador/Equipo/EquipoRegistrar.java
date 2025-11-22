@@ -36,13 +36,13 @@ public class EquipoRegistrar {
 
     private void cargarCiudades() {
         try (Connection con = Conexion.getConnection();
-             ResultSet rs = con.createStatement().executeQuery("SELECT idCiudad, nombreCiudad FROM Ciudad")) {
+             ResultSet rs = con.createStatement().executeQuery("SELECT idciudad, nombre_ciudad FROM Ciudad")) {
 
             while (rs.next()) {
                 cmbCiudad.getItems().add(
                         new CiudadItem(
-                                rs.getString("idCiudad"),
-                                rs.getString("nombreCiudad")
+                                rs.getString("idciudad"),
+                                rs.getString("nombre_ciudad")
                         )
                 );
             }
@@ -67,7 +67,7 @@ public class EquipoRegistrar {
 
         try (Connection con = Conexion.getConnection()) {
 
-            String sql = "INSERT INTO Equipo (idEquipo, nombreEquipo, idCiudad) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO Equipo (idequipo, nombre_equipo, idciudad) VALUES (?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setString(1, id);

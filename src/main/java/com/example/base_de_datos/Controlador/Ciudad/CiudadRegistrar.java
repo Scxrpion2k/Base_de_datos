@@ -27,7 +27,7 @@ public class CiudadRegistrar {
             return;
         }
 
-        String sql = "INSERT INTO Ciudad (idCiudad, nombreCiudad) VALUES (?, ?)";
+        String sql = "INSERT INTO Ciudad (idciudad, nombre_ciudad) VALUES (?, ?)";
 
         try (Connection con = Conexion.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {

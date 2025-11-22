@@ -43,15 +43,15 @@ public class CiudadListar {
 
         lista.clear();
 
-        String query = "SELECT idCiudad, nombreCiudad FROM Ciudad";
+        String query = "SELECT idciudad, nombre_ciudad FROM Ciudad";
 
         try (Connection con = Conexion.getConnection();
              ResultSet rs = con.createStatement().executeQuery(query)) {
 
             while (rs.next()) {
                 lista.add(new CiudadItem(
-                        rs.getString("idCiudad"),
-                        rs.getString("nombreCiudad")
+                        rs.getString("idciudad"),
+                        rs.getString("nombre_ciudad")
                 ));
             }
 
@@ -106,7 +106,7 @@ public class CiudadListar {
 
         if (alert.showAndWait().get() == ButtonType.OK) {
 
-            String query = "DELETE FROM Ciudad WHERE idCiudad = ?";
+            String query = "DELETE FROM Ciudad WHERE idciudad = ?";
 
             try (Connection con = Conexion.getConnection();
                  PreparedStatement ps = con.prepareStatement(query)) {

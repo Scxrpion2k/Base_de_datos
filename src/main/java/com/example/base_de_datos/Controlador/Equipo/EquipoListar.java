@@ -62,7 +62,7 @@ public class EquipoListar {
                 ObservableList<EquipoItem> tempList = FXCollections.observableArrayList();
 
                 String query = """
-                        SELECT e.idEquipo, e.nombreEquipo, c.nombreCiudad
+                        SELECT e.idEquipo, e.nombre_equipo, c.nombre_ciudad
                         FROM Equipo e
                         INNER JOIN Ciudad c ON e.idCiudad = c.idCiudad
                         """;
@@ -73,8 +73,8 @@ public class EquipoListar {
                     while (rs.next()) {
                         tempList.add(new EquipoItem(
                                 rs.getString("idEquipo"),
-                                rs.getString("nombreEquipo"),
-                                rs.getString("nombreCiudad")
+                                rs.getString("nombre_equipo"),
+                                rs.getString("nombre_ciudad")
                         ));
                     }
                 }
