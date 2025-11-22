@@ -1,60 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.SVGPath?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21"
+<AnchorPane fx:id="rootEditar"
+            xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.base_de_datos.Controlador.Equipo.EquipoEditar"
-            prefWidth="500" prefHeight="400"
-            style="-fx-background-color: #F4F6F9;">
+            prefWidth="900" prefHeight="600"
+            style="-fx-background-color: rgba(0,0,0,0.45);">
 
-    <VBox spacing="20" alignment="CENTER"
-          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+    <VBox alignment="CENTER"
+          spacing="30"
+          AnchorPane.topAnchor="0"
+          AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0">
 
-        <VBox alignment="CENTER" spacing="20"
-              maxWidth="400"
+        <VBox fx:id="formularioEditar"
+              spacing="25"
+              alignment="TOP_CENTER"
+              maxWidth="550"
               style="-fx-background-color: white;
-                     -fx-padding: 25;
-                     -fx-background-radius: 15;
-                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5);">
+                     -fx-padding: 35 45;
+                     -fx-background-radius: 18;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 18, 0, 0, 5);">
+
+            <HBox alignment="TOP_RIGHT">
+                <Button onAction="#cerrarVentana"
+                        style="-fx-background-color: transparent;
+                               -fx-cursor: hand;
+                               -fx-padding: 4;">
+                    <graphic>
+                        <SVGPath content="M4 4 L16 16 M16 4 L4 16"
+                                 style="-fx-stroke: #444;
+                                        -fx-stroke-width: 2;" />
+                    </graphic>
+                </Button>
+            </HBox>
 
             <Label text="Editar Equipo"
-                   style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+                   style="-fx-font-size: 28px;
+                          -fx-font-weight: bold;
+                          -fx-text-fill: #222;" />
 
-            <GridPane hgap="20" vgap="15">
+            <GridPane hgap="30" vgap="20" alignment="CENTER_LEFT">
                 <columnConstraints>
-                    <ColumnConstraints halignment="RIGHT" minWidth="120"/>
-                    <ColumnConstraints halignment="LEFT" minWidth="220"/>
+                    <ColumnConstraints minWidth="150" halignment="RIGHT"/>
+                    <ColumnConstraints minWidth="280" halignment="LEFT"/>
                 </columnConstraints>
 
-                <Label text="ID Equipo:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Label text="ID Equipo:"
+                       GridPane.rowIndex="0" GridPane.columnIndex="0"
+                       style="-fx-font-size: 15px; -fx-text-fill: #444;" />
+
                 <TextField fx:id="txtId"
                            promptText="Ej: EQ001"
-                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"
+                           style="-fx-background-radius: 8;
+                                  -fx-padding: 8 12;" />
 
-                <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Label text="Nombre:"
+                       GridPane.rowIndex="1" GridPane.columnIndex="0"
+                       style="-fx-font-size: 15px; -fx-text-fill: #444;" />
+
                 <TextField fx:id="txtNombre"
-                           promptText="Nombre del equipo"
-                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                           promptText="Ej: Tigres del Norte"
+                           GridPane.rowIndex="1" GridPane.columnIndex="1"
+                           style="-fx-background-radius: 8;
+                                  -fx-padding: 8 12;" />
 
-                <Label text="Ciudad:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Label text="Ciudad:"
+                       GridPane.rowIndex="2" GridPane.columnIndex="0"
+                       style="-fx-font-size: 15px; -fx-text-fill: #444;" />
+
                 <ComboBox fx:id="cmbCiudad"
-                          promptText="Seleccione ciudad"
-                          prefWidth="200"
-                          GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                          prefWidth="240"
+                          promptText="Seleccione una ciudad"
+                          GridPane.rowIndex="2" GridPane.columnIndex="1"
+                          style="-fx-background-radius: 8;
+                                 -fx-padding: 6 10;" />
             </GridPane>
 
-            <Button text="Guardar Cambios"
-                    onAction="#guardarCambios"
-                    style="-fx-background-color: #0d6efd;
-                           -fx-text-fill: white;
-                           -fx-padding: 12 30;
-                           -fx-background-radius: 10;"/>
+            <HBox alignment="CENTER">
+                <Button text="Guardar Cambios"
+                        onAction="#guardarCambios"
+                        style="-fx-background-color: linear-gradient(to right, #007bff, #0056d2);
+                               -fx-text-fill: white;
+                               -fx-font-size: 15px;
+                               -fx-padding: 12 35;
+                               -fx-background-radius: 10;
+                               -fx-cursor: hand;" />
+            </HBox>
 
         </VBox>
+
     </VBox>
 
 </AnchorPane>

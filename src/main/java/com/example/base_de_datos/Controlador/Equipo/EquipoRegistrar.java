@@ -2,10 +2,13 @@ package com.example.base_de_datos.Controlador.Equipo;
 
 import com.example.base_de_datos.Conexion.Conexion;
 import com.example.base_de_datos.Controlador.Ciudad.CiudadItem;
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
+
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,12 +16,18 @@ import java.sql.ResultSet;
 
 public class EquipoRegistrar {
 
+
     @FXML
     private TextField txtIdEquipo;
+
     @FXML
     private TextField txtNombreEquipo;
+
     @FXML
     private ComboBox<CiudadItem> cmbCiudad;
+
+    @FXML
+    private AnchorPane rootRegistrar;
 
     @FXML
     public void initialize() {
@@ -26,33 +35,16 @@ public class EquipoRegistrar {
     }
 
     private void cargarCiudades() {
-
-        try {
-            Connection con = Conexion.getConnection();
-
-            if (con == null) {
-                System.out.println("ERROR: getConnection() devolvió null");
-                return;
-            }
-
-            ResultSet rs = con.createStatement().executeQuery(
-                    "SELECT idCiudad, nombreCiudad FROM Ciudad"
-            );
-
-            boolean hayCiudades = false;
+        try (Connection con = Conexion.getConnection();
+             ResultSet rs = con.createStatement().executeQuery("SELECT idCiudad, nombreCiudad FROM Ciudad")) {
 
             while (rs.next()) {
-                hayCiudades = true;
-
-                String id = rs.getString("idCiudad");
-                String nombre = rs.getString("nombreCiudad");
-
-
-                cmbCiudad.getItems().add(new CiudadItem(id, nombre));
-            }
-
-            if (!hayCiudades) {
-                System.out.println("NO HAY CIUDADES EN LA TABLA");
+                cmbCiudad.getItems().add(
+                        new CiudadItem(
+                                rs.getString("idCiudad"),
+                                rs.getString("nombreCiudad")
+                        )
+                );
             }
 
         } catch (Exception e) {
@@ -61,12 +53,11 @@ public class EquipoRegistrar {
         }
     }
 
-
     @FXML
     private void guardarEquipo() {
 
-        String id = txtIdEquipo.getText();
-        String nombre = txtNombreEquipo.getText();
+        String id = txtIdEquipo.getText().trim();
+        String nombre = txtNombreEquipo.getText().trim();
         CiudadItem ciudad = cmbCiudad.getValue();
 
         if (id.isEmpty() || nombre.isEmpty() || ciudad == null) {
@@ -74,17 +65,14 @@ public class EquipoRegistrar {
             return;
         }
 
-        String ciudadId = ciudad.getId();
-
-        try {
-            Connection con = Conexion.getConnection();
+        try (Connection con = Conexion.getConnection()) {
 
             String sql = "INSERT INTO Equipo (idEquipo, nombreEquipo, idCiudad) VALUES (?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
+
             ps.setString(1, id);
             ps.setString(2, nombre);
-            ps.setString(3, ciudadId);
-
+            ps.setString(3, ciudad.getId());
             ps.executeUpdate();
 
             showAlert("Equipo registrado correctamente.");
@@ -103,20 +91,27 @@ public class EquipoRegistrar {
         cmbCiudad.getSelectionModel().clearSelection();
     }
 
-
     private void showAlert(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mensaje, ButtonType.OK);
         alert.show();
     }
 
+
     @FXML
     public void volverAlMenuPrincipal() {
         try {
-            BorderPane root = (BorderPane) txtIdEquipo.getScene().getRoot();
 
-            StackPane content = (StackPane) root.getCenter();
+            AnchorPane modal = rootRegistrar;
 
-            content.getChildren().clear();
+            StackPane content = (StackPane) modal.getParent();
+
+            FadeTransition fade = new FadeTransition(Duration.millis(200), modal);
+            fade.setFromValue(1);
+            fade.setToValue(0);
+
+            fade.setOnFinished(e -> content.getChildren().remove(modal));
+
+            fade.play();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,3 +120,7 @@ public class EquipoRegistrar {
 
 
 }
+
+
+
+
