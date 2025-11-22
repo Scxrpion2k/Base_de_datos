@@ -7,7 +7,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.base_de_datos.Controlador.Juego.JuegoListar"
-            prefWidth="1000" prefHeight="650"
+            prefWidth="1500" prefHeight="650"
             style="-fx-background-color: #F4F6F9;">
 
     <VBox spacing="10" alignment="TOP_CENTER"
@@ -21,14 +21,17 @@
                       -fx-text-fill: #1F1F1F;" />
 
         <VBox spacing="15"
-              prefWidth="900"
-              maxWidth="900"
+              alignment="CENTER"
+              prefWidth="1400"
+              maxWidth="Infinity"
+              minWidth="1200"
               style="-fx-background-color: white;
                      -fx-padding: 25;
                      -fx-background-radius: 18;
                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 4);">
 
-            <HBox alignment="CENTER_LEFT" spacing="15">
+            <HBox alignment="CENTER_LEFT" spacing="15"
+                  prefWidth="1400">
 
                 <Label text="Juegos Registrados"
                        style="-fx-font-size: 20px;
@@ -60,7 +63,8 @@
 
             <TableView fx:id="tablaJuegos"
                        prefHeight="450"
-                       maxHeight="450"
+                       prefWidth="1400"
+                       maxWidth="Infinity"
                        minHeight="350"
                        style="-fx-background-radius: 12;
                               -fx-border-color: #E0E0E0;
@@ -75,15 +79,15 @@
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
                     <TableColumn fx:id="colDescripcion" text="Descripción"
-                                 prefWidth="230"
+                                 prefWidth="250"
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
                     <TableColumn fx:id="colEquipoA" text="Equipo A"
-                                 prefWidth="200"
+                                 prefWidth="250"
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
                     <TableColumn fx:id="colEquipoB" text="Equipo B"
-                                 prefWidth="200"
+                                 prefWidth="250"
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
                     <TableColumn fx:id="colFecha" text="Fecha"
@@ -91,7 +95,7 @@
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
                     <TableColumn fx:id="colAcciones" text="Acciones"
-                                 prefWidth="200"
+                                 prefWidth="300"
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
                 </columns>
@@ -99,6 +103,7 @@
             </TableView>
 
         </VBox>
+
     </VBox>
 
 </AnchorPane>

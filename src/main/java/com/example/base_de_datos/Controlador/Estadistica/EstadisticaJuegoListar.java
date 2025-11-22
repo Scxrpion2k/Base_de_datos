@@ -1,4 +1,4 @@
-package com.example.base_de_datos.Controlador;
+package com.example.base_de_datos.Controlador.Estadistica;
 
 
 import javafx.application.Application;

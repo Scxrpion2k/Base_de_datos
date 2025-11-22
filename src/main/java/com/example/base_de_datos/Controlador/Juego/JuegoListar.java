@@ -20,6 +20,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import static javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY;
+
 public class JuegoListar {
 
     @FXML private TableView<JuegoItem> tablaJuegos;
@@ -38,7 +40,7 @@ public class JuegoListar {
     @FXML
     public void initialize() {
 
-        tablaJuegos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tablaJuegos.setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);
 
         colIdJuego.setCellValueFactory(new PropertyValueFactory<>("idJuego"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
@@ -49,11 +51,32 @@ public class JuegoListar {
         btnRegistrar.setOnAction(e -> abrirFormularioRegistro());
         btnCerrar.setOnAction(e -> volverAlMenuPrincipal());
 
+        hacerTablaResponsive();
         centrarColumnas();
         agregarBotones();
 
         cargarJuegosAsync();
     }
+
+
+    private void hacerTablaResponsive() {
+
+        tablaJuegos.setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);
+
+        colIdJuego.setMaxWidth(1f * Integer.MAX_VALUE * 5);
+        colDescripcion.setMaxWidth(1f * Integer.MAX_VALUE * 20);
+        colEquipoA.setMaxWidth(1f * Integer.MAX_VALUE * 20);
+        colEquipoB.setMaxWidth(1f * Integer.MAX_VALUE * 20);
+        colFecha.setMaxWidth(1f * Integer.MAX_VALUE * 10);
+        colAcciones.setMaxWidth(1f * Integer.MAX_VALUE * 25);
+    }
+
+
+    private String soloFecha(String fechaCompleta) {
+        if (fechaCompleta == null) return "";
+        return fechaCompleta.split(" ")[0];
+    }
+
 
     private void cargarJuegosAsync() {
 
@@ -85,7 +108,7 @@ public class JuegoListar {
                                 rs.getString("descripcionJuego"),
                                 rs.getString("equipoA"),
                                 rs.getString("equipoB"),
-                                rs.getString("fechaJuego")
+                                soloFecha(rs.getString("fechaJuego"))
                         ));
                     }
                 }
@@ -106,44 +129,36 @@ public class JuegoListar {
         thread.start();
     }
 
+
     private void agregarBotones() {
+
         colAcciones.setCellFactory(col -> new TableCell<>() {
 
             private final Button btnUpdate = new Button("Actualizar");
             private final Button btnDelete = new Button("Eliminar");
-            private final HBox contenedor = new HBox(10);
+            private final Button btnStats = new Button("Ver Estadísticas");
+
+            private final HBox contenedor = new HBox(8);
 
             {
                 contenedor.setAlignment(Pos.CENTER);
 
-                btnUpdate.setStyle("-fx-background-color: #0d6efd; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;");
-                btnDelete.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;");
+                btnUpdate.setStyle("-fx-background-color: #0d6efd; -fx-text-fill: white; -fx-background-radius: 8;");
+                btnDelete.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-background-radius: 8;");
+                btnStats.setStyle("-fx-background-color: #28a745; -fx-text-fill: white; -fx-background-radius: 8;");
 
-                btnUpdate.setOnMouseEntered(ev -> btnUpdate.setStyle(
-                        "-fx-background-color: #0b5ed7; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;"
-                ));
-                btnUpdate.setOnMouseExited(ev -> btnUpdate.setStyle(
-                        "-fx-background-color: #0d6efd; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;"
-                ));
+                btnUpdate.setOnAction(e -> abrirVentanaActualizar(getTableView().getItems().get(getIndex())));
+                btnDelete.setOnAction(e -> eliminarJuego(getTableView().getItems().get(getIndex()).getIdJuego()));
 
-                btnDelete.setOnMouseEntered(ev -> btnDelete.setStyle(
-                        "-fx-background-color: #bb2d3b; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;"
-                ));
-                btnDelete.setOnMouseExited(ev -> btnDelete.setStyle(
-                        "-fx-background-color: #dc3545; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;"
-                ));
-
-                contenedor.getChildren().addAll(btnUpdate, btnDelete);
-
-                btnDelete.setOnAction(e -> {
-                    JuegoItem item = getTableView().getItems().get(getIndex());
-                    eliminarJuego(item.getIdJuego());
+                btnStats.setOnAction(e -> {
+                    Alert a = new Alert(Alert.AlertType.INFORMATION);
+                    a.setTitle("Estadísticas");
+                    a.setHeaderText(null);
+                    a.setContentText("Aquí irán las estadísticas del juego.");
+                    a.show();
                 });
 
-                btnUpdate.setOnAction(e -> {
-                    JuegoItem item = getTableView().getItems().get(getIndex());
-                    abrirVentanaActualizar(item);
-                });
+                contenedor.getChildren().addAll(btnUpdate, btnDelete, btnStats);
             }
 
             @Override
@@ -153,6 +168,7 @@ public class JuegoListar {
             }
         });
     }
+
 
     private void eliminarJuego(String id) {
 
@@ -179,6 +195,7 @@ public class JuegoListar {
         }
     }
 
+
     private void centrarColumnas() {
         colIdJuego.setStyle("-fx-alignment: CENTER;");
         colDescripcion.setStyle("-fx-alignment: CENTER;");
@@ -187,6 +204,7 @@ public class JuegoListar {
         colFecha.setStyle("-fx-alignment: CENTER;");
         colAcciones.setStyle("-fx-alignment: CENTER;");
     }
+
 
     private void abrirVentanaActualizar(JuegoItem item) {
         try {
@@ -212,30 +230,15 @@ public class JuegoListar {
         }
     }
 
-    @FXML
-    public void volverAlMenuPrincipal() {
-        try {
-            BorderPane root = (BorderPane) tablaJuegos.getScene().getRoot();
-            StackPane content = (StackPane) root.getCenter();
-            content.getChildren().clear();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void abrirFormularioRegistro() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Juego/JuegoRegistrarVisual.fxml"));
             Parent modal = loader.load();
 
-            modal.setId("modalRegistrarJuego");
-
             BorderPane root = (BorderPane) tablaJuegos.getScene().getRoot();
             StackPane content = (StackPane) root.getCenter();
 
-            content.getChildren().removeIf(node ->
-                    "modalRegistrarJuego".equals(node.getId())
-            );
+            content.getChildren().removeIf(node -> "modalRegistrarJuego".equals(node.getId()));
 
             modal.setOpacity(0);
             content.getChildren().add(modal);
@@ -250,4 +253,14 @@ public class JuegoListar {
         }
     }
 
+    @FXML
+    public void volverAlMenuPrincipal() {
+        try {
+            BorderPane root = (BorderPane) tablaJuegos.getScene().getRoot();
+            StackPane content = (StackPane) root.getCenter();
+            content.getChildren().clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
