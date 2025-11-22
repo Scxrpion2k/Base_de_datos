@@ -13,3 +13,22 @@
     -fx-opacity: 0.85;
     -fx-cursor: hand;
 }
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #e9ecef;
+}
+
+.table-view .column-header, .table-view .table-cell {
+    -fx-padding: 10px;
+}
+
+.button {
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}

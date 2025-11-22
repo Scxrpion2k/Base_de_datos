@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.base_de_datos.Logico.EquipoEditar"
+            prefWidth="500" prefHeight="400"
+            style="-fx-background-color: #F4F6F9;">
+
+    <VBox spacing="20" alignment="CENTER"
+          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+
+        <VBox alignment="CENTER" spacing="20"
+              maxWidth="400"
+              style="-fx-background-color: white;
+                     -fx-padding: 25;
+                     -fx-background-radius: 15;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5);">
+
+            <Label text="Editar Equipo"
+                   style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="20" vgap="15">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                    <ColumnConstraints halignment="LEFT" minWidth="220"/>
+                </columnConstraints>
+
+                <Label text="ID Equipo:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtId"
+                           promptText="Ej: EQ001"
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNombre"
+                           promptText="Nombre del equipo"
+                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Ciudad:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cmbCiudad"
+                          promptText="Seleccione ciudad"
+                          prefWidth="200"
+                          GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <Button text="Guardar Cambios"
+                    onAction="#guardarCambios"
+                    style="-fx-background-color: #0d6efd;
+                           -fx-text-fill: white;
+                           -fx-padding: 12 30;
+                           -fx-background-radius: 10;"/>
+
+        </VBox>
+    </VBox>
+
+</AnchorPane>

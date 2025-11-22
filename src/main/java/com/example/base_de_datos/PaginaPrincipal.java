@@ -168,7 +168,7 @@ public class PaginaPrincipal extends Application {
                     break;
 
                 case "Listar Ciudades":
-                    fxml = "CiudadVisualListar.fxml";
+                    fxml = "CiudadListarVisual.fxml";
                     break;
 
                 case "Registrar Equipo":
@@ -176,7 +176,7 @@ public class PaginaPrincipal extends Application {
                     break;
 
                 case "Listar Equipos":
-                    fxml = "EquipoVisualListar.fxml";
+                    fxml = "EquipoListarVisual.fxml";
                     break;
 
                 case "Registrar Jugador":
@@ -192,7 +192,7 @@ public class PaginaPrincipal extends Application {
                     break;
 
                 case "Listar Juegos":
-                    fxml = "EstadisticaJuegoVisualListar.fxml";
+                    fxml = "EstadisticaJuegoListarVisual.fxml";
                     break;
 
                 case "Registrar Estadística":
