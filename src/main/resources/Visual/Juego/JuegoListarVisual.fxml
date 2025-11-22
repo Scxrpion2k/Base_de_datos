@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.SVGPath?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.base_de_datos.Controlador.Juego.JuegoListar"
+            prefWidth="1000" prefHeight="650"
+            style="-fx-background-color: #F4F6F9;">
+
+    <VBox spacing="10" alignment="TOP_CENTER"
+          AnchorPane.topAnchor="5"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0">
+
+        <Label text="Listado de Juegos"
+               style="-fx-font-size: 30px;
+                      -fx-font-weight: 700;
+                      -fx-text-fill: #1F1F1F;" />
+
+        <VBox spacing="15"
+              prefWidth="900"
+              maxWidth="900"
+              style="-fx-background-color: white;
+                     -fx-padding: 25;
+                     -fx-background-radius: 18;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 4);">
+
+            <HBox alignment="CENTER_LEFT" spacing="15">
+
+                <Label text="Juegos Registrados"
+                       style="-fx-font-size: 20px;
+                              -fx-font-weight: 600;
+                              -fx-text-fill: #212121;" />
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <Button text="➕  Registrar Juego"
+                        fx:id="btnRegistrar"
+                        onAction="#abrirFormularioRegistro"
+                        style="-fx-background-color: #0d6efd;
+                               -fx-text-fill: white;
+                               -fx-background-radius: 10;
+                               -fx-font-weight: bold;
+                               -fx-padding: 8 14;
+                               -fx-cursor: hand;" />
+
+                <Button fx:id="btnCerrar"
+                        onAction="#volverAlMenuPrincipal"
+                        style="-fx-background-color: transparent; -fx-cursor: hand;">
+                    <graphic>
+                        <SVGPath content="M4 4 L16 16 M16 4 L4 16"
+                                 style="-fx-stroke: #444; -fx-stroke-width: 2;" />
+                    </graphic>
+                </Button>
+
+            </HBox>
+
+            <TableView fx:id="tablaJuegos"
+                       prefHeight="450"
+                       maxHeight="450"
+                       minHeight="350"
+                       style="-fx-background-radius: 12;
+                              -fx-border-color: #E0E0E0;
+                              -fx-border-width: 1.2;
+                              -fx-border-radius: 12;
+                              -fx-padding: 5;">
+
+                <columns>
+
+                    <TableColumn fx:id="colIdJuego" text="ID"
+                                 prefWidth="90"
+                                 style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+
+                    <TableColumn fx:id="colDescripcion" text="Descripción"
+                                 prefWidth="230"
+                                 style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+
+                    <TableColumn fx:id="colEquipoA" text="Equipo A"
+                                 prefWidth="200"
+                                 style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+
+                    <TableColumn fx:id="colEquipoB" text="Equipo B"
+                                 prefWidth="200"
+                                 style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+
+                    <TableColumn fx:id="colFecha" text="Fecha"
+                                 prefWidth="150"
+                                 style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+
+                    <TableColumn fx:id="colAcciones" text="Acciones"
+                                 prefWidth="200"
+                                 style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+
+                </columns>
+
+            </TableView>
+
+        </VBox>
+    </VBox>
+
+</AnchorPane>

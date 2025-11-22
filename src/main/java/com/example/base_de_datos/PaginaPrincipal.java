@@ -188,7 +188,7 @@ public class PaginaPrincipal extends Application {
                     return;
 
                 case "Registrar Juego":
-                    abrirModal("/Visual/EstadisticaJuegoRegistrarVisual.fxml", "modalRegistrarJuego");
+                    abrirModal("/Visual/Juego/JuegoRegistrarVisual.fxml", "modalRegistrarJuego");
                     return;
 
                 case "Registrar Estadística":
@@ -208,7 +208,7 @@ public class PaginaPrincipal extends Application {
                     break;
 
                 case "Listar Juegos":
-                    path = "/Visual/EstadisticaJuegoListarVisual.fxml";
+                    path = "/Visual/Juego/JuegoListarVisual.fxml";
                     break;
 
                 case "Listar Estadísticas":
