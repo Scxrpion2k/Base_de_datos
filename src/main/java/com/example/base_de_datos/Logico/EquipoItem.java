@@ -15,4 +15,10 @@ public class EquipoItem {
     public String getId() { return id; }
     public String getNombre() { return nombre; }
     public String getCiudad() { return ciudad; }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
 }

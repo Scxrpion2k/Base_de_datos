@@ -9,7 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
@@ -143,5 +145,13 @@ public class CiudadListar {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void volverAlMenuPrincipal() {
+        BorderPane root = (BorderPane) tablaCiudades.getScene().getRoot();
+        StackPane content = (StackPane) root.getCenter();
+        content.getChildren().clear();
+    }
+
+
 
 }

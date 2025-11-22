@@ -2,10 +2,7 @@ package com.example.base_de_datos.Logico;
 
 import com.example.base_de_datos.Conexion.Conexion;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
@@ -112,7 +109,6 @@ public class EquipoRegistrar {
     }
 
     @FXML
-
     public void volverAlMenuPrincipal() {
         try {
             BorderPane root = (BorderPane) txtIdEquipo.getScene().getRoot();
@@ -125,5 +121,6 @@ public class EquipoRegistrar {
             e.printStackTrace();
         }
     }
+
 
 }

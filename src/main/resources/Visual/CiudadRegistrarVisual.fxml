@@ -29,6 +29,18 @@
                          -fx-background-radius: 15;
                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);">
 
+                <!-- X DE CIERRE -->
+                <HBox alignment="TOP_RIGHT">
+                    <Button text="✖"
+                            onAction="#volverAlMenuPrincipal"
+                            style="-fx-background-color: transparent;
+                                   -fx-font-size: 20px;
+                                   -fx-font-weight: bold;
+                                   -fx-text-fill: #444;
+                                   -fx-cursor: hand;" />
+                </HBox>
+
+                <!-- TÍTULO -->
                 <Label text="Registrar Ciudad"
                        style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #222;" />
 
@@ -39,23 +51,18 @@
                     </columnConstraints>
 
                     <!-- ID CIUDAD -->
-                    <Label text="ID Ciudad:"
-                           GridPane.rowIndex="0" GridPane.columnIndex="0"
+                    <Label text="ID Ciudad:" GridPane.rowIndex="0" GridPane.columnIndex="0"
                            style="-fx-font-size: 15px; -fx-text-fill: #444;" />
-
                     <TextField fx:id="txtIdCiudad" promptText="Ej: C001"
                                GridPane.rowIndex="0" GridPane.columnIndex="1"
                                style="-fx-background-radius: 8; -fx-padding: 8 12;" />
 
                     <!-- NOMBRE CIUDAD -->
-                    <Label text="Nombre Ciudad:"
-                           GridPane.rowIndex="1" GridPane.columnIndex="0"
+                    <Label text="Nombre Ciudad:" GridPane.rowIndex="1" GridPane.columnIndex="0"
                            style="-fx-font-size: 15px; -fx-text-fill: #444;" />
-
                     <TextField fx:id="txtNombreCiudad" promptText="Ej: Monterrey"
                                GridPane.rowIndex="1" GridPane.columnIndex="1"
                                style="-fx-background-radius: 8; -fx-padding: 8 12;" />
-
                 </GridPane>
 
                 <!-- BOTONES -->

@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -58,5 +60,18 @@ public class CiudadRegistrar {
     private void showAlert(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mensaje, ButtonType.OK);
         alert.show();
+    }
+
+    public void volverAlMenuPrincipal() {
+        try {
+            BorderPane root = (BorderPane) txtIdCiudad.getScene().getRoot();
+
+            StackPane content = (StackPane) root.getCenter();
+
+            content.getChildren().clear();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

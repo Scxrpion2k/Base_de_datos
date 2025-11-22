@@ -15,14 +15,25 @@
           AnchorPane.leftAnchor="0"
           AnchorPane.rightAnchor="0">
 
-        <!-- TÍTULO -->
-        <Label text="Listado de Ciudades"
-               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222;" />
-
         <!-- CARD DE TABLA -->
         <VBox style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 15;
                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 15, 0, 0, 4);"
               maxWidth="850">
+
+            <!-- X DE CIERRE -->
+            <HBox alignment="TOP_RIGHT">
+                <Button text="✖"
+                        onAction="#volverAlMenuPrincipal"
+                        style="-fx-background-color: transparent;
+                               -fx-font-size: 20px;
+                               -fx-font-weight: bold;
+                               -fx-text-fill: #444;
+                               -fx-cursor: hand;" />
+            </HBox>
+
+            <!-- TÍTULO -->
+            <Label text="Listado de Ciudades"
+                   style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222;" />
 
             <!-- TABLA -->
             <TableView fx:id="tablaCiudades"

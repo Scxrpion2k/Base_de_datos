@@ -1,5 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            prefHeight="400.0" prefWidth="600.0"/>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.base_de_datos.Logico.JugadorRegistrar"
+            prefWidth="900" prefHeight="600"
+            style="-fx-background-color: #F4F6F9;">
+
+    <VBox spacing="25" alignment="CENTER"
+          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+
+        <VBox spacing="20" alignment="CENTER"
+              maxWidth="550"
+              style="-fx-background-color: white;
+                     -fx-padding: 35 45;
+                     -fx-background-radius: 15;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5);">
+
+            <!-- BOTÓN X PARA CERRAR -->
+            <HBox alignment="TOP_RIGHT">
+                <Button text="✖"
+                        onAction="#volverAlMenuPrincipal"
+                        style="-fx-background-color: transparent;
+                               -fx-font-size: 20px;
+                               -fx-font-weight: bold;
+                               -fx-text-fill: #444;
+                               -fx-cursor: hand;" />
+            </HBox>
+
+            <!-- TÍTULO -->
+            <Label text="Registrar Jugador"
+                   style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #222;" />
+
+            <GridPane hgap="25" vgap="20">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="150"/>
+                    <ColumnConstraints halignment="LEFT" minWidth="250"/>
+                </columnConstraints>
+
+                <Label text="ID Jugador:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtIdJugador" promptText="Ej: JG001" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNombreJugador" promptText="Nombre completo" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Ciudad Nacimiento:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cmbCiudadNacimiento" promptText="Seleccione ciudad" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Fecha Nacimiento:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="dpFechaNacimiento" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Número Jugador:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNumeroJugador" promptText="Ej: 10" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                <Label text="Equipo:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cmbEquipo" promptText="Seleccione equipo" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <HBox spacing="20" alignment="CENTER">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+
+                <Button text="Guardar" onAction="#guardarJugador"
+                        style="-fx-background-color: linear-gradient(to right, #007bff, #0056d2);
+                               -fx-text-fill: white;
+                               -fx-font-size: 15px;
+                               -fx-padding: 12 28;
+                               -fx-background-radius: 10;"/>
+                <Button text="Limpiar" onAction="#limpiar"
+                        style="-fx-background-color: #6c757d;
+                               -fx-text-fill: white;
+                               -fx-padding: 12 28;
+                               -fx-font-size: 15px;
+                               -fx-background-radius: 10;"/>
+            </HBox>
+
+        </VBox>
+    </VBox>
+</AnchorPane>
