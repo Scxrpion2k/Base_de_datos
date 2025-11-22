@@ -226,6 +226,4 @@ public class PaginaPrincipal extends Application {
             e.printStackTrace();
         }
     }
-
-
 }
