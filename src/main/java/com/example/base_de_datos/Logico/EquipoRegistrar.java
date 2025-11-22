@@ -6,6 +6,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,9 +15,12 @@ import java.sql.ResultSet;
 
 public class EquipoRegistrar {
 
-    @FXML private TextField txtIdEquipo;
-    @FXML private TextField txtNombreEquipo;
-    @FXML private ComboBox<CiudadItem> cmbCiudad;
+    @FXML
+    private TextField txtIdEquipo;
+    @FXML
+    private TextField txtNombreEquipo;
+    @FXML
+    private ComboBox<CiudadItem> cmbCiudad;
 
     @FXML
     public void initialize() {
@@ -59,13 +64,12 @@ public class EquipoRegistrar {
     }
 
 
-
     @FXML
     private void guardarEquipo() {
 
         String id = txtIdEquipo.getText();
         String nombre = txtNombreEquipo.getText();
-        CiudadItem ciudad = cmbCiudad.getValue(); // objeto CiudadItem
+        CiudadItem ciudad = cmbCiudad.getValue();
 
         if (id.isEmpty() || nombre.isEmpty() || ciudad == null) {
             showAlert("Todos los campos son obligatorios.");
@@ -106,4 +110,20 @@ public class EquipoRegistrar {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mensaje, ButtonType.OK);
         alert.show();
     }
+
+    @FXML
+
+    public void volverAlMenuPrincipal() {
+        try {
+            BorderPane root = (BorderPane) txtIdEquipo.getScene().getRoot();
+
+            StackPane content = (StackPane) root.getCenter();
+
+            content.getChildren().clear();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
