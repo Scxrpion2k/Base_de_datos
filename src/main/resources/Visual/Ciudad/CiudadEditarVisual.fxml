@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.base_de_datos.Logico.EquipoEditar"
+            fx:controller="com.example.base_de_datos.Controlador.Ciudad.CiudadEditar"
             prefWidth="500" prefHeight="400"
             style="-fx-background-color: #F4F6F9;">
 
@@ -21,7 +21,7 @@
                      -fx-background-radius: 15;
                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5);">
 
-            <Label text="Editar Equipo"
+            <Label text="Editar Ciudad"
                    style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
 
             <GridPane hgap="20" vgap="15">
@@ -30,21 +30,15 @@
                     <ColumnConstraints halignment="LEFT" minWidth="220"/>
                 </columnConstraints>
 
-                <Label text="ID Equipo:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtId"
-                           promptText="Ej: EQ001"
+                <Label text="ID Ciudad:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtIdCiudad"
+                           promptText="Ej: C001"
                            GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
                 <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtNombre"
-                           promptText="Nombre del equipo"
+                <TextField fx:id="txtNombreCiudad"
+                           promptText="Nombre de la ciudad"
                            GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-                <Label text="Ciudad:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <ComboBox fx:id="cmbCiudad"
-                          promptText="Seleccione ciudad"
-                          prefWidth="200"
-                          GridPane.rowIndex="2" GridPane.columnIndex="1"/>
             </GridPane>
 
             <Button text="Guardar Cambios"

@@ -1,4 +1,4 @@
-package com.example.base_de_datos.Logico;
+package com.example.base_de_datos.Controlador.Ciudad;
 
 public class CiudadItem {
     private String id;

@@ -1,4 +1,4 @@
-package com.example.base_de_datos.Logico;
+package com.example.base_de_datos.Controlador.Equipo;
 
 import com.example.base_de_datos.Conexion.Conexion;
 import javafx.collections.FXCollections;
@@ -9,58 +9,64 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class CiudadListar {
+public class EquipoListar {
 
-    @FXML private TableView<CiudadItem> tablaCiudades;
-    @FXML private TableColumn<CiudadItem, String> colId;
-    @FXML private TableColumn<CiudadItem, String> colNombre;
-    @FXML private TableColumn<CiudadItem, Void> colAcciones;
+    @FXML private TableView<EquipoItem> tablaEquipos;
+    @FXML private TableColumn<EquipoItem, String> colId;
+    @FXML private TableColumn<EquipoItem, String> colNombre;
+    @FXML private TableColumn<EquipoItem, String> colCiudad;
+    @FXML private TableColumn<EquipoItem, Void> colAcciones;
 
-    private ObservableList<CiudadItem> lista = FXCollections.observableArrayList();
+    private ObservableList<EquipoItem> lista = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
 
-        tablaCiudades.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tablaEquipos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
 
-        cargarCiudades();
+        cargarEquipos();
         agregarBotones();
     }
 
-    void cargarCiudades() {
+    private void cargarEquipos() {
 
         lista.clear();
 
-        String query = "SELECT idCiudad, nombreCiudad FROM Ciudad";
+        String query = """
+            SELECT e.idEquipo, e.nombreEquipo, c.nombreCiudad
+            FROM Equipo e
+            INNER JOIN Ciudad c ON e.idCiudad = c.idCiudad
+        """;
 
         try (Connection con = Conexion.getConnection();
              ResultSet rs = con.createStatement().executeQuery(query)) {
 
             while (rs.next()) {
-                lista.add(new CiudadItem(
-                        rs.getString("idCiudad"),
+                lista.add(new EquipoItem(
+                        rs.getString("idEquipo"),
+                        rs.getString("nombreEquipo"),
                         rs.getString("nombreCiudad")
                 ));
             }
 
-            tablaCiudades.setItems(lista);
+            tablaEquipos.setItems(lista);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     private void agregarBotones() {
         colAcciones.setCellFactory(col -> new TableCell<>() {
@@ -76,13 +82,13 @@ public class CiudadListar {
 
                 // Botón Eliminar
                 btnDelete.setOnAction(e -> {
-                    CiudadItem item = getTableView().getItems().get(getIndex());
-                    eliminarCiudad(item.getId());
+                    EquipoItem item = getTableView().getItems().get(getIndex());
+                    eliminarEquipo(item.getId());
                 });
 
                 // Botón Actualizar
                 btnUpdate.setOnAction(e -> {
-                    CiudadItem item = getTableView().getItems().get(getIndex());
+                    EquipoItem item = getTableView().getItems().get(getIndex());
                     abrirVentanaActualizar(item);
                 });
             }
@@ -97,16 +103,16 @@ public class CiudadListar {
         });
     }
 
-    private void eliminarCiudad(String id) {
+    private void eliminarEquipo(String id) {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmación");
-        alert.setHeaderText("Eliminar Ciudad");
-        alert.setContentText("¿Desea eliminar la ciudad " + id + "?");
+        alert.setHeaderText("Eliminar Equipo");
+        alert.setContentText("¿Desea eliminar el equipo " + id + "?");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
 
-            String query = "DELETE FROM Ciudad WHERE idCiudad = ?";
+            String query = "DELETE FROM Equipo WHERE idEquipo = ?";
 
             try (Connection con = Conexion.getConnection();
                  PreparedStatement ps = con.prepareStatement(query)) {
@@ -114,7 +120,7 @@ public class CiudadListar {
                 ps.setString(1, id);
                 ps.executeUpdate();
 
-                cargarCiudades();
+                cargarEquipos();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -122,22 +128,19 @@ public class CiudadListar {
         }
     }
 
-    private void abrirVentanaActualizar(CiudadItem item) {
+    private void abrirVentanaActualizar(EquipoItem item) {
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/CiudadEditarVisual.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Equipo/EquipoEditarVisual.fxml"));
             Parent root = loader.load();
 
             // Pasar datos a la ventana de edición
-            CiudadEditar controller = loader.getController();
-            controller.cargarCiudad(item);
-
-            // PASAR REFERENCIA AL LISTADO PARA REFRESCAR
-            controller.setCiudadListarController(this);
+            EquipoEditar controller = loader.getController();
+            controller.cargarEquipo(item);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Actualizar Ciudad");
+            stage.setTitle("Actualizar Equipo");
             stage.setResizable(false);
             stage.show();
 
@@ -145,13 +148,4 @@ public class CiudadListar {
             e.printStackTrace();
         }
     }
-    @FXML
-    private void volverAlMenuPrincipal() {
-        BorderPane root = (BorderPane) tablaCiudades.getScene().getRoot();
-        StackPane content = (StackPane) root.getCenter();
-        content.getChildren().clear();
-    }
-
-
-
 }

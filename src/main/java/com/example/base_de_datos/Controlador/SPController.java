@@ -1,4 +1,4 @@
-package com.example.base_de_datos.Logico;
+package com.example.base_de_datos.Controlador;
 
 import com.example.base_de_datos.Conexion.Conexion;
 import javafx.application.Application;

@@ -155,57 +155,54 @@ public class PaginaPrincipal extends Application {
 
     private void handleMenuSelection(String option) {
 
-        System.out.println("Seleccionaste: " + option);
-
         try {
-
-            String fxml = null;
+            String path = null;
 
             switch (option) {
 
                 case "Registrar Ciudad":
-                    fxml = "CiudadRegistrarVisual.fxml";
+                    path = "/Visual/Ciudad/CiudadRegistrarVisual.fxml";
                     break;
 
                 case "Listar Ciudades":
-                    fxml = "CiudadListarVisual.fxml";
+                    path = "/Visual/Ciudad/CiudadListarVisual.fxml";
                     break;
 
                 case "Registrar Equipo":
-                    fxml = "EquipoRegistrarVisual.fxml";
+                    path = "/Visual/Equipo/EquipoRegistrarVisual.fxml";
                     break;
 
                 case "Listar Equipos":
-                    fxml = "EquipoListarVisual.fxml";
+                    path = "/Visual/Equipo/EquipoListarVisual.fxml";
                     break;
 
                 case "Registrar Jugador":
-                    fxml = "JugadorRegistrarVisual.fxml";
+                    path = "/Visual/Jugador/JugadorRegistrarVisual.fxml";
                     break;
 
                 case "Listar Jugadores":
-                    fxml = "JugadorVisualListar.fxml";
+                    path = "/Visual/Jugador/JugadorVisualListar.fxml";
                     break;
 
                 case "Registrar Juego":
-                    fxml = "EstadisticaJuegoRegistrarVisual.fxml";
+                    path = "/Visual/EstadisticaJuegoRegistrarVisual.fxml";
                     break;
 
                 case "Listar Juegos":
-                    fxml = "EstadisticaJuegoListarVisual.fxml";
+                    path = "/Visual/EstadisticaJuegoListarVisual.fxml";
                     break;
 
                 case "Registrar Estadística":
-                    fxml = "EstadisticaRegistrarVisual.fxml";
+                    path = "/Visual/Estadistica/EstadisticaRegistrarVisual.fxml";
                     break;
 
                 case "Listar Estadísticas":
-                    fxml = "EstadisticaVisualListar.fxml";
+                    path = "/Visual/Estadistica/EstadisticaVisualListar.fxml";
                     break;
             }
 
-            if (fxml != null) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/" + fxml));
+            if (path != null) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
                 Pane view = loader.load();
 
                 content.getChildren().clear();
@@ -216,6 +213,7 @@ public class PaginaPrincipal extends Application {
             e.printStackTrace();
         }
     }
+
 
     public static void main(String[] args) {
         launch();

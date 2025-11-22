@@ -1,6 +1,8 @@
-package com.example.base_de_datos.Logico;
+package com.example.base_de_datos.Controlador.Jugador;
 
 import com.example.base_de_datos.Conexion.Conexion;
+import com.example.base_de_datos.Controlador.Ciudad.CiudadItem;
+import com.example.base_de_datos.Controlador.Equipo.EquipoItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

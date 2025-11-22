@@ -1,4 +1,4 @@
-package com.example.base_de_datos.Logico;
+package com.example.base_de_datos.Controlador.Jugador;
 
 public class JugadorItem {
     private String id;

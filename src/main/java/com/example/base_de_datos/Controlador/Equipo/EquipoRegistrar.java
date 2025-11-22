@@ -1,6 +1,7 @@
-package com.example.base_de_datos.Logico;
+package com.example.base_de_datos.Controlador.Equipo;
 
 import com.example.base_de_datos.Conexion.Conexion;
+import com.example.base_de_datos.Controlador.Ciudad.CiudadItem;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
