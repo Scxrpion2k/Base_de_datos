@@ -1,6 +1,7 @@
 package com.example.base_de_datos.Controlador.Juego;
 
 import com.example.base_de_datos.Conexion.Conexion;
+import com.example.base_de_datos.Controlador.Estadistica.EstadisticaJuegoRegistrar;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,14 +9,18 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -136,7 +141,7 @@ public class JuegoListar {
 
             private final Button btnUpdate = new Button("Actualizar");
             private final Button btnDelete = new Button("Eliminar");
-            private final Button btnStats = new Button("Ver Estadísticas");
+            private final Button btnStats = new Button("Registrar Estadísticas");
 
             private final HBox contenedor = new HBox(8);
 
@@ -151,11 +156,31 @@ public class JuegoListar {
                 btnDelete.setOnAction(e -> eliminarJuego(getTableView().getItems().get(getIndex()).getIdJuego()));
 
                 btnStats.setOnAction(e -> {
-                    Alert a = new Alert(Alert.AlertType.INFORMATION);
-                    a.setTitle("Estadísticas");
-                    a.setHeaderText(null);
-                    a.setContentText("Aquí irán las estadísticas del juego.");
-                    a.show();
+                    try {
+                        // Cargar el FXML de EstadísticaJuegoRegistrar
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/EstadisticaJuegoRegistrarVisual.fxml"));
+                        Parent root = loader.load();
+
+                        // Obtener el nodo contenedor donde mostrar la ventana
+                        BorderPane mainRoot = (BorderPane) ((Node) e.getSource()).getScene().getRoot();
+                        StackPane content = (StackPane) mainRoot.getCenter();
+
+                        // Limpiar contenido actual
+                        content.getChildren().clear();
+
+                        // Agregar la nueva ventana dentro del StackPane
+                        content.getChildren().add(root);
+
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText("No se pudo cargar la ventana de estadísticas");
+                        alert.setContentText(ex.getMessage());
+                        alert.showAndWait();
+                    }
+
                 });
 
                 contenedor.getChildren().addAll(btnUpdate, btnDelete, btnStats);
@@ -263,4 +288,8 @@ public class JuegoListar {
             e.printStackTrace();
         }
     }
+
+
+
+
 }
