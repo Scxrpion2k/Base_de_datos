@@ -24,16 +24,25 @@ import static javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY;
 
 public class JuegoListar {
 
-    @FXML private TableView<JuegoItem> tablaJuegos;
-    @FXML private TableColumn<JuegoItem, String> colIdJuego;
-    @FXML private TableColumn<JuegoItem, String> colDescripcion;
-    @FXML private TableColumn<JuegoItem, String> colEquipoA;
-    @FXML private TableColumn<JuegoItem, String> colEquipoB;
-    @FXML private TableColumn<JuegoItem, String> colFecha;
-    @FXML private TableColumn<JuegoItem, Void> colAcciones;
+    @FXML
+    private TableView<JuegoItem> tablaJuegos;
+    @FXML
+    private TableColumn<JuegoItem, String> colIdJuego;
+    @FXML
+    private TableColumn<JuegoItem, String> colDescripcion;
+    @FXML
+    private TableColumn<JuegoItem, String> colEquipoA;
+    @FXML
+    private TableColumn<JuegoItem, String> colEquipoB;
+    @FXML
+    private TableColumn<JuegoItem, String> colFecha;
+    @FXML
+    private TableColumn<JuegoItem, Void> colAcciones;
 
-    @FXML private Button btnRegistrar;
-    @FXML private Button btnCerrar;
+    @FXML
+    private Button btnRegistrar;
+    @FXML
+    private Button btnCerrar;
 
     private final ObservableList<JuegoItem> lista = FXCollections.observableArrayList();
 
@@ -99,17 +108,10 @@ public class JuegoListar {
                         ORDER BY j.fechaJuego DESC
                         """;
 
-                try (Connection con = Conexion.getConnection();
-                     ResultSet rs = con.createStatement().executeQuery(query)) {
+                try (Connection con = Conexion.getConnection(); ResultSet rs = con.createStatement().executeQuery(query)) {
 
                     while (rs.next()) {
-                        temp.add(new JuegoItem(
-                                rs.getString("idJuego"),
-                                rs.getString("descripcionJuego"),
-                                rs.getString("equipoA"),
-                                rs.getString("equipoB"),
-                                soloFecha(rs.getString("fechaJuego"))
-                        ));
+                        temp.add(new JuegoItem(rs.getString("idJuego"), rs.getString("descripcionJuego"), rs.getString("equipoA"), rs.getString("equipoB"), soloFecha(rs.getString("fechaJuego"))));
                     }
                 }
 
@@ -181,8 +183,7 @@ public class JuegoListar {
 
             String query = "DELETE FROM Juego WHERE idJuego = ?";
 
-            try (Connection con = Conexion.getConnection();
-                 PreparedStatement ps = con.prepareStatement(query)) {
+            try (Connection con = Conexion.getConnection(); PreparedStatement ps = con.prepareStatement(query)) {
 
                 ps.setString(1, id);
                 ps.executeUpdate();
