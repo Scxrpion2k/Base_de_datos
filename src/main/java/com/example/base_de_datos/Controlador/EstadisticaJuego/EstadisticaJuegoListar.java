@@ -16,7 +16,7 @@ class EstadisticaJuegoListar extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Visual/EstadisticaJuegoListarVisual.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/Visual/EstadisticaJuego/EstadisticaJuegoListarVisual.fxml"));
 
 
             Scene scene = new Scene(root);

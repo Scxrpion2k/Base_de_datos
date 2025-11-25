@@ -33,7 +33,13 @@
 
                 <!-- Juego -->
                 <Label text="Juego:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+
+                <!-- TextField para ID de juego (cuando se pasa desde el listado) -->
                 <TextField fx:id="txtIdJuego" editable="false" prefHeight="30" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                <!-- ComboBox para seleccionar juego (cuando se abre desde menú Estadísticas Juego) -->
+                <ComboBox fx:id="cmbJuegos" promptText="Seleccione Juego" prefHeight="30" prefWidth="250"
+                          GridPane.columnIndex="1" GridPane.rowIndex="0" visible="false" />
 
                 <!-- Estadística -->
                 <Label text="Estadística:" GridPane.columnIndex="0" GridPane.rowIndex="1" />

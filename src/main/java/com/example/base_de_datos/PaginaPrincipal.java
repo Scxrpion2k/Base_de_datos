@@ -1,5 +1,6 @@
 package com.example.base_de_datos;
 
+import com.example.base_de_datos.Controlador.EstadisticaJuego.EstadisticaJuegoRegistrar;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
@@ -50,12 +51,14 @@ public class PaginaPrincipal extends Application {
         Button btnJugador = createMenuButton("Jugadores");
         Button btnJuego = createMenuButton("Juegos");
         Button btnEstadistica = createMenuButton("Estadísticas");
+        Button btnEstadisticaJuego = createMenuButton("Estadísticas Juego");
 
         addHoverMenu(btnCiudad, "Registrar Ciudad", "Listar Ciudades");
         addHoverMenu(btnEquipo, "Registrar Equipo", "Listar Equipos");
         addHoverMenu(btnJugador, "Registrar Jugador", "Listar Jugadores");
         addHoverMenu(btnJuego, "Registrar Juego", "Listar Juegos");
         addHoverMenu(btnEstadistica, "Registrar Estadística", "Listar Estadísticas");
+        addHoverMenu(btnEstadisticaJuego, "Registrar Estadísticas Juego", "Listar Estadísticas Juego");
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -68,7 +71,7 @@ public class PaginaPrincipal extends Application {
 
         menu.getChildren().addAll(
                 title,
-                btnCiudad, btnEquipo, btnJugador, btnJuego, btnEstadistica,
+                btnCiudad, btnEquipo, btnJugador, btnJuego, btnEstadistica,btnEstadisticaJuego,
                 spacer,
                 btnConfig,
                 btnSalir
@@ -214,6 +217,40 @@ public class PaginaPrincipal extends Application {
                 case "Listar Estadísticas":
                     path = "/Visual/Estadistica/EstadisticaVisualListar.fxml";
                     break;
+                case "Registrar Estadísticas Juego":
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                                "/Visual/EstadisticaJuego/EstadisticaJuegoRegistrarVisual.fxml"));
+                        Parent modal = loader.load();
+
+                        EstadisticaJuegoRegistrar controller = loader.getController();
+                        controller.setModoSeleccionJuego(true); // activa el ComboBox de juegos
+
+                        // Obtener el StackPane central
+                        BorderPane mainRoot = (BorderPane) content.getScene().getRoot();
+                        StackPane contentStack = (StackPane) mainRoot.getCenter();
+
+                        // Limpiar y agregar modal
+                        contentStack.getChildren().clear();
+                        contentStack.getChildren().add(modal);
+
+                        // Fade in
+                        FadeTransition fade = new FadeTransition(Duration.millis(200), modal);
+                        fade.setFromValue(0);
+                        fade.setToValue(1);
+                        fade.play();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return;
+
+
+                case "Listar Estadísticas Juego":
+                    path = "/Visual/EstadisticaJuego/EstadisticaJuegoListarVisual.fxml";
+                    break;
+
+
 
                 default:
                     return;

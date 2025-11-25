@@ -3,6 +3,7 @@ package com.example.base_de_datos.Controlador.EstadisticaJuego;
 import com.example.base_de_datos.Conexion.Conexion;
 import com.example.base_de_datos.Controlador.Equipo.EquipoItem;
 import com.example.base_de_datos.Controlador.Estadistica.EstadisticaItem;
+import com.example.base_de_datos.Controlador.Juego.JuegoItem;
 import com.example.base_de_datos.Controlador.Jugador.JugadorItem;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
@@ -29,6 +30,11 @@ public class EstadisticaJuegoRegistrar {
     @FXML private ComboBox<EquipoItem> cmbEquipo;
     @FXML private ComboBox<JugadorItem> cmbJugador;
     @FXML private TextField txtCantidad;
+    @FXML private ComboBox<JuegoItem> cmbJuegos;
+    @FXML private Label lblJuegos;
+
+    private boolean seleccionarJuego = false;
+
 
     @FXML
     private AnchorPane rootRegistrar;
@@ -37,13 +43,31 @@ public class EstadisticaJuegoRegistrar {
 
     @FXML
     public void initialize() {
-        // Cuando se seleccione un equipo, se cargan los jugadores de ese equipo
-        cmbEquipo.setOnAction(event -> {
-            if (cmbEquipo.getValue() != null) {
-                cargarJugadores();
+        cmbJuegos.setVisible(false);
+
+
+        if (seleccionarJuego) {
+            cmbJuegos.setVisible(true);
+            cargarJuegos();
+        }
+    }
+
+
+
+
+    public void setModoSeleccionJuego(boolean seleccionarJuego) {
+
+        Platform.runLater(() -> {
+            if (cmbJuegos != null) {
+                cmbJuegos.setVisible(seleccionarJuego);
+                if (seleccionarJuego) cargarJuegos();
             }
         });
     }
+
+
+
+
 
 
     public void setIdJuego(String idJuego) {
@@ -150,12 +174,68 @@ public class EstadisticaJuegoRegistrar {
         }
     }
 
+    public void cargarJuegos() {
+        // Limpiar el ComboBox antes de cargar
+        cmbJuegos.getItems().clear();
+
+        String sql = """
+            SELECT 
+                j.idJuego,
+                j.descripcionJuego,
+                A.nombreEquipo AS equipoA,
+                B.nombreEquipo AS equipoB,
+                j.fechaJuego
+            FROM Juego j
+            INNER JOIN Equipo A ON j.idEquipoA = A.idEquipo
+            INNER JOIN Equipo B ON j.idEquipoB = B.idEquipo
+            ORDER BY j.fechaJuego DESC
+            """;
+
+        try (Connection conn = Conexion.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            ObservableList<JuegoItem> juegos = FXCollections.observableArrayList();
+
+            while (rs.next()) {
+                String id = rs.getString("idJuego");
+                String descripcion = rs.getString("descripcionJuego");
+                String equipoA = rs.getString("equipoA");
+                String equipoB = rs.getString("equipoB");
+                String fecha = rs.getString("fechaJuego").split(" ")[0]; // solo fecha
+
+                // JuegoItem debe tener un constructor: id, descripcion, equipoA, equipoB, fecha
+                juegos.add(new JuegoItem(id, descripcion, equipoA, equipoB, fecha));
+            }
+
+            cmbJuegos.setItems(juegos);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error al cargar los juegos: " + e.getMessage()).showAndWait();
+        }
+    }
+
+
 
 
 
 
     @FXML
     public void guardarEstadistica(ActionEvent actionEvent) {
+
+        String idJuegoFinal;
+        if (seleccionarJuego) {
+            JuegoItem juegoSeleccionado = cmbJuegos.getValue();
+            if (juegoSeleccionado == null) {
+                new Alert(Alert.AlertType.WARNING, "Debe seleccionar un juego.").showAndWait();
+                return;
+            }
+            idJuegoFinal = juegoSeleccionado.getIdJuego();
+        } else {
+            idJuegoFinal = this.idJuego; // idJuego ya asignado desde setIdJuego
+        }
+
         // Obtener los objetos seleccionados
         EstadisticaItem estadisticaSeleccionada = cmbEstadistica.getValue();
         EquipoItem equipoSeleccionado = cmbEquipo.getValue();

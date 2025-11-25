@@ -179,7 +179,7 @@ public class JuegoListar {
 
     private void abrirRegistrarEstadisticasJuego(String idJuego) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/EstadisticaJuegoRegistrarVisual.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/EstadisticaJuego/EstadisticaJuegoRegistrarVisual.fxml"));
             Parent root = loader.load();
 
             EstadisticaJuegoRegistrar controller = loader.getController();
