@@ -1,7 +1,7 @@
 package com.example.base_de_datos.Controlador.Juego;
 
 import com.example.base_de_datos.Conexion.Conexion;
-import com.example.base_de_datos.Controlador.Estadistica.EstadisticaJuegoRegistrar;
+import com.example.base_de_datos.Controlador.EstadisticaJuego.EstadisticaJuegoRegistrar;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,18 +9,14 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,6 +44,13 @@ public class JuegoListar {
     private Button btnRegistrar;
     @FXML
     private Button btnCerrar;
+
+    @FXML
+    private Button btnStats;
+
+
+    private StackPane contentPane;
+
 
     private final ObservableList<JuegoItem> lista = FXCollections.observableArrayList();
 
@@ -156,34 +159,7 @@ public class JuegoListar {
 
                 btnUpdate.setOnAction(e -> abrirVentanaActualizar(getTableView().getItems().get(getIndex())));
                 btnDelete.setOnAction(e -> eliminarJuego(getTableView().getItems().get(getIndex()).getIdJuego()));
-
-                btnStats.setOnAction(e -> {
-                    try {
-                        // Cargar el FXML de EstadísticaJuegoRegistrar
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/EstadisticaJuegoRegistrarVisual.fxml"));
-                        Parent root = loader.load();
-
-                        // Obtener el nodo contenedor donde mostrar la ventana
-                        BorderPane mainRoot = (BorderPane) ((Node) e.getSource()).getScene().getRoot();
-                        StackPane content = (StackPane) mainRoot.getCenter();
-
-                        // Limpiar contenido actual
-                        content.getChildren().clear();
-
-                        // Agregar la nueva ventana dentro del StackPane
-                        content.getChildren().add(root);
-
-
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText("No se pudo cargar la ventana de estadísticas");
-                        alert.setContentText(ex.getMessage());
-                        alert.showAndWait();
-                    }
-
-                });
+                btnStats.setOnAction(e -> {abrirRegistrarEstadisticasJuego(getTableView().getItems().get(getIndex()).getIdJuego());});
 
                 contenedor.getChildren().addAll(btnUpdate, btnDelete, btnStats);
             }
@@ -195,6 +171,42 @@ public class JuegoListar {
             }
         });
     }
+
+    public void setContentPane(StackPane contentPane) {
+        this.contentPane = contentPane;
+    }
+
+
+    private void abrirRegistrarEstadisticasJuego(String idJuego) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/EstadisticaJuegoRegistrarVisual.fxml"));
+            Parent root = loader.load();
+
+            EstadisticaJuegoRegistrar controller = loader.getController();
+            controller.setIdJuego(idJuego);
+
+            BorderPane mainRoot = (BorderPane) tablaJuegos.getScene().getRoot();
+            StackPane content = (StackPane) mainRoot.getCenter();
+
+
+            root.setOpacity(0);
+            content.getChildren().add(root);
+
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(200), root);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+            fadeIn.play();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+
+
+
+
 
 
     private void eliminarJuego(String id) {
