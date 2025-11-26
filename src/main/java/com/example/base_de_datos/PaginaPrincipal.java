@@ -26,12 +26,10 @@ public class PaginaPrincipal extends Application {
         root.setTop(topMenu);
 
         content = new StackPane();
-        content.setId("mainContent");   // <-- IMPORTANTE
+        content.setId("mainContent");
         root.setCenter(content);
 
-        // =======================
-        // Cargar pantalla inicial
-        // =======================
+
         try {
             Pane inicio = FXMLLoader.load(getClass().getResource("/Visual/Inicio/InicioDashboardVisual.fxml"));
             content.getChildren().setAll(inicio);
