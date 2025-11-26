@@ -2,6 +2,7 @@ package com.example.base_de_datos.Controlador.Juego;
 
 import com.example.base_de_datos.Conexion.Conexion;
 import com.example.base_de_datos.Controlador.Equipo.EquipoItem;
+import com.example.base_de_datos.PaginaPrincipal;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -137,19 +138,16 @@ public class JuegoEditar {
 
     @FXML
     public void cerrarVentana() {
-        try {
-            BorderPane root = (BorderPane) rootEditarJuego.getScene().getRoot();
-            StackPane content = (StackPane) root.getCenter();
+        FadeTransition fade = new FadeTransition(Duration.millis(200), rootEditarJuego);
+        fade.setFromValue(1);
+        fade.setToValue(0);
 
-            FadeTransition fade = new FadeTransition(Duration.millis(200), rootEditarJuego);
-            fade.setFromValue(1);
-            fade.setToValue(0);
+        fade.setOnFinished(e -> {
+            StackPane parent = (StackPane) rootEditarJuego.getParent();
+            parent.getChildren().remove(rootEditarJuego);
+            PaginaPrincipal.volverAlDashboard();
+        });
 
-            fade.setOnFinished(e -> content.getChildren().remove(rootEditarJuego));
-            fade.play();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        fade.play();
     }
 }

@@ -2,6 +2,7 @@ package com.example.base_de_datos.Controlador.EstadisticaJuego;
 
 import com.example.base_de_datos.Conexion.Conexion;
 import com.example.base_de_datos.Controlador.Juego.JuegoItem;
+import com.example.base_de_datos.PaginaPrincipal;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -195,17 +196,18 @@ public class EstadisticaJuegoVer {
 
     @FXML
     private void cerrar() {
-
         FadeTransition fade = new FadeTransition(Duration.millis(200), rootEstadisticas);
         fade.setFromValue(1);
         fade.setToValue(0);
 
         fade.setOnFinished(e -> {
-            StackPane content = (StackPane) rootEstadisticas.getParent();
-            content.getChildren().remove(rootEstadisticas);
+            StackPane parent = (StackPane) rootEstadisticas.getParent();
+            parent.getChildren().remove(rootEstadisticas);
+            PaginaPrincipal.volverAlDashboard();  // 🔥 volver al inicio
         });
 
         fade.play();
     }
+
 
 }

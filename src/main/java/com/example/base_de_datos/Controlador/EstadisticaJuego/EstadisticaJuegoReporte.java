@@ -2,6 +2,7 @@ package com.example.base_de_datos.Controlador.EstadisticaJuego;
 
 import com.example.base_de_datos.Controlador.Inicio.ReporteRow;
 import com.example.base_de_datos.Conexion.Conexion;
+import com.example.base_de_datos.PaginaPrincipal;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -65,6 +66,7 @@ public class EstadisticaJuegoReporte {
 
     @FXML
     private void cerrar() {
+
         FadeTransition fade = new FadeTransition(Duration.millis(200), rootReporte);
         fade.setFromValue(1);
         fade.setToValue(0);
@@ -72,6 +74,7 @@ public class EstadisticaJuegoReporte {
         fade.setOnFinished(e -> {
             StackPane parent = (StackPane) rootReporte.getParent();
             parent.getChildren().remove(rootReporte);
+            PaginaPrincipal.volverAlDashboard();   // 🔥 volver al inicio
         });
 
         fade.play();

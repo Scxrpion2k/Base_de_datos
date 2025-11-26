@@ -13,9 +13,17 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class PaginaPrincipal extends Application {
-
+    private static PaginaPrincipal instance;
     private StackPane content;
     private ContextMenu activeMenu = null;
+
+    public PaginaPrincipal() {
+        instance = this;
+    }
+
+    public static PaginaPrincipal getInstance() {
+        return instance;
+    }
 
     @Override
     public void start(Stage stage) {
@@ -212,4 +220,13 @@ public class PaginaPrincipal extends Application {
             e.printStackTrace();
         }
     }
+    public static void volverAlDashboard() {
+        try {
+            Pane dash = PageManager.get("/Visual/Inicio/InicioDashboardVisual.fxml");
+            instance.content.getChildren().setAll(dash);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

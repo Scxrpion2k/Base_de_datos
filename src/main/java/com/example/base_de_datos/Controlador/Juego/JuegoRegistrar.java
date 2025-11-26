@@ -2,6 +2,7 @@ package com.example.base_de_datos.Controlador.Juego;
 
 import com.example.base_de_datos.Conexion.Conexion;
 import com.example.base_de_datos.Controlador.Equipo.EquipoItem;
+import com.example.base_de_datos.PaginaPrincipal;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -115,13 +116,16 @@ public class JuegoRegistrar {
     public void cerrarFormulario() {
         try {
             AnchorPane modal = rootRegistrar;
-            StackPane content = (StackPane) modal.getParent();
+            StackPane parent = (StackPane) modal.getParent();
 
             FadeTransition fade = new FadeTransition(Duration.millis(200), modal);
             fade.setFromValue(1);
             fade.setToValue(0);
 
-            fade.setOnFinished(e -> content.getChildren().remove(modal));
+            fade.setOnFinished(e -> {
+                parent.getChildren().remove(modal);
+                PaginaPrincipal.volverAlDashboard();
+            });
 
             fade.play();
 
@@ -129,4 +133,5 @@ public class JuegoRegistrar {
             e.printStackTrace();
         }
     }
+
 }
