@@ -19,7 +19,8 @@ module com.example.base_de_datos {
     opens com.example.base_de_datos.Controlador.Juego to javafx.fxml;
     exports com.example.base_de_datos.Controlador.Jugador;
     opens com.example.base_de_datos.Controlador.Jugador to javafx.fxml;
-    exports com.example.base_de_datos.Controlador.EstadisticaJuego;
     opens com.example.base_de_datos.Controlador.EstadisticaJuego to javafx.fxml;
+    exports com.example.base_de_datos.Controlador.EstadisticaJuego;
+    opens com.example.base_de_datos.Controlador.Inicio to javafx.fxml;
 
 }

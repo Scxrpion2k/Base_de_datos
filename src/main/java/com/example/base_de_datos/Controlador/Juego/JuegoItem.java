@@ -38,6 +38,6 @@ public class JuegoItem {
 
     @Override
     public String toString() {
-        return descripcion;
+        return idJuego;
     }
 }

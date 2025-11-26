@@ -2,44 +2,40 @@ package com.example.base_de_datos.Controlador.EstadisticaJuego;
 
 public class EstadisticaJuegoItem {
 
-    private String idJuego;
-    private String idEstadistica;
-    private String idEquipo;
-    private String idJugador;
+    private String equipo;
+    private String jugador;
+    private String estadistica;
     private int cantidad;
 
-    public EstadisticaJuegoItem(String idJuego, String idEstadistica, String idEquipo, String idJugador, int cantidad) {
-        this.idJuego = idJuego;
-        this.idEstadistica = idEstadistica;
+    private String idEquipo;
+    private String idJugador;
+    private String idEstadistica;
+
+    public EstadisticaJuegoItem(
+            String equipo,
+            String jugador,
+            String estadistica,
+            int cantidad,
+            String idEquipo,
+            String idJugador,
+            String idEstadistica
+    ) {
+        this.equipo = equipo;
+        this.jugador = jugador;
+        this.estadistica = estadistica;
+        this.cantidad = cantidad;
+
         this.idEquipo = idEquipo;
         this.idJugador = idJugador;
-        this.cantidad = cantidad;
+        this.idEstadistica = idEstadistica;
     }
 
-    public String getIdJuego() {
-        return idJuego;
-    }
+    public String getEquipo() { return equipo; }
+    public String getJugador() { return jugador; }
+    public String getEstadistica() { return estadistica; }
+    public int getCantidad() { return cantidad; }
 
-    public String getIdEstadistica() {
-        return idEstadistica;
-    }
-
-    public String getIdEquipo() {
-        return idEquipo;
-    }
-
-    public String getIdJugador() {
-        return idJugador;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    @Override
-    public String toString() {
-        // Devuelve una representación legible para ComboBox o debugging
-        return "Juego: " + idJuego + ", Estadística: " + idEstadistica +
-                ", Equipo: " + idEquipo + ", Jugador: " + idJugador + ", Cantidad: " + cantidad;
-    }
+    public String getIdEquipo() { return idEquipo; }
+    public String getIdJugador() { return idJugador; }
+    public String getIdEstadistica() { return idEstadistica; }
 }

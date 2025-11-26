@@ -6,8 +6,8 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.base_de_datos.Controlador.EstadisticaJuego.EstadisticaJuegoListar"
-            prefWidth="1000" prefHeight="650"
+            fx:controller="com.example.base_de_datos.Controlador.Jugador.JugadorListar"
+            prefWidth="1500" prefHeight="650"
             style="-fx-background-color: #F4F6F9;">
 
     <VBox spacing="10" alignment="TOP_CENTER"
@@ -15,30 +15,41 @@
           AnchorPane.leftAnchor="0"
           AnchorPane.rightAnchor="0">
 
-        <Label text="Registrar Estadísticas por Juego"
+        <Label text="Listado de Jugadores"
                style="-fx-font-size: 30px;
                       -fx-font-weight: 700;
                       -fx-text-fill: #1F1F1F;" />
 
         <VBox spacing="15"
-              prefWidth="900"
-              maxWidth="900"
+              alignment="CENTER"
+              prefWidth="1400"
+              maxWidth="Infinity"
+              minWidth="1200"
               style="-fx-background-color: white;
                      -fx-padding: 25;
                      -fx-background-radius: 18;
                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 4);">
 
-            <HBox alignment="CENTER_LEFT" spacing="15">
+            <HBox alignment="CENTER_LEFT" spacing="15"
+                  prefWidth="1400">
 
-                <Label text="Seleccione un Juego"
+                <Label text="Jugadores Registrados"
                        style="-fx-font-size: 20px;
                               -fx-font-weight: 600;
                               -fx-text-fill: #212121;" />
 
                 <Region HBox.hgrow="ALWAYS"/>
 
+                <Button text="➕  Registrar Jugador"
+                        fx:id="btnRegistrar"
+                        style="-fx-background-color: #0d6efd;
+                               -fx-text-fill: white;
+                               -fx-background-radius: 10;
+                               -fx-font-weight: bold;
+                               -fx-padding: 8 14;
+                               -fx-cursor: hand;" />
+
                 <Button fx:id="btnCerrar"
-                        onAction="#volverAlMenuPrincipal"
                         style="-fx-background-color: transparent; -fx-cursor: hand;">
                     <graphic>
                         <SVGPath content="M4 4 L16 16 M16 4 L4 16"
@@ -48,8 +59,11 @@
 
             </HBox>
 
-            <TableView fx:id="tablaJuegos"
+            <TableView fx:id="tablaJugadores"
                        prefHeight="450"
+                       prefWidth="1400"
+                       maxWidth="Infinity"
+                       minHeight="350"
                        style="-fx-background-radius: 12;
                               -fx-border-color: #E0E0E0;
                               -fx-border-width: 1.2;
@@ -58,22 +72,32 @@
 
                 <columns>
 
-                    <TableColumn fx:id="colIdJuego" text="ID" prefWidth="90"
+                    <TableColumn fx:id="colId" text="ID"
+                                 prefWidth="100"
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
-                    <TableColumn fx:id="colDescripcion" text="Descripción" prefWidth="230"
+                    <TableColumn fx:id="colNombre" text="Nombre"
+                                 prefWidth="200"
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
-                    <TableColumn fx:id="colEquipoA" text="Equipo A" prefWidth="200"
+                    <TableColumn fx:id="colCiudad" text="Ciudad Nac."
+                                 prefWidth="200"
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
-                    <TableColumn fx:id="colEquipoB" text="Equipo B" prefWidth="200"
+                    <TableColumn fx:id="colFecha" text="Fecha Nac."
+                                 prefWidth="150"
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
-                    <TableColumn fx:id="colFecha" text="Fecha" prefWidth="150"
+                    <TableColumn fx:id="colNumero" text="Número"
+                                 prefWidth="120"
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
-                    <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="200"
+                    <TableColumn fx:id="colEquipo" text="Equipo"
+                                 prefWidth="200"
+                                 style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+
+                    <TableColumn fx:id="colAcciones" text="Acciones"
+                                 prefWidth="220"
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
                 </columns>

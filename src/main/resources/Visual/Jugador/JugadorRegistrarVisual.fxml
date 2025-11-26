@@ -2,16 +2,20 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns="http://javafx.com/javafx/21"
+
+<AnchorPane fx:id="rootRegistrar"
+            id="modalRegistrarJugador"
+            xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.base_de_datos.Controlador.Jugador.JugadorRegistrar"
             prefWidth="900" prefHeight="600"
-            style="-fx-background-color: #F4F6F9;">
+            style="-fx-background-color: rgba(0,0,0,0.30);">
 
     <VBox spacing="25" alignment="CENTER"
           AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
           AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
 
+        <!-- CARD BLANCA CENTRADA -->
         <VBox spacing="20" alignment="CENTER"
               maxWidth="550"
               style="-fx-background-color: white;
@@ -22,7 +26,7 @@
             <!-- BOTÓN X PARA CERRAR -->
             <HBox alignment="TOP_RIGHT">
                 <Button text="✖"
-                        onAction="#volverAlMenuPrincipal"
+                        onAction="#cerrarFormulario"
                         style="-fx-background-color: transparent;
                                -fx-font-size: 20px;
                                -fx-font-weight: bold;
@@ -70,6 +74,7 @@
                                -fx-font-size: 15px;
                                -fx-padding: 12 28;
                                -fx-background-radius: 10;"/>
+
                 <Button text="Limpiar" onAction="#limpiar"
                         style="-fx-background-color: #6c757d;
                                -fx-text-fill: white;

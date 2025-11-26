@@ -1,7 +1,7 @@
 package com.example.base_de_datos.Controlador.Juego;
 
 import com.example.base_de_datos.Conexion.Conexion;
-import com.example.base_de_datos.Controlador.EstadisticaJuego.EstadisticaJuegoRegistrar;
+import com.example.base_de_datos.Controlador.EstadisticaJuego.EstadisticaJuegoVer;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,13 +44,6 @@ public class JuegoListar {
     private Button btnRegistrar;
     @FXML
     private Button btnCerrar;
-
-    @FXML
-    private Button btnStats;
-
-
-    private StackPane contentPane;
-
 
     private final ObservableList<JuegoItem> lista = FXCollections.observableArrayList();
 
@@ -104,22 +97,29 @@ public class JuegoListar {
                 ObservableList<JuegoItem> temp = FXCollections.observableArrayList();
 
                 String query = """
-                        SELECT 
-                            j.idJuego,
-                            j.descripcionJuego,
-                            A.nombreEquipo AS equipoA,
-                            B.nombreEquipo AS equipoB,
-                            j.fechaJuego
-                        FROM Juego j
-                        INNER JOIN Equipo A ON j.idEquipoA = A.idEquipo
-                        INNER JOIN Equipo B ON j.idEquipoB = B.idEquipo
-                        ORDER BY j.fechaJuego DESC
-                        """;
+                    SELECT 
+                        j.idJuego,
+                        j.descripcionJuego,
+                        A.nombreEquipo AS equipoA,
+                        B.nombreEquipo AS equipoB,
+                        j.fechaJuego
+                    FROM Juego j
+                    INNER JOIN Equipo A ON j.idEquipoA = A.idEquipo
+                    INNER JOIN Equipo B ON j.idEquipoB = B.idEquipo
+                    ORDER BY j.fechaJuego DESC
+                    """;
 
-                try (Connection con = Conexion.getConnection(); ResultSet rs = con.createStatement().executeQuery(query)) {
+                try (Connection con = Conexion.getConnection();
+                     ResultSet rs = con.createStatement().executeQuery(query)) {
 
                     while (rs.next()) {
-                        temp.add(new JuegoItem(rs.getString("idJuego"), rs.getString("descripcionJuego"), rs.getString("equipoA"), rs.getString("equipoB"), soloFecha(rs.getString("fechaJuego"))));
+                        temp.add(new JuegoItem(
+                                rs.getString("idJuego"),
+                                rs.getString("descripcionJuego"),
+                                rs.getString("equipoA"),
+                                rs.getString("equipoB"),
+                                soloFecha(rs.getString("fechaJuego"))
+                        ));
                     }
                 }
 
@@ -130,6 +130,14 @@ public class JuegoListar {
         task.setOnSucceeded(e -> {
             lista.setAll(task.getValue());
             tablaJuegos.setItems(lista);
+
+            // 🔥 Corrige el desfase inicial entre encabezado y contenido
+            tablaJuegos.layout();
+
+            javafx.application.Platform.runLater(() -> {
+                tablaJuegos.refresh();
+                tablaJuegos.layout();
+            });
         });
 
         task.setOnFailed(e -> task.getException().printStackTrace());
@@ -140,13 +148,14 @@ public class JuegoListar {
     }
 
 
+
     private void agregarBotones() {
 
         colAcciones.setCellFactory(col -> new TableCell<>() {
 
             private final Button btnUpdate = new Button("Actualizar");
             private final Button btnDelete = new Button("Eliminar");
-            private final Button btnStats = new Button("Registrar Estadísticas");
+            private final Button btnStats = new Button("Ver Estadísticas");
 
             private final HBox contenedor = new HBox(8);
 
@@ -157,9 +166,10 @@ public class JuegoListar {
                 btnDelete.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-background-radius: 8;");
                 btnStats.setStyle("-fx-background-color: #28a745; -fx-text-fill: white; -fx-background-radius: 8;");
 
+                btnStats.setOnAction(e -> abrirVentanaEstadisticas(getTableView().getItems().get(getIndex())));
                 btnUpdate.setOnAction(e -> abrirVentanaActualizar(getTableView().getItems().get(getIndex())));
                 btnDelete.setOnAction(e -> eliminarJuego(getTableView().getItems().get(getIndex()).getIdJuego()));
-                btnStats.setOnAction(e -> {abrirRegistrarEstadisticasJuego(getTableView().getItems().get(getIndex()).getIdJuego());});
+
 
                 contenedor.getChildren().addAll(btnUpdate, btnDelete, btnStats);
             }
@@ -171,42 +181,6 @@ public class JuegoListar {
             }
         });
     }
-
-    public void setContentPane(StackPane contentPane) {
-        this.contentPane = contentPane;
-    }
-
-
-    private void abrirRegistrarEstadisticasJuego(String idJuego) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/EstadisticaJuego/EstadisticaJuegoRegistrarVisual.fxml"));
-            Parent root = loader.load();
-
-            EstadisticaJuegoRegistrar controller = loader.getController();
-            controller.setIdJuego(idJuego);
-
-            BorderPane mainRoot = (BorderPane) tablaJuegos.getScene().getRoot();
-            StackPane content = (StackPane) mainRoot.getCenter();
-
-
-            root.setOpacity(0);
-            content.getChildren().add(root);
-
-            FadeTransition fadeIn = new FadeTransition(Duration.millis(200), root);
-            fadeIn.setFromValue(0);
-            fadeIn.setToValue(1);
-            fadeIn.play();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-
-
-
-
-
 
 
     private void eliminarJuego(String id) {
@@ -243,6 +217,36 @@ public class JuegoListar {
         colAcciones.setStyle("-fx-alignment: CENTER;");
     }
 
+    private void abrirVentanaEstadisticas(JuegoItem juego) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/Visual/EstadisticaJuego/EstadisticaJuegoVerVisual.fxml"));
+
+            Parent modal = loader.load();
+            EstadisticaJuegoVer controller = loader.getController();
+
+            // Cargar el juego (ID, equipos y estadísticas)
+            controller.cargarJuego(juego);
+
+            BorderPane root = (BorderPane) tablaJuegos.getScene().getRoot();
+            StackPane content = (StackPane) root.getCenter();
+
+            // Evitar duplicados
+            content.getChildren().removeIf(node -> "modalVerEstadisticas".equals(node.getId()));
+            modal.setId("modalVerEstadisticas");
+
+            modal.setOpacity(0);
+            content.getChildren().add(modal);
+
+            FadeTransition fade = new FadeTransition(Duration.millis(200), modal);
+            fade.setFromValue(0);
+            fade.setToValue(1);
+            fade.play();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
     private void abrirVentanaActualizar(JuegoItem item) {
         try {
@@ -301,8 +305,4 @@ public class JuegoListar {
             e.printStackTrace();
         }
     }
-
-
-
-
 }

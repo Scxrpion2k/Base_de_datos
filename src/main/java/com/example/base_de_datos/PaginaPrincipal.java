@@ -1,6 +1,5 @@
 package com.example.base_de_datos;
 
-import com.example.base_de_datos.Controlador.EstadisticaJuego.EstadisticaJuegoRegistrar;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
@@ -27,7 +26,18 @@ public class PaginaPrincipal extends Application {
         root.setTop(topMenu);
 
         content = new StackPane();
+        content.setId("mainContent");   // <-- IMPORTANTE
         root.setCenter(content);
+
+        // =======================
+        // Cargar pantalla inicial
+        // =======================
+        try {
+            Pane inicio = FXMLLoader.load(getClass().getResource("/Visual/Inicio/InicioDashboardVisual.fxml"));
+            content.getChildren().setAll(inicio);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         Scene scene = new Scene(root, 1200, 800);
 
@@ -51,14 +61,12 @@ public class PaginaPrincipal extends Application {
         Button btnJugador = createMenuButton("Jugadores");
         Button btnJuego = createMenuButton("Juegos");
         Button btnEstadistica = createMenuButton("Estadísticas");
-        Button btnEstadisticaJuego = createMenuButton("Estadísticas Juego");
 
         addHoverMenu(btnCiudad, "Registrar Ciudad", "Listar Ciudades");
         addHoverMenu(btnEquipo, "Registrar Equipo", "Listar Equipos");
         addHoverMenu(btnJugador, "Registrar Jugador", "Listar Jugadores");
         addHoverMenu(btnJuego, "Registrar Juego", "Listar Juegos");
-        addHoverMenu(btnEstadistica, "Registrar Estadística", "Listar Estadísticas");
-        addHoverMenu(btnEstadisticaJuego, "Registrar Estadísticas Juego", "Listar Estadísticas Juego");
+        addHoverMenu(btnEstadistica, "Registrar Estadisticas Por Juego");
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -71,7 +79,7 @@ public class PaginaPrincipal extends Application {
 
         menu.getChildren().addAll(
                 title,
-                btnCiudad, btnEquipo, btnJugador, btnJuego, btnEstadistica,btnEstadisticaJuego,
+                btnCiudad, btnEquipo, btnJugador, btnJuego, btnEstadistica,
                 spacer,
                 btnConfig,
                 btnSalir
@@ -83,23 +91,23 @@ public class PaginaPrincipal extends Application {
     private Button createMenuButton(String text) {
         Button btn = new Button(text);
 
-        btn.setStyle(
-                "-fx-background-color: transparent;" +
-                        "-fx-text-fill: white;" +
-                        "-fx-font-size: 14px;"
-        );
+        btn.setStyle("""
+                -fx-background-color: transparent;
+                -fx-text-fill: white;
+                -fx-font-size: 14px;
+                """);
 
-        btn.setOnMouseEntered(e -> btn.setStyle(
-                "-fx-background-color: transparent;" +
-                        "-fx-text-fill: #F0B501;" +
-                        "-fx-font-size: 14px;"
-        ));
+        btn.setOnMouseEntered(e -> btn.setStyle("""
+                -fx-background-color: transparent;
+                -fx-text-fill: #F0B501;
+                -fx-font-size: 14px;
+                """));
 
-        btn.setOnMouseExited(e -> btn.setStyle(
-                "-fx-background-color: transparent;" +
-                        "-fx-text-fill: white;" +
-                        "-fx-font-size: 14px;"
-        ));
+        btn.setOnMouseExited(e -> btn.setStyle("""
+                -fx-background-color: transparent;
+                -fx-text-fill: white;
+                -fx-font-size: 14px;
+                """));
 
         return btn;
     }
@@ -115,10 +123,9 @@ public class PaginaPrincipal extends Application {
         }
 
         button.setOnMouseEntered(e -> {
-            if (activeMenu != null && activeMenu != menu) {
-                activeMenu.hide();
-            }
+            if (activeMenu != null && activeMenu != menu) activeMenu.hide();
             activeMenu = menu;
+
             if (!menu.isShowing()) {
                 menu.show(button,
                         button.localToScreen(0, button.getHeight()).getX(),
@@ -127,19 +134,15 @@ public class PaginaPrincipal extends Application {
         });
 
         button.setOnMouseExited(e -> {
-            PauseTransition delay = new PauseTransition(Duration.millis(160));
+            PauseTransition delay = new PauseTransition(Duration.millis(130));
             delay.setOnFinished(ev -> {
-                if (!button.isHover() && !menu.isShowing()) {
-                    menu.hide();
-                }
+                if (!button.isHover() && !menu.isShowing()) menu.hide();
             });
             delay.play();
         });
 
         menu.setOnHidden(e -> {
-            if (activeMenu == menu) {
-                activeMenu = null;
-            }
+            if (activeMenu == menu) activeMenu = null;
         });
     }
 
@@ -147,21 +150,13 @@ public class PaginaPrincipal extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             Parent modal = loader.load();
-
             modal.setId(modalId);
-            modal.setUserData(modalId);
-
-            content.getChildren().clear();
-
-            content.getChildren().removeIf(node ->
-                    modalId.equals(node.getId()) ||
-                            modalId.equals(node.getUserData())
-            );
-
             modal.setOpacity(0);
+
+            content.getChildren().removeIf(node -> modalId.equals(node.getId()));
             content.getChildren().add(modal);
 
-            FadeTransition fadeIn = new FadeTransition(Duration.millis(200), modal);
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(180), modal);
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
             fadeIn.play();
@@ -194,66 +189,22 @@ public class PaginaPrincipal extends Application {
                     abrirModal("/Visual/Juego/JuegoRegistrarVisual.fxml", "modalRegistrarJuego");
                     return;
 
-                case "Registrar Estadística":
-                    abrirModal("/Visual/Estadistica/EstadisticaRegistrarVisual.fxml", "modalRegistrarEstadistica");
-                    return;
-
                 case "Listar Ciudades":
-                    path = "/Visual/Ciudad/CiudadListarVisual.fxml";
-                    break;
+                    path = "/Visual/Ciudad/CiudadListarVisual.fxml"; break;
 
                 case "Listar Equipos":
-                    path = "/Visual/Equipo/EquipoListarVisual.fxml";
-                    break;
+                    path = "/Visual/Equipo/EquipoListarVisual.fxml"; break;
 
                 case "Listar Jugadores":
-                    path = "/Visual/Jugador/JugadorVisualListar.fxml";
-                    break;
+                    path = "/Visual/Jugador/JugadorListarVisual.fxml"; break;
 
                 case "Listar Juegos":
-                    path = "/Visual/Juego/JuegoListarVisual.fxml";
-                    break;
+                    path = "/Visual/Juego/JuegoListarVisual.fxml"; break;
 
-                case "Listar Estadísticas":
-                    path = "/Visual/Estadistica/EstadisticaVisualListar.fxml";
-                    break;
-                case "Registrar Estadísticas Juego":
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                                "/Visual/EstadisticaJuego/EstadisticaJuegoRegistrarVisual.fxml"));
-                        Parent modal = loader.load();
+                case "Registrar Estadisticas Por Juego":
+                    path = "/Visual/EstadisticaJuego/EstadisticaJuegoListarVisual.fxml"; break;
 
-                        EstadisticaJuegoRegistrar controller = loader.getController();
-                        controller.setModoSeleccionJuego(true); // activa el ComboBox de juegos
-
-                        // Obtener el StackPane central
-                        BorderPane mainRoot = (BorderPane) content.getScene().getRoot();
-                        StackPane contentStack = (StackPane) mainRoot.getCenter();
-
-                        // Limpiar y agregar modal
-                        contentStack.getChildren().clear();
-                        contentStack.getChildren().add(modal);
-
-                        // Fade in
-                        FadeTransition fade = new FadeTransition(Duration.millis(200), modal);
-                        fade.setFromValue(0);
-                        fade.setToValue(1);
-                        fade.play();
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    return;
-
-
-                case "Listar Estadísticas Juego":
-                    path = "/Visual/EstadisticaJuego/EstadisticaJuegoListarVisual.fxml";
-                    break;
-
-
-
-                default:
-                    return;
+                default: return;
             }
 
             Pane view = PageManager.get(path);

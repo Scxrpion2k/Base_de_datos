@@ -3,22 +3,22 @@ package com.example.base_de_datos.Controlador.Jugador;
 import com.example.base_de_datos.Conexion.Conexion;
 import com.example.base_de_datos.Controlador.Ciudad.CiudadItem;
 import com.example.base_de_datos.Controlador.Equipo.EquipoItem;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 
-public class JugadorRegistrar extends Application {
+public class JugadorRegistrar {
+
+    @FXML private AnchorPane rootRegistrar;
 
     @FXML private TextField txtIdJugador;
     @FXML private TextField txtNombreJugador;
@@ -26,21 +26,6 @@ public class JugadorRegistrar extends Application {
     @FXML private ComboBox<CiudadItem> cmbCiudadNacimiento;
     @FXML private ComboBox<EquipoItem> cmbEquipo;
     @FXML private DatePicker dpFechaNacimiento;
-
-    public static void main(String[] args) { launch(args); }
-
-    @Override
-    public void start(Stage primaryStage) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Visual/JugadorRegistrarVisual.fxml"));
-            Scene scene = new Scene(root);
-            primaryStage.setTitle("Registrar Jugador");
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     public void initialize() {
@@ -84,62 +69,53 @@ public class JugadorRegistrar extends Application {
         }
     }
 
-
     @FXML
-    public void volverAlMenuPrincipal(ActionEvent actionEvent) {
+    public void guardarJugador() {
         try {
-            BorderPane root = (BorderPane) txtIdJugador.getScene().getRoot();
+            String id = txtIdJugador.getText();
+            String nombre = txtNombreJugador.getText();
+            String numero = txtNumeroJugador.getText();
+            CiudadItem ciudadSeleccionada = cmbCiudadNacimiento.getValue();
+            EquipoItem equipoSeleccionado = cmbEquipo.getValue();
 
-            StackPane content = (StackPane) root.getCenter();
+            if (id.isEmpty() || nombre.isEmpty() || numero.isEmpty()
+                    || ciudadSeleccionada == null || equipoSeleccionado == null
+                    || dpFechaNacimiento.getValue() == null) {
 
-            content.getChildren().clear();
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Campos incompletos");
+                alert.setHeaderText(null);
+                alert.setContentText("Todos los campos son obligatorios.");
+                alert.showAndWait();
+                return;
+            }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            java.sql.Date fechaNacimiento = java.sql.Date.valueOf(dpFechaNacimiento.getValue());
 
-    }
+            String sql = "INSERT INTO Jugador (idJugador, nombreJugador, idciudadNacimiento, fechaNacimiento, numeroJugador, idEquipo) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
 
-    @FXML
-    public void guardarJugador(ActionEvent actionEvent) {
-        String id = txtIdJugador.getText();
-        String nombre = txtNombreJugador.getText();
-        String numero = txtNumeroJugador.getText();
-        CiudadItem ciudadSeleccionada = cmbCiudadNacimiento.getValue();
-        EquipoItem equipoSeleccionado = cmbEquipo.getValue();
-        java.sql.Date fechaNacimiento = java.sql.Date.valueOf(dpFechaNacimiento.getValue());
+            try (Connection conn = Conexion.getConnection();
+                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        if (ciudadSeleccionada == null || equipoSeleccionado == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Campos incompletos");
-            alert.setHeaderText(null);
-            alert.setContentText("Debe seleccionar una ciudad y un equipo.");
-            alert.showAndWait();
-            return;
-        }
+                ps.setString(1, id);
+                ps.setString(2, nombre);
+                ps.setString(3, ciudadSeleccionada.getId());
+                ps.setDate(4, fechaNacimiento);
+                ps.setString(5, numero);
+                ps.setString(6, equipoSeleccionado.getId());
 
-        String sql = "INSERT INTO Jugador (idJugador, nombreJugador, idciudadNacimiento, fechaNacimiento, numeroJugador, idEquipo) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+                ps.executeUpdate();
 
-        try (Connection conn = Conexion.getConnection();
-             var ps = conn.prepareStatement(sql)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Jugador Guardado");
+                alert.setHeaderText(null);
+                alert.setContentText("El jugador ha sido guardado correctamente.");
+                alert.showAndWait();
 
-            ps.setString(1, id);
-            ps.setString(2, nombre);
-            ps.setString(3, ciudadSeleccionada.getId()); // usar String
-            ps.setDate(4, fechaNacimiento);
-            ps.setString(5, numero);
-            ps.setString(6, equipoSeleccionado.getId()); // usar String
+                limpiar();
 
-            ps.executeUpdate();
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Jugador Guardado");
-            alert.setHeaderText(null);
-            alert.setContentText("El jugador ha sido guardado correctamente.");
-            alert.showAndWait();
-
-            limpiar(actionEvent);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -152,12 +128,31 @@ public class JugadorRegistrar extends Application {
     }
 
     @FXML
-    public void limpiar(ActionEvent actionEvent) {
+    public void limpiar() {
         txtIdJugador.clear();
         txtNombreJugador.clear();
         txtNumeroJugador.clear();
         cmbCiudadNacimiento.getSelectionModel().clearSelection();
         cmbEquipo.getSelectionModel().clearSelection();
         dpFechaNacimiento.setValue(null);
+    }
+
+    // 🔹 Cerrar modal tipo JuegoRegistrar
+    @FXML
+    public void cerrarFormulario() {
+        try {
+            BorderPane root = (BorderPane) rootRegistrar.getScene().getRoot();
+            StackPane content = (StackPane) root.getCenter();
+
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(150), rootRegistrar);
+            fadeOut.setFromValue(1);
+            fadeOut.setToValue(0);
+
+            fadeOut.setOnFinished(ev -> content.getChildren().remove(rootRegistrar));
+            fadeOut.play();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
