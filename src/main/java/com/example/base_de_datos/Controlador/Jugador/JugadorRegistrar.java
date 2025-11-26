@@ -137,7 +137,6 @@ public class JugadorRegistrar {
         dpFechaNacimiento.setValue(null);
     }
 
-    // 🔹 Cerrar modal tipo JuegoRegistrar
     @FXML
     public void cerrarFormulario() {
         try {

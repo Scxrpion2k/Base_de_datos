@@ -35,9 +35,6 @@ public class JugadorEditar {
         cargarEquipos();
     }
 
-    // -------------------------------------------------------------
-    //  CARGAR DATOS A LOS COMBOBOX
-    // -------------------------------------------------------------
 
     private void cargarCiudades() {
         cmbCiudad.getItems().clear();
@@ -89,9 +86,6 @@ public class JugadorEditar {
         }
     }
 
-    // -------------------------------------------------------------
-    //  CARGAR DATOS DEL JUGADOR SELECCIONADO
-    // -------------------------------------------------------------
 
     public void cargarJugador(JugadorItem item) {
 
@@ -121,9 +115,6 @@ public class JugadorEditar {
                 .ifPresent(cmbEquipo::setValue);
     }
 
-    // -------------------------------------------------------------
-    //  GUARDAR CAMBIOS
-    // -------------------------------------------------------------
 
     @FXML
     public void guardarCambios() {
@@ -167,9 +158,6 @@ public class JugadorEditar {
         }
     }
 
-    // -------------------------------------------------------------
-    //  CERRAR VENTANA
-    // -------------------------------------------------------------
 
     @FXML
     public void cerrarVentana() {

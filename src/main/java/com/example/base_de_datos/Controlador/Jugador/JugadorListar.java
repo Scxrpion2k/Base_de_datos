@@ -114,10 +114,8 @@ public class JugadorListar {
             lista.setAll(task.getValue());
             tablaJugadores.setItems(lista);
 
-            // 🔥 Arregla el problema de alineación
             tablaJugadores.layout();
 
-            // 🔥 Asegura que los encabezados y celdas se alineen
             javafx.application.Platform.runLater(() -> {
                 tablaJugadores.refresh();
                 tablaJugadores.layout();
@@ -207,7 +205,6 @@ public class JugadorListar {
         }
     }
 
-    // 🔹 Igual que JuegoListar pero para Jugador
     public void abrirFormularioRegistro() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Jugador/JugadorRegistrarVisual.fxml"));
@@ -216,7 +213,6 @@ public class JugadorListar {
             BorderPane root = (BorderPane) tablaJugadores.getScene().getRoot();
             StackPane content = (StackPane) root.getCenter();
 
-            // Evitar modales duplicados
             content.getChildren().removeIf(node -> "modalRegistrarJugador".equals(node.getId()));
 
             modal.setOpacity(0);
