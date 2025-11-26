@@ -1,10 +1,12 @@
 package com.example.base_de_datos.Controlador.Ciudad;
 
 import com.example.base_de_datos.Conexion.Conexion;
+import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,11 +33,12 @@ public class CiudadListar {
     @FXML
     public void initialize() {
 
+
         tablaCiudades.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-
+        centrarColumnas();
         cargarCiudades();
         agregarBotones();
     }
@@ -68,34 +72,35 @@ public class CiudadListar {
             private final Button btnUpdate = new Button("Actualizar");
             private final Button btnDelete = new Button("Eliminar");
 
-            private final HBox contenedor = new HBox(10, btnUpdate, btnDelete);
+            private final HBox contenedor = new HBox(10);
 
             {
+                contenedor.setAlignment(Pos.CENTER);
+
                 btnUpdate.setStyle("-fx-background-color: #0d6efd; -fx-text-fill: white; -fx-background-radius: 8;");
                 btnDelete.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-background-radius: 8;");
 
-                // Botón Eliminar
                 btnDelete.setOnAction(e -> {
                     CiudadItem item = getTableView().getItems().get(getIndex());
                     eliminarCiudad(item.getId());
                 });
 
-                // Botón Actualizar
                 btnUpdate.setOnAction(e -> {
                     CiudadItem item = getTableView().getItems().get(getIndex());
                     abrirVentanaActualizar(item);
                 });
+
+                contenedor.getChildren().addAll(btnUpdate, btnDelete);
             }
 
             @Override
             protected void updateItem(Void unused, boolean empty) {
                 super.updateItem(unused, empty);
-
-                if (empty) setGraphic(null);
-                else setGraphic(contenedor);
+                setGraphic(empty ? null : contenedor);
             }
         });
     }
+
 
     private void eliminarCiudad(String id) {
 
@@ -126,25 +131,62 @@ public class CiudadListar {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Ciudad/CiudadEditarVisual.fxml"));
-            Parent root = loader.load();
+            Parent modal = loader.load();
 
-            // Pasar datos a la ventana de edición
             CiudadEditar controller = loader.getController();
             controller.cargarCiudad(item);
-
-            // PASAR REFERENCIA AL LISTADO PARA REFRESCAR
             controller.setCiudadListarController(this);
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Actualizar Ciudad");
-            stage.setResizable(false);
-            stage.show();
+            // Obtener el mainContent donde se cargan los modales
+            BorderPane root = (BorderPane) tablaCiudades.getScene().getRoot();
+            StackPane content = (StackPane) root.getCenter();
+
+            // Remover modales actuales
+            content.getChildren().removeIf(n -> "modalEditarCiudad".equals(n.getId()));
+
+            modal.setId("modalEditarCiudad");
+            modal.setOpacity(0);
+            content.getChildren().add(modal);
+
+            // ANIMACIÓN
+            FadeTransition fade = new FadeTransition(Duration.millis(200), modal);
+            fade.setFromValue(0);
+            fade.setToValue(1);
+            fade.play();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    private void centrarColumnas() {
+        colId.setStyle("-fx-alignment: CENTER;");
+        colNombre.setStyle("-fx-alignment: CENTER;");
+        colAcciones.setStyle("-fx-alignment: CENTER;");
+    }
+    public void abrirFormularioRegistro() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Ciudad/CiudadRegistrarVisual.fxml"));
+            Parent modal = loader.load();
+
+            BorderPane root = (BorderPane) tablaCiudades.getScene().getRoot();
+            StackPane content = (StackPane) root.getCenter();
+
+            content.getChildren().removeIf(node -> "modalRegistrarCiudad".equals(node.getId()));
+
+            modal.setOpacity(0);
+            content.getChildren().add(modal);
+
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(200), modal);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+            fadeIn.play();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void volverAlMenuPrincipal() {
         BorderPane root = (BorderPane) tablaCiudades.getScene().getRoot();

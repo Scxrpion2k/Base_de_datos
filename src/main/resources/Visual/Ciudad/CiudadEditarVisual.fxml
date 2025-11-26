@@ -1,53 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.SVGPath?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
+            xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.base_de_datos.Controlador.Ciudad.CiudadEditar"
-            prefWidth="500" prefHeight="400"
-            style="-fx-background-color: #F4F6F9;">
+            fx:id="rootEditarCiudad"
+            style="-fx-background-color: rgba(0,0,0,0.45);">
 
-    <VBox spacing="20" alignment="CENTER"
-          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+    <VBox alignment="CENTER"
+          prefWidth="1500" prefHeight="800">
 
-        <VBox alignment="CENTER" spacing="20"
-              maxWidth="400"
+        <!-- CARD -->
+        <VBox spacing="18"
+              alignment="TOP_CENTER"
               style="-fx-background-color: white;
+                     -fx-background-radius: 18;
                      -fx-padding: 25;
-                     -fx-background-radius: 15;
-                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5);">
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0, 0, 5);"
+              maxWidth="450">
+
+
+            <HBox alignment="CENTER_RIGHT" prefWidth="400">
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button onAction="#cerrarVentana"
+                        style="-fx-background-color: transparent; -fx-cursor: hand;">
+                    <graphic>
+                        <SVGPath content="M4 4 L16 16 M16 4 L4 16"
+                                 style="-fx-stroke: #444; -fx-stroke-width: 2;"/>
+                    </graphic>
+                </Button>
+            </HBox>
 
             <Label text="Editar Ciudad"
-                   style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+                   style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill:#222;"/>
 
-            <GridPane hgap="20" vgap="15">
-                <columnConstraints>
-                    <ColumnConstraints halignment="RIGHT" minWidth="120"/>
-                    <ColumnConstraints halignment="LEFT" minWidth="220"/>
-                </columnConstraints>
+            <VBox spacing="12" alignment="CENTER_LEFT" prefWidth="380">
 
-                <Label text="ID Ciudad:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Label text="ID Ciudad" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
                 <TextField fx:id="txtIdCiudad"
-                           promptText="Ej: C001"
-                           GridPane.rowIndex="0" GridPane.columnIndex="1"
-                           disable="true"/>
+                           promptText="ID Ciudad"
+                           style="-fx-background-radius: 10; -fx-padding: 8;"
+                            disable="true"/>
 
-                <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Label text="Nombre Ciudad" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
                 <TextField fx:id="txtNombreCiudad"
-                           promptText="Nombre de la ciudad"
-                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-            </GridPane>
+                           promptText="Nombre Ciudad"
+                           style="-fx-background-radius: 10; -fx-padding: 8;"/>
+            </VBox>
 
-            <Button text="Guardar Cambios"
-                    onAction="#guardarCambios"
-                    style="-fx-background-color: #0d6efd;
-                           -fx-text-fill: white;
-                           -fx-padding: 12 30;
-                           -fx-background-radius: 10;"/>
+            <!-- BOTONES -->
+            <HBox spacing="12" alignment="CENTER">
+
+                <Button text="Guardar Cambios"
+                        onAction="#guardarCambios"
+                        style="-fx-background-color: #0d6efd;
+                               -fx-text-fill:white;
+                               -fx-background-radius: 10;
+                               -fx-padding: 10 20;
+                               -fx-font-weight: bold;"/>
+
+                <Button text="Cancelar"
+                        onAction="#cerrarVentana"
+                        style="-fx-background-color: #dc3545;
+                               -fx-text-fill:white;
+                               -fx-background-radius: 10;
+                               -fx-padding: 10 20;
+                               -fx-font-weight: bold;"/>
+
+            </HBox>
 
         </VBox>
     </VBox>

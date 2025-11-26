@@ -1,53 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.base_de_datos.Controlador.Inicio.InicioDashboard"
-            prefWidth="1400" prefHeight="800"
             style="-fx-background-color:#F4F6F9;">
 
-    <VBox spacing="25" alignment="TOP_CENTER"
+    <VBox alignment="TOP_CENTER"
+          spacing="5"
           AnchorPane.topAnchor="20"
           AnchorPane.leftAnchor="0"
           AnchorPane.rightAnchor="0">
 
-        <!-- 🔎 BUSCADOR CENTRADO -->
-        <HBox alignment="CENTER" spacing="10">
 
+        <Label text="Últimos Juegos"
+               style="-fx-font-size: 36px;
+                      -fx-font-weight: bold;
+                      -fx-text-fill:#0D0D0D;" />
+
+
+        <HBox alignment="CENTER" spacing="15">
             <TextField fx:id="txtBuscarJuego"
                        promptText="Buscar juego por ID (ej: 76)"
-                       prefWidth="330"
-                       style="
-                       -fx-background-radius: 12;
-                       -fx-font-size: 14px;
-                       -fx-padding: 10 15;
-                       -fx-border-color: #CFCFCF;
-                       -fx-border-radius: 12;
-                   "/>
+                       style="-fx-background-radius: 16;
+                              -fx-padding: 12 20;
+                              -fx-font-size: 15px;"
+                       prefWidth="360"/>
 
             <Button fx:id="btnBuscarJuego"
                     text="Buscar"
-                    style="
-                    -fx-background-color: #0d6efd;
-                    -fx-text-fill: white;
-                    -fx-font-weight: bold;
-                    -fx-background-radius: 12;
-                    -fx-padding: 10 20;
-                    -fx-cursor: hand;
-                "/>
+                    style="-fx-background-color: #0d6efd;
+                           -fx-text-fill: white;
+                           -fx-font-size: 14px;
+                           -fx-font-weight: bold;
+                           -fx-background-radius: 14;
+                           -fx-padding: 10 25;"/>
         </HBox>
 
-        <!-- 🟦 CONTENEDOR DE LAS TARJETAS DE JUEGOS -->
-        <FlowPane fx:id="panelJuegos"
-                  hgap="20" vgap="20"
+
+        <Region prefHeight="10"/>
+
+
+        <ScrollPane fx:id="scrollJuegos"
+                    prefHeight="420"
+                    hbarPolicy="ALWAYS"
+                    vbarPolicy="NEVER"
+                    fitToHeight="false"
+                    fitToWidth="true"
+                    pannable="true"
+                    style="-fx-background-color: transparent;
+                   -fx-border-color: transparent;
+                   -fx-padding: 0;">
+
+            <HBox fx:id="contenedorJuegos"
                   alignment="CENTER"
-                  prefWidth="1000"
-        />
-
+                  spacing="45"
+                  style="-fx-padding: 10 40;" />
+        </ScrollPane>
     </VBox>
-
 </AnchorPane>

@@ -225,13 +225,12 @@ public class JuegoListar {
             Parent modal = loader.load();
             EstadisticaJuegoVer controller = loader.getController();
 
-            // Cargar el juego (ID, equipos y estadísticas)
             controller.cargarJuego(juego);
 
             BorderPane root = (BorderPane) tablaJuegos.getScene().getRoot();
             StackPane content = (StackPane) root.getCenter();
 
-            // Evitar duplicados
+
             content.getChildren().removeIf(node -> "modalVerEstadisticas".equals(node.getId()));
             modal.setId("modalVerEstadisticas");
 

@@ -2,51 +2,100 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.*?>
+<?import javafx.scene.shape.SVGPath?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.base_de_datos.Controlador.Ciudad.CiudadListar"
-            prefWidth="900" prefHeight="600"
+            prefWidth="1500" prefHeight="650"
             style="-fx-background-color: #F4F6F9;">
 
-    <VBox spacing="20" alignment="TOP_CENTER"
-          AnchorPane.topAnchor="30"
+    <VBox spacing="10" alignment="TOP_CENTER"
+          AnchorPane.topAnchor="5"
           AnchorPane.leftAnchor="0"
           AnchorPane.rightAnchor="0">
 
-        <!-- CARD DE TABLA -->
-        <VBox style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 15;
-                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 15, 0, 0, 4);"
-              maxWidth="850">
+        <!-- 🔥 TÍTULO IGUAL A LISTAR JUEGOS -->
+        <Label text="Listado de Ciudades"
+               style="-fx-font-size: 30px;
+                      -fx-font-weight: 700;
+                      -fx-text-fill: #1F1F1F;" />
 
-            <!-- X DE CIERRE -->
-            <HBox alignment="TOP_RIGHT">
-                <Button text="✖"
-                        onAction="#volverAlMenuPrincipal"
-                        style="-fx-background-color: transparent;
-                               -fx-font-size: 20px;
+        <!-- 📦 CARD PRINCIPAL -->
+        <VBox spacing="15"
+              alignment="CENTER"
+              prefWidth="1400"
+              maxWidth="Infinity"
+              minWidth="1200"
+              style="-fx-background-color: white;
+                     -fx-padding: 25;
+                     -fx-background-radius: 18;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 4);">
+
+            <!-- 🔵 BARRA SUPERIOR (Registrar + X) -->
+            <HBox alignment="CENTER_LEFT" spacing="15"
+                  prefWidth="1400">
+
+                <Label text="Ciudades Registradas"
+                       style="-fx-font-size: 20px;
+                              -fx-font-weight: 600;
+                              -fx-text-fill: #212121;" />
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <Button text="➕  Registrar Ciudad"
+                        fx:id="btnRegistrar"
+                        onAction="#abrirFormularioRegistro"
+                        style="-fx-background-color: #0d6efd;
+                               -fx-text-fill: white;
+                               -fx-background-radius: 10;
                                -fx-font-weight: bold;
-                               -fx-text-fill: #444;
+                               -fx-padding: 8 14;
                                -fx-cursor: hand;" />
+
+                <Button fx:id="btnCerrar"
+                        onAction="#volverAlMenuPrincipal"
+                        style="-fx-background-color: transparent; -fx-cursor: hand;">
+                    <graphic>
+                        <SVGPath content="M4 4 L16 16 M16 4 L4 16"
+                                 style="-fx-stroke: #444; -fx-stroke-width: 2;" />
+                    </graphic>
+                </Button>
+
             </HBox>
 
-            <!-- TÍTULO -->
-            <Label text="Listado de Ciudades"
-                   style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222;" />
-
-            <!-- TABLA -->
+            <!-- 📋 TABLA IGUAL A LISTAR JUEGOS -->
             <TableView fx:id="tablaCiudades"
-                       prefWidth="820"
-                       style="-fx-background-radius: 10; -fx-padding: 10;">
+                       prefHeight="450"
+                       prefWidth="1400"
+                       maxWidth="Infinity"
+                       minHeight="350"
+                       style="-fx-background-radius: 12;
+                              -fx-border-color: #E0E0E0;
+                              -fx-border-width: 1.2;
+                              -fx-border-radius: 12;
+                              -fx-padding: 5;">
+
                 <columns>
-                    <TableColumn fx:id="colId" text="ID Ciudad" prefWidth="150"/>
-                    <TableColumn fx:id="colNombre" text="Nombre Ciudad" prefWidth="400"/>
-                    <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="250"/>
+
+                    <TableColumn fx:id="colId" text="ID Ciudad"
+                                 prefWidth="200"
+                                 style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+
+                    <TableColumn fx:id="colNombre" text="Nombre Ciudad"
+                                 prefWidth="600"
+                                 style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+
+                    <TableColumn fx:id="colAcciones" text="Acciones"
+                                 prefWidth="350"
+                                 style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+
                 </columns>
+
             </TableView>
 
         </VBox>
+
     </VBox>
 
 </AnchorPane>
