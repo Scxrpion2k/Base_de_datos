@@ -2,48 +2,50 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.SVGPath?>
 
+<?import javafx.scene.shape.SVGPath?>
 <AnchorPane fx:id="rootReporte"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.base_de_datos.Controlador.EstadisticaJuego.EstadisticaJuegoReporte"
-            prefWidth="1100" prefHeight="700"
-            style="-fx-background-color: rgba(0,0,0,0.40);">
+            style="-fx-background-color: rgba(0,0,0,0.45);">
 
-    <VBox alignment="TOP_CENTER" spacing="20"
+    <VBox alignment="CENTER"
+          prefWidth="1000" prefHeight="700"
           AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
           AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
 
-        <VBox maxWidth="950" spacing="20"
-              style="-fx-background-color:white; -fx-background-radius:15; -fx-padding:25;
-                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2),20,0,0,5);">
+        <VBox spacing="10"
+              maxWidth="900"
+              style="-fx-background-color: white;
+                     -fx-background-radius: 18;
+                     -fx-padding: 30;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0, 0, 5);">
+
 
             <HBox alignment="TOP_RIGHT">
-                <Button onAction="#cerrar" style="-fx-background-color:transparent;">
+                <Button onAction="#cerrar"
+                        style="-fx-background-color: transparent; -fx-cursor: hand;">
                     <graphic>
                         <SVGPath content="M4 4 L16 16 M16 4 L4 16"
-                                 style="-fx-stroke:#444; -fx-stroke-width:2;"/>
+                                 style="-fx-stroke:#444; -fx-stroke-width:2;" />
                     </graphic>
                 </Button>
             </HBox>
 
-            <Label fx:id="lblTitulo"
-                   style="-fx-font-size:28px; -fx-font-weight:bold;" />
 
-            <TableView fx:id="tablaReporte" prefHeight="550">
+            <VBox alignment="CENTER" spacing="6">
+                <Label fx:id="lblTitulo"
+                       style="-fx-font-size: 28px; -fx-font-weight: bold;" />
 
-                <columns>
-                    <TableColumn fx:id="col1" text="" prefWidth="150"/>
-                    <TableColumn fx:id="col2" text="" prefWidth="120"/>
-                    <TableColumn fx:id="col3" text="" prefWidth="120"/>
-                    <TableColumn fx:id="col4" text="" prefWidth="120"/>
-                    <TableColumn fx:id="col5" text="" prefWidth="120"/>
-                    <TableColumn fx:id="col6" text="" prefWidth="120"/>
-                    <TableColumn fx:id="col7" text="" prefWidth="120"/>
-                    <TableColumn fx:id="col8" text="" prefWidth="120"/>
-                </columns>
-
+                <Label fx:id="lblFecha"
+                       style="-fx-font-size: 16px; -fx-text-fill: #555;" />
+            </VBox>
+            <TableView fx:id="tablaReporte"
+                       prefHeight="400"
+                       style="-fx-background-radius: 12;
+                              -fx-border-color: #ddd;
+                              -fx-border-radius: 12;">
             </TableView>
 
         </VBox>

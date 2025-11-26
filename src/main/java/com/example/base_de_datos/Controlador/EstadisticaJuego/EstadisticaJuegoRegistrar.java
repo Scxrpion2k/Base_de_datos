@@ -185,7 +185,7 @@ public class EstadisticaJuegoRegistrar {
     }
 
     @FXML
-    public void cerrarFormulario() {
+    public void cerrar() {
         try {
             AnchorPane modal = rootRegistrar;
             StackPane parent = (StackPane) modal.getParent();
