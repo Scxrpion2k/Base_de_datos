@@ -26,9 +26,7 @@ public class EstadisticaJuegoRegistrar {
 
     private JuegoItem juego;
 
-    // ======================================================
-    // CARGA DEL JUEGO SELECCIONADO
-    // ======================================================
+
     public void setJuego(JuegoItem juego) {
         this.juego = juego;
 
@@ -37,9 +35,6 @@ public class EstadisticaJuegoRegistrar {
         cargarEstadisticas();
     }
 
-    // ======================================================
-    // CARGAR EQUIPOS (con id y nombre)
-    // ======================================================
     private void cargarEquipos() {
         cmbEquipo.getItems().clear();
 
@@ -73,9 +68,7 @@ public class EstadisticaJuegoRegistrar {
         cmbEquipo.setOnAction(e -> cargarJugadoresPorEquipo());
     }
 
-    // ======================================================
-    // CARGAR JUGADORES DEL EQUIPO
-    // ======================================================
+
     private void cargarJugadoresPorEquipo() {
         EquipoItem equipo = cmbEquipo.getValue();
         if (equipo == null) return;
@@ -106,9 +99,7 @@ public class EstadisticaJuegoRegistrar {
         }
     }
 
-    // ======================================================
-    // CARGAR ESTADISTICAS
-    // ======================================================
+
     private void cargarEstadisticas() {
         cmbEstadistica.getItems().clear();
 
@@ -134,9 +125,6 @@ public class EstadisticaJuegoRegistrar {
         }
     }
 
-    // ======================================================
-    // LIMPIAR CAMPOS
-    // ======================================================
     @FXML
     private void limpiar() {
         cmbEquipo.getSelectionModel().clearSelection();
@@ -145,9 +133,7 @@ public class EstadisticaJuegoRegistrar {
         txtCantidad.clear();
     }
 
-    // ======================================================
-    // GUARDAR ESTADISTICA
-    // ======================================================
+
     @FXML
     private void guardarEstadistica() {
         try {
@@ -190,9 +176,6 @@ public class EstadisticaJuegoRegistrar {
     }
 
 
-    // ======================================================
-    // UTILIDADES
-    // ======================================================
     private void mostrar(String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setHeaderText(null);
