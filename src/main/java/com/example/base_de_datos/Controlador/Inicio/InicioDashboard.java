@@ -4,8 +4,10 @@ import com.example.base_de_datos.Conexion.Conexion;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -21,9 +23,11 @@ public class InicioDashboard {
 
     @FXML
     private FlowPane panelJuegos;
-
+    @FXML private TextField txtBuscarJuego;
+    @FXML private Button btnBuscarJuego;
     @FXML
     public void initialize() {
+        btnBuscarJuego.setOnAction(e -> buscarJuego());
         cargarUltimosJuegos();
     }
 
@@ -92,6 +96,46 @@ public class InicioDashboard {
 
         return card;
     }
+
+    private void buscarJuego() {
+
+        String id = txtBuscarJuego.getText().trim();
+
+        if (id.isEmpty()) {
+            mostrar("Debe escribir un número de juego.");
+            return;
+        }
+
+        String sql = "SELECT idJuego FROM Juego WHERE idJuego = ?";
+
+        try (Connection con = Conexion.getConnection();
+             var ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                abrirReporteTabJueg(id); // 🔥 usa tu ventana del stored procedure
+                txtBuscarJuego.clear();
+
+            } else {
+                mostrar("No existe un juego con ID: " + id);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            mostrar("Error al buscar el juego.");
+        }
+    }
+
+    private void mostrar(String msg) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setHeaderText(null);
+        a.setContentText(msg);
+        a.showAndWait();
+    }
+
 
     private void abrirReporteTabJueg(String idJuego) {
         try {

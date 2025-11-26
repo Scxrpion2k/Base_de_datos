@@ -2,100 +2,56 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.SVGPath?>
+<?import javafx.geometry.*?>
 
-<AnchorPane fx:id="rootRegistrar"
+<AnchorPane fx:id="rootReporte"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.base_de_datos.Controlador.EstadisticaJuego.EstadisticaJuegoRegistrar"
-            prefWidth="900" prefHeight="600"
-            style="-fx-background-color: rgba(0,0,0,0.30);">
+            fx:controller="com.example.base_de_datos.Controlador.EstadisticaJuego.EstadisticaJuegoReporte"
+            style="-fx-background-color: rgba(0,0,0,0.40);">
 
-    <VBox alignment="CENTER" spacing="30"
-          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
-          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0">
+    <VBox alignment="TOP_CENTER"
+          spacing="20"
+          prefWidth="1000" prefHeight="700"
+          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
 
-        <VBox alignment="TOP_CENTER"
-              spacing="25"
-              maxWidth="550"
+        <!-- Tarjeta del reporte -->
+        <VBox spacing="15"
+              maxWidth="900"
               style="-fx-background-color: white;
-                     -fx-padding: 35 45;
                      -fx-background-radius: 18;
-                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15),18,0,0,5);">
+                     -fx-padding: 30;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0, 0, 5);">
 
-            <!-- BOTÓN CERRAR -->
+            <!-- Botón cerrar -->
             <HBox alignment="TOP_RIGHT">
-                <Button onAction="#volverAlMenuPrincipal"
-                        style="-fx-background-color: transparent; -fx-cursor: hand;">
+                <Button onAction="#cerrar"
+                        style="-fx-background-color: transparent;
+                               -fx-cursor: hand;">
                     <graphic>
-                        <SVGPath content="M4 4 L16 16 M16 4 L4 16"
-                                 style="-fx-stroke:#444; -fx-stroke-width:2;" />
+                        <Label text="✖"
+                               style="-fx-font-size:18px; -fx-text-fill:#333;"/>
                     </graphic>
                 </Button>
             </HBox>
 
-            <!-- TÍTULO -->
-            <Label text="Registrar Estadística del Juego"
-                   style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill:#222;" />
+            <!-- Encabezado -->
+            <VBox alignment="CENTER" spacing="5">
+                <Label fx:id="lblTitulo"
+                       style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
+                <Label fx:id="lblFecha"
+                       style="-fx-font-size: 18px; -fx-text-fill: #444;"/>
+            </VBox>
 
-            <!-- FORMULARIO -->
-            <GridPane hgap="25" vgap="20">
-
-                <columnConstraints>
-                    <ColumnConstraints halignment="RIGHT" minWidth="150" />
-                    <ColumnConstraints halignment="LEFT" minWidth="260" />
-                </columnConstraints>
-
-                <!-- FILA 0: Juego -->
-                <Label text="Juego:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                <TextField fx:id="txtIdJuego"
-                           editable="false"
-                           style="-fx-background-radius:8; -fx-padding:8 12;
-                                  -fx-opacity: 1; -fx-background-color: #E9ECEF;"
-                           GridPane.rowIndex="0" GridPane.columnIndex="1" />
-
-                <!-- FILA 1: Equipo -->
-                <Label text="Equipo:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                <ComboBox fx:id="cmbEquipo"
-                          promptText="Seleccione equipo"
-                          prefWidth="240"
-                          GridPane.rowIndex="1" GridPane.columnIndex="1" />
-
-                <!-- FILA 2: Jugador -->
-                <Label text="Jugador:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                <ComboBox fx:id="cmbJugador"
-                          promptText="Seleccione jugador"
-                          prefWidth="240"
-                          GridPane.rowIndex="2" GridPane.columnIndex="1" />
-
-                <!-- FILA 3: Estadística -->
-                <Label text="Estadística:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-                <ComboBox fx:id="cmbEstadistica"
-                          promptText="Seleccione estadística"
-                          prefWidth="240"
-                          GridPane.rowIndex="3" GridPane.columnIndex="1" />
-
-                <!-- FILA 4: Cantidad -->
-                <Label text="Cantidad:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
-                <TextField fx:id="txtCantidad"
-                           promptText="Ej: 5"
-                           style="-fx-background-radius:8; -fx-padding:8 12;"
-                           GridPane.rowIndex="4" GridPane.columnIndex="1" />
-
-            </GridPane>
-
-            <!-- BOTONES -->
-            <HBox alignment="CENTER" spacing="25">
-                <Button text="Guardar"
-                        onAction="#guardarEstadistica"
-                        style="-fx-background-color:#28a745; -fx-text-fill:white;
-                               -fx-padding:10 25; -fx-background-radius:10;" />
-
-                <Button text="Limpiar"
-                        onAction="#limpiar"
-                        style="-fx-background-color:#6c757d; -fx-text-fill:white;
-                               -fx-padding:10 25; -fx-background-radius:10;" />
-            </HBox>
+            <!-- Tabla (scrollable y responsive) -->
+            <ScrollPane fitToWidth="true" fitToHeight="true"
+                        style="-fx-background-color: transparent;">
+                <TableView fx:id="tablaReporte"
+                           columnResizePolicy="CONSTRAINED_RESIZE_POLICY"
+                           style="-fx-font-size: 14px;">
+                </TableView>
+            </ScrollPane>
 
         </VBox>
 
