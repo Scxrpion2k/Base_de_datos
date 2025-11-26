@@ -2,6 +2,7 @@ package com.example.base_de_datos.Controlador.EstadisticaJuego;
 
 import com.example.base_de_datos.Conexion.Conexion;
 import com.example.base_de_datos.Controlador.Juego.JuegoItem;
+import com.example.base_de_datos.PaginaPrincipal;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -93,7 +94,7 @@ public class EstadisticaJuegoListar {
 
             tablaJuegos.setItems(task.getValue());
 
-            // 🔥 Corrige la desalineación inicial
+
             tablaJuegos.layout();
 
             javafx.application.Platform.runLater(() -> {
@@ -170,13 +171,14 @@ public class EstadisticaJuegoListar {
     }
 
     @FXML
+
     public void volverAlMenuPrincipal() {
         try {
-            BorderPane root = (BorderPane) tablaJuegos.getScene().getRoot();
-            StackPane content = (StackPane) root.getCenter();
-            content.getChildren().clear();
+            PaginaPrincipal.volverAlDashboard();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }
+

@@ -35,7 +35,6 @@ public class InicioDashboard {
     @FXML
     public void initialize() {
 
-        // Mapear logos locales
         logos.put("los angeles lakers", "/Logo/Los_Angeles_Lakers_logo.svg.png");
         logos.put("golden state warriors", "/Logo/Golden_State_Warriors_logo.svg.png");
         logos.put("chicago bulls", "/Logo/Chicago_Bulls_logo.svg.png");
@@ -162,7 +161,6 @@ public class InicioDashboard {
         card.setOnMouseEntered(e -> card.setStyle(estiloHover));
         card.setOnMouseExited(e -> card.setStyle(estiloNormal));
 
-        // ✅ LOGOS
         ImageView imgA = new ImageView(obtenerLogo(equipoA));
         imgA.setFitWidth(65);
         imgA.setFitHeight(65);

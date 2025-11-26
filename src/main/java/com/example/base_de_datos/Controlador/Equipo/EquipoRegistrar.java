@@ -28,10 +28,16 @@ public class EquipoRegistrar {
 
     @FXML
     private AnchorPane rootRegistrar;
+    private EquipoListar equipoListarController;
+
 
     @FXML
     public void initialize() {
         cargarCiudades();
+    }
+
+    public void setEquipoListarController(EquipoListar controller) {
+        this.equipoListarController = controller;
     }
 
     private void cargarCiudades() {
@@ -100,16 +106,21 @@ public class EquipoRegistrar {
     @FXML
     public void volverAlMenuPrincipal() {
         try {
-
             AnchorPane modal = rootRegistrar;
-
-            StackPane content = (StackPane) modal.getParent();
+            StackPane parent = (StackPane) modal.getParent();
 
             FadeTransition fade = new FadeTransition(Duration.millis(200), modal);
             fade.setFromValue(1);
             fade.setToValue(0);
 
-            fade.setOnFinished(e -> content.getChildren().remove(modal));
+            fade.setOnFinished(ev -> {
+                parent.getChildren().remove(modal);
+
+                if (equipoListarController != null) return;
+
+
+                com.example.base_de_datos.PaginaPrincipal.volverAlDashboard();
+            });
 
             fade.play();
 
@@ -117,6 +128,7 @@ public class EquipoRegistrar {
             e.printStackTrace();
         }
     }
+
 
 
 }

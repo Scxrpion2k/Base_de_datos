@@ -37,7 +37,7 @@ public class PaginaPrincipal extends Application {
 
         BorderPane root = new BorderPane();
 
-        // TOP MENU
+
         HBox topMenu = createTopMenu(stage);
         root.setTop(topMenu);
 
@@ -85,7 +85,6 @@ public class PaginaPrincipal extends Application {
     }
 
 
-
     private HBox createTopMenu(Stage stage) {
 
         HBox menu = new HBox(25);
@@ -93,21 +92,21 @@ public class PaginaPrincipal extends Application {
         menu.setAlignment(Pos.CENTER_LEFT);
 
         menu.setStyle("""
-                -fx-background-color: #0A0A0A;
-                -fx-border-color: #1F1F1F;
-                -fx-border-width: 0 0 2 0;
-        """);
+                        -fx-background-color: #0A0A0A;
+                        -fx-border-color: #1F1F1F;
+                        -fx-border-width: 0 0 2 0;
+                """);
 
         menu.setEffect(new DropShadow(15, Color.rgb(0, 0, 0, 0.25)));
 
         Label title = new Label("🏀 TORNEO BASKET");
         title.setStyle("""
-                -fx-text-fill: white;
-                -fx-font-size: 19px;
-                -fx-font-weight: bold;
-        """);
+                        -fx-text-fill: white;
+                        -fx-font-size: 19px;
+                        -fx-font-weight: bold;
+                """);
 
-        Button btnCiudad = createMenuButton("Ciudades", "city-buildings.png" );
+        Button btnCiudad = createMenuButton("Ciudades", "city-buildings.png");
         Button btnEquipo = createMenuButton("Equipos", "groups.png");
         Button btnJugador = createMenuButton("Jugadores", "user.png");
         Button btnJuego = createMenuButton("Juegos", "timetable.png");
@@ -125,12 +124,12 @@ public class PaginaPrincipal extends Application {
 
         Button btnSalir = new Button("Salir");
         btnSalir.setStyle("""
-                -fx-background-color: #F0B501;
-                -fx-background-radius: 12;
-                -fx-text-fill: black;
-                -fx-font-weight: bold;
-                -fx-padding: 6 18;
-        """);
+                        -fx-background-color: #F0B501;
+                        -fx-background-radius: 12;
+                        -fx-text-fill: black;
+                        -fx-font-weight: bold;
+                        -fx-padding: 6 18;
+                """);
         btnSalir.setOnAction(e -> stage.close());
 
         menu.getChildren().addAll(
@@ -153,25 +152,25 @@ public class PaginaPrincipal extends Application {
         btn.setGraphicTextGap(10);
 
         btn.setStyle("""
-            -fx-background-color: transparent;
-            -fx-text-fill: #E5E5E5;
-            -fx-font-size: 15px;
-            -fx-font-weight: 600;
-        """);
+                    -fx-background-color: transparent;
+                    -fx-text-fill: #E5E5E5;
+                    -fx-font-size: 15px;
+                    -fx-font-weight: 600;
+                """);
 
         btn.setOnMouseEntered(e -> btn.setStyle("""
-            -fx-background-color: transparent;
-            -fx-text-fill: #F0B501;
-            -fx-font-size: 15px;
-            -fx-font-weight: 600;
-        """));
+                    -fx-background-color: transparent;
+                    -fx-text-fill: #F0B501;
+                    -fx-font-size: 15px;
+                    -fx-font-weight: 600;
+                """));
 
         btn.setOnMouseExited(e -> btn.setStyle("""
-            -fx-background-color: transparent;
-            -fx-text-fill: #E5E5E5;
-            -fx-font-size: 15px;
-            -fx-font-weight: 600;
-        """));
+                    -fx-background-color: transparent;
+                    -fx-text-fill: #E5E5E5;
+                    -fx-font-size: 15px;
+                    -fx-font-weight: 600;
+                """));
 
         return btn;
     }
@@ -181,20 +180,20 @@ public class PaginaPrincipal extends Application {
 
         ContextMenu menu = new ContextMenu();
         menu.setStyle("""
-            -fx-background-color: #1B1B1B;
-            -fx-text-fill: white;
-            -fx-background-radius: 10;
-            -fx-border-radius: 10;
-            -fx-padding: 5 0;
-        """);
+                    -fx-background-color: #1B1B1B;
+                    -fx-text-fill: white;
+                    -fx-background-radius: 10;
+                    -fx-border-radius: 10;
+                    -fx-padding: 5 0;
+                """);
 
         for (String option : options) {
             MenuItem item = new MenuItem(option);
             item.setStyle("""
-                -fx-text-fill: white;
-                -fx-padding: 8 12;
-                -fx-font-size: 14px;
-            """);
+                        -fx-text-fill: white;
+                        -fx-padding: 8 12;
+                        -fx-font-size: 14px;
+                    """);
             item.setOnAction(e -> handleMenuSelection(option));
             menu.getItems().add(item);
         }
@@ -230,18 +229,33 @@ public class PaginaPrincipal extends Application {
             String path;
 
             switch (option) {
-                case "Registrar Ciudad" -> { abrirModal("/Visual/Ciudad/CiudadRegistrarVisual.fxml", "modalCiudad"); return; }
-                case "Registrar Equipo" -> { abrirModal("/Visual/Equipo/EquipoRegistrarVisual.fxml", "modalRegistrarEquipo"); return; }
-                case "Registrar Jugador" -> { abrirModal("/Visual/Jugador/JugadorRegistrarVisual.fxml", "modalRegistrarJugador"); return; }
-                case "Registrar Juego" -> { abrirModal("/Visual/Juego/JuegoRegistrarVisual.fxml", "modalRegistrarJuego"); return; }
+                case "Registrar Ciudad" -> {
+                    abrirModal("/Visual/Ciudad/CiudadRegistrarVisual.fxml", "modalCiudad");
+                    return;
+                }
+                case "Registrar Equipo" -> {
+                    abrirModal("/Visual/Equipo/EquipoRegistrarVisual.fxml", "modalRegistrarEquipo");
+                    return;
+                }
+                case "Registrar Jugador" -> {
+                    abrirModal("/Visual/Jugador/JugadorRegistrarVisual.fxml", "modalRegistrarJugador");
+                    return;
+                }
+                case "Registrar Juego" -> {
+                    abrirModal("/Visual/Juego/JuegoRegistrarVisual.fxml", "modalRegistrarJuego");
+                    return;
+                }
 
                 case "Listar Ciudades" -> path = "/Visual/Ciudad/CiudadListarVisual.fxml";
                 case "Listar Equipos" -> path = "/Visual/Equipo/EquipoListarVisual.fxml";
                 case "Listar Jugadores" -> path = "/Visual/Jugador/JugadorListarVisual.fxml";
                 case "Listar Juegos" -> path = "/Visual/Juego/JuegoListarVisual.fxml";
-                case "Registrar Estadísticas Por Juego" -> path = "/Visual/EstadisticaJuego/EstadisticaJuegoListarVisual.fxml";
+                case "Registrar Estadísticas Por Juego" ->
+                        path = "/Visual/EstadisticaJuego/EstadisticaJuegoListarVisual.fxml";
 
-                default -> { return; }
+                default -> {
+                    return;
+                }
             }
 
             Pane view = PageManager.get(path);

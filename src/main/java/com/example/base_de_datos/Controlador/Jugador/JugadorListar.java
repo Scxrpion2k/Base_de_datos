@@ -37,7 +37,6 @@ public class JugadorListar {
 
     @FXML private Button btnRegistrar;
     @FXML private Button btnCerrar;
-
     private final ObservableList<JugadorItem> lista = FXCollections.observableArrayList();
 
     @FXML
@@ -130,6 +129,8 @@ public class JugadorListar {
         thread.start();
     }
 
+
+
     private void agregarBotones() {
 
         colAcciones.setCellFactory(col -> new TableCell<>() {
@@ -166,6 +167,7 @@ public class JugadorListar {
 
             JugadorEditar controller = loader.getController();
             controller.cargarJugador(item);
+            controller.setJugadorListarController(this);
 
             BorderPane root = (BorderPane) tablaJugadores.getScene().getRoot();
             StackPane content = (StackPane) root.getCenter();
@@ -182,6 +184,7 @@ public class JugadorListar {
             e.printStackTrace();
         }
     }
+
 
     private void eliminarJugador(String id) {
 
@@ -210,10 +213,11 @@ public class JugadorListar {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Jugador/JugadorRegistrarVisual.fxml"));
             Parent modal = loader.load();
 
+            JugadorRegistrar controller = loader.getController();
+            controller.setJugadorListarController(this);
+
             BorderPane root = (BorderPane) tablaJugadores.getScene().getRoot();
             StackPane content = (StackPane) root.getCenter();
-
-            content.getChildren().removeIf(node -> "modalRegistrarJugador".equals(node.getId()));
 
             modal.setOpacity(0);
             content.getChildren().add(modal);
@@ -227,6 +231,7 @@ public class JugadorListar {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     public void volverAlMenuPrincipal() {

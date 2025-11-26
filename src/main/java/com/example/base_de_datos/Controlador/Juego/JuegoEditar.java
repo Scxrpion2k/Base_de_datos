@@ -27,6 +27,11 @@ public class JuegoEditar {
     @FXML private AnchorPane rootEditarJuego;
 
     private String idOriginal;
+    private JuegoListar juegoListarController;
+
+    public void setJuegoListarController(JuegoListar controller) {
+        this.juegoListarController = controller;
+    }
 
     @FXML
     public void initialize() {
@@ -145,9 +150,14 @@ public class JuegoEditar {
         fade.setOnFinished(e -> {
             StackPane parent = (StackPane) rootEditarJuego.getParent();
             parent.getChildren().remove(rootEditarJuego);
+
+
+            if (juegoListarController != null) return;
+
             PaginaPrincipal.volverAlDashboard();
         });
 
         fade.play();
     }
+
 }

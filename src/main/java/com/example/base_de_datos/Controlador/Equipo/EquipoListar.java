@@ -1,6 +1,7 @@
 package com.example.base_de_datos.Controlador.Equipo;
 
 import com.example.base_de_datos.Conexion.Conexion;
+import com.example.base_de_datos.PaginaPrincipal;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,6 +32,10 @@ public class EquipoListar {
     @FXML private TableColumn<EquipoItem, Void> colAcciones;
     @FXML private Button btnRegistrar;
     @FXML private Button btnCerrar;
+    private EquipoListar equipoListarController;
+
+
+
 
 
     private final ObservableList<EquipoItem> lista = FXCollections.observableArrayList();
@@ -92,6 +97,9 @@ public class EquipoListar {
         Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
+    }
+    public void setEquipoListarController(EquipoListar controller) {
+        this.equipoListarController = controller;
     }
 
     private void agregarBotones() {
@@ -193,8 +201,9 @@ public class EquipoListar {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Equipo/EquipoEditarVisual.fxml"));
             Parent modal = loader.load();
-
             EquipoEditar controller = loader.getController();
+            controller.setEquipoListarController(this);
+
             controller.cargarEquipo(item);
 
             BorderPane root = (BorderPane) tablaEquipos.getScene().getRoot();
@@ -216,30 +225,22 @@ public class EquipoListar {
     @FXML
     public void volverAlMenuPrincipal() {
         try {
-            BorderPane root = (BorderPane) tablaEquipos.getScene().getRoot();
-            StackPane content = (StackPane) root.getCenter();
-            content.getChildren().clear();
+            PaginaPrincipal.volverAlDashboard();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     public void abrirFormularioRegistro() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Equipo/EquipoRegistrarVisual.fxml"));
             Parent modal = loader.load();
 
-            modal.setId("modalRegistrar");
+            EquipoRegistrar controller = loader.getController();
+            controller.setEquipoListarController(this);
 
             BorderPane root = (BorderPane) tablaEquipos.getScene().getRoot();
             StackPane content = (StackPane) root.getCenter();
-
-            content.getChildren().removeIf(node ->
-                    "modalRegistrar".equals(node.getId()) ||
-                            node.getUserData() != null && node.getUserData().equals("modalRegistrar")
-            );
-
-
-            modal.setUserData("modalRegistrar");
 
             modal.setOpacity(0);
             content.getChildren().add(modal);
@@ -253,6 +254,7 @@ public class EquipoListar {
             e.printStackTrace();
         }
     }
+
 
 
 

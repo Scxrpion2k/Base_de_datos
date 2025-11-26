@@ -26,6 +26,7 @@ public class JugadorRegistrar {
     @FXML private ComboBox<CiudadItem> cmbCiudadNacimiento;
     @FXML private ComboBox<EquipoItem> cmbEquipo;
     @FXML private DatePicker dpFechaNacimiento;
+    private JugadorListar jugadorListarController;
 
     @FXML
     public void initialize() {
@@ -126,6 +127,9 @@ public class JugadorRegistrar {
             alert.showAndWait();
         }
     }
+    public void setJugadorListarController(JugadorListar controller) {
+        this.jugadorListarController = controller;
+    }
 
     @FXML
     public void limpiar() {
@@ -140,14 +144,22 @@ public class JugadorRegistrar {
     @FXML
     public void cerrarFormulario() {
         try {
-            BorderPane root = (BorderPane) rootRegistrar.getScene().getRoot();
-            StackPane content = (StackPane) root.getCenter();
+            AnchorPane modal = rootRegistrar;
+            StackPane parent = (StackPane) modal.getParent();
 
-            FadeTransition fadeOut = new FadeTransition(Duration.millis(150), rootRegistrar);
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(180), modal);
             fadeOut.setFromValue(1);
             fadeOut.setToValue(0);
 
-            fadeOut.setOnFinished(ev -> content.getChildren().remove(rootRegistrar));
+            fadeOut.setOnFinished(ev -> {
+                parent.getChildren().remove(modal);
+
+
+                if (jugadorListarController != null) return;
+
+                com.example.base_de_datos.PaginaPrincipal.volverAlDashboard();
+            });
+
             fadeOut.play();
 
         } catch (Exception e) {

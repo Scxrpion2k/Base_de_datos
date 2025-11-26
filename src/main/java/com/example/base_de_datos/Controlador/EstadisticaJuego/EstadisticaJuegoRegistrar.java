@@ -3,6 +3,7 @@ package com.example.base_de_datos.Controlador.EstadisticaJuego;
 import com.example.base_de_datos.Conexion.Conexion;
 import com.example.base_de_datos.Controlador.Juego.JuegoItem;
 import com.example.base_de_datos.Controlador.Equipo.EquipoItem;
+import com.example.base_de_datos.PaginaPrincipal;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -159,9 +160,9 @@ public class EstadisticaJuegoRegistrar {
                  PreparedStatement ps = con.prepareStatement(sql)) {
 
                 ps.setString(1, juego.getIdJuego());
-                ps.setString(2, idEstadistica);        // ✔ correcto
-                ps.setString(3, equipo.getId());       // ✔ idEquipo real
-                ps.setString(4, idJugador);            // ✔ idJugador real
+                ps.setString(2, idEstadistica);
+                ps.setString(3, equipo.getId());
+                ps.setString(4, idJugador);
                 ps.setInt(5, cantidad);
 
                 ps.executeUpdate();
@@ -184,18 +185,19 @@ public class EstadisticaJuegoRegistrar {
     }
 
     @FXML
-    public void volverAlMenuPrincipal() {
+    public void cerrarFormulario() {
         try {
-
             AnchorPane modal = rootRegistrar;
-
-            StackPane content = (StackPane) modal.getParent();
+            StackPane parent = (StackPane) modal.getParent();
 
             FadeTransition fade = new FadeTransition(Duration.millis(200), modal);
             fade.setFromValue(1);
             fade.setToValue(0);
 
-            fade.setOnFinished(e -> content.getChildren().remove(modal));
+            fade.setOnFinished(e -> {
+                PaginaPrincipal.volverAlDashboard();
+                modal.setVisible(false);
+            });
 
             fade.play();
 

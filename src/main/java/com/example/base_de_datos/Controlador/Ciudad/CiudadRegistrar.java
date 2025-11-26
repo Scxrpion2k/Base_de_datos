@@ -14,10 +14,14 @@ import java.sql.PreparedStatement;
 
 public class CiudadRegistrar {
 
-    @FXML private TextField txtIdCiudad;
-    @FXML private TextField txtNombreCiudad;
+    @FXML
+    private TextField txtIdCiudad;
+    @FXML
+    private TextField txtNombreCiudad;
 
-    @FXML private AnchorPane rootRegistrar; // 🎯 IMPORTANTE para modal fade out
+    @FXML
+    private AnchorPane rootRegistrar;
+    private CiudadListar ciudadListarController;
 
     @FXML
     private void guardarCiudad() {
@@ -59,7 +63,9 @@ public class CiudadRegistrar {
         txtNombreCiudad.clear();
     }
 
-    // 🚪 Cerrar con animación EXACTA a JuegoRegistrar
+    public void setCiudadListarController(CiudadListar controller) {
+        this.ciudadListarController = controller;
+    }
     @FXML
     public void cerrarFormulario() {
         try {
@@ -72,7 +78,14 @@ public class CiudadRegistrar {
 
             fade.setOnFinished(e -> {
                 parent.getChildren().remove(modal);
-                PaginaPrincipal.volverAlDashboard();
+
+
+                if (ciudadListarController != null) {
+                    ciudadListarController.cargarCiudades();
+                } else {
+
+                    PaginaPrincipal.volverAlDashboard();
+                }
             });
 
             fade.play();
@@ -81,4 +94,5 @@ public class CiudadRegistrar {
             e.printStackTrace();
         }
     }
+
 }

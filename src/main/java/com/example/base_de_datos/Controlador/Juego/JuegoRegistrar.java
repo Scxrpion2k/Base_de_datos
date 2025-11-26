@@ -25,6 +25,12 @@ public class JuegoRegistrar {
     @FXML private DatePicker dpFecha;
     @FXML private AnchorPane rootRegistrar;
 
+    private JuegoListar juegoListarController;
+
+    public void setJuegoListarController(JuegoListar controller) {
+        this.juegoListarController = controller;
+    }
+
     @FXML
     public void initialize() {
         cargarEquipos();
@@ -124,6 +130,9 @@ public class JuegoRegistrar {
 
             fade.setOnFinished(e -> {
                 parent.getChildren().remove(modal);
+
+                if (juegoListarController != null) return;
+
                 PaginaPrincipal.volverAlDashboard();
             });
 
@@ -133,5 +142,6 @@ public class JuegoRegistrar {
             e.printStackTrace();
         }
     }
+
 
 }

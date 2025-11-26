@@ -1,6 +1,7 @@
 package com.example.base_de_datos.Controlador.Ciudad;
 
 import com.example.base_de_datos.Conexion.Conexion;
+import com.example.base_de_datos.PaginaPrincipal;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -137,18 +138,17 @@ public class CiudadListar {
             controller.cargarCiudad(item);
             controller.setCiudadListarController(this);
 
-            // Obtener el mainContent donde se cargan los modales
             BorderPane root = (BorderPane) tablaCiudades.getScene().getRoot();
             StackPane content = (StackPane) root.getCenter();
 
-            // Remover modales actuales
+
             content.getChildren().removeIf(n -> "modalEditarCiudad".equals(n.getId()));
 
             modal.setId("modalEditarCiudad");
             modal.setOpacity(0);
             content.getChildren().add(modal);
 
-            // ANIMACIÓN
+
             FadeTransition fade = new FadeTransition(Duration.millis(200), modal);
             fade.setFromValue(0);
             fade.setToValue(1);
@@ -169,11 +169,15 @@ public class CiudadListar {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Ciudad/CiudadRegistrarVisual.fxml"));
             Parent modal = loader.load();
 
+            CiudadRegistrar controller = loader.getController();
+            controller.setCiudadListarController(this);
+
             BorderPane root = (BorderPane) tablaCiudades.getScene().getRoot();
             StackPane content = (StackPane) root.getCenter();
 
             content.getChildren().removeIf(node -> "modalRegistrarCiudad".equals(node.getId()));
 
+            modal.setId("modalRegistrarCiudad");
             modal.setOpacity(0);
             content.getChildren().add(modal);
 
@@ -187,12 +191,16 @@ public class CiudadListar {
         }
     }
 
+
     @FXML
     private void volverAlMenuPrincipal() {
-        BorderPane root = (BorderPane) tablaCiudades.getScene().getRoot();
-        StackPane content = (StackPane) root.getCenter();
-        content.getChildren().clear();
+        try {
+            PaginaPrincipal.volverAlDashboard();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
 
 

@@ -26,7 +26,7 @@ public class JugadorEditar {
     @FXML private ComboBox<EquipoItem> cmbEquipo;
 
     @FXML private AnchorPane rootEditarJugador;
-
+    private JugadorListar jugadorListarController;
     private String idOriginal;
 
     @FXML
@@ -94,21 +94,21 @@ public class JugadorEditar {
         txtIdJugador.setText(item.getId());
         txtNombre.setText(item.getNombre());
 
-        // Ciudad
+
         cmbCiudad.getItems().stream()
                 .filter(x -> x.getNombre().equals(item.getCiudadNacimiento()))
                 .findFirst()
                 .ifPresent(cmbCiudad::setValue);
 
-        // Fecha
+
         if (item.getFechaNacimiento() != null && item.getFechaNacimiento().length() >= 10) {
             dpFecha.setValue(LocalDate.parse(item.getFechaNacimiento().substring(0, 10)));
         }
 
-        // Número
+
         txtNumero.setText(item.getNumero());
 
-        // Equipo
+
         cmbEquipo.getItems().stream()
                 .filter(x -> x.getNombre().equals(item.getEquipo()))
                 .findFirst()
@@ -163,20 +163,33 @@ public class JugadorEditar {
     public void cerrarVentana() {
         try {
 
-            BorderPane root = (BorderPane) rootEditarJugador.getScene().getRoot();
-            StackPane content = (StackPane) root.getCenter();
+            AnchorPane modal = rootEditarJugador;
+            StackPane parent = (StackPane) modal.getParent();
 
-            FadeTransition fade = new FadeTransition(Duration.millis(200), rootEditarJugador);
+            FadeTransition fade = new FadeTransition(Duration.millis(180), modal);
             fade.setFromValue(1);
             fade.setToValue(0);
 
-            fade.setOnFinished(e -> content.getChildren().remove(rootEditarJugador));
+            fade.setOnFinished(ev -> {
+                parent.getChildren().remove(modal);
+
+                if (jugadorListarController != null) return;
+
+
+                com.example.base_de_datos.PaginaPrincipal.volverAlDashboard();
+            });
 
             fade.play();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+
+    public void setJugadorListarController(JugadorListar controller) {
+        this.jugadorListarController = controller;
     }
 
     private void mostrar(String msg) {

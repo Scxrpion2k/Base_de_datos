@@ -203,7 +203,7 @@ public class EstadisticaJuegoVer {
         fade.setOnFinished(e -> {
             StackPane parent = (StackPane) rootEstadisticas.getParent();
             parent.getChildren().remove(rootEstadisticas);
-            PaginaPrincipal.volverAlDashboard();  // 🔥 volver al inicio
+            PaginaPrincipal.volverAlDashboard();
         });
 
         fade.play();

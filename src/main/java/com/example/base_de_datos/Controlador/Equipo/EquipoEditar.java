@@ -17,16 +17,28 @@ import java.sql.ResultSet;
 
 public class EquipoEditar {
 
-    @FXML private TextField txtId;
-    @FXML private TextField txtNombre;
-    @FXML private ComboBox<String> cmbCiudad;
-    @FXML private AnchorPane rootEditar;
+    @FXML
+    private TextField txtId;
+    @FXML
+    private TextField txtNombre;
+    @FXML
+    private ComboBox<String> cmbCiudad;
+    @FXML
+    private AnchorPane rootEditar;
 
     private String idOriginal;
+    private EquipoListar equipoListarController;
+
+
+
 
     @FXML
     public void initialize() {
-        cargarCiudades();   // ← NECESARIO
+        cargarCiudades();
+    }
+
+    public void setEquipoListarController(EquipoListar controller) {
+        this.equipoListarController = controller;
     }
 
     private void cargarCiudades() {
@@ -56,11 +68,11 @@ public class EquipoEditar {
     public void guardarCambios() {
 
         String query = """
-            UPDATE Equipo
-            SET idEquipo = ?, nombreEquipo = ?, idCiudad =
-                (SELECT idCiudad FROM Ciudad WHERE nombreCiudad = ?)
-            WHERE idEquipo = ?
-        """;
+                    UPDATE Equipo
+                    SET idEquipo = ?, nombreEquipo = ?, idCiudad =
+                        (SELECT idCiudad FROM Ciudad WHERE nombreCiudad = ?)
+                    WHERE idEquipo = ?
+                """;
 
         try (Connection con = Conexion.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
@@ -82,19 +94,20 @@ public class EquipoEditar {
 
     @FXML
     public void cerrarVentana() {
-        try {
-            BorderPane root = (BorderPane) rootEditar.getScene().getRoot();
-            StackPane content = (StackPane) root.getCenter();
+        FadeTransition fade = new FadeTransition(Duration.millis(200), rootEditar);
+        fade.setFromValue(1);
+        fade.setToValue(0);
 
-            FadeTransition fade = new FadeTransition(Duration.millis(200), rootEditar);
-            fade.setFromValue(1);
-            fade.setToValue(0);
+        fade.setOnFinished(e -> {
+            StackPane parent = (StackPane) rootEditar.getParent();
+            parent.getChildren().remove(rootEditar);
 
-            fade.setOnFinished(e -> content.getChildren().remove(rootEditar));
-            fade.play();
+            if (equipoListarController != null) return;
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            com.example.base_de_datos.PaginaPrincipal.volverAlDashboard();
+        });
+
+        fade.play();
     }
+
 }

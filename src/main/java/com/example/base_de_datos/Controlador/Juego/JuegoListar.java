@@ -2,6 +2,7 @@ package com.example.base_de_datos.Controlador.Juego;
 
 import com.example.base_de_datos.Conexion.Conexion;
 import com.example.base_de_datos.Controlador.EstadisticaJuego.EstadisticaJuegoVer;
+import com.example.base_de_datos.PaginaPrincipal;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -131,7 +132,7 @@ public class JuegoListar {
             lista.setAll(task.getValue());
             tablaJuegos.setItems(lista);
 
-            // 🔥 Corrige el desfase inicial entre encabezado y contenido
+
             tablaJuegos.layout();
 
             javafx.application.Platform.runLater(() -> {
@@ -254,6 +255,7 @@ public class JuegoListar {
 
             JuegoEditar controller = loader.getController();
             controller.cargarJuego(item);
+            controller.setJuegoListarController(this);
 
             BorderPane root = (BorderPane) tablaJuegos.getScene().getRoot();
             StackPane content = (StackPane) root.getCenter();
@@ -270,16 +272,18 @@ public class JuegoListar {
             e.printStackTrace();
         }
     }
+
 
     public void abrirFormularioRegistro() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Juego/JuegoRegistrarVisual.fxml"));
             Parent modal = loader.load();
 
+            JuegoRegistrar controller = loader.getController();
+            controller.setJuegoListarController(this);
+
             BorderPane root = (BorderPane) tablaJuegos.getScene().getRoot();
             StackPane content = (StackPane) root.getCenter();
-
-            content.getChildren().removeIf(node -> "modalRegistrarJuego".equals(node.getId()));
 
             modal.setOpacity(0);
             content.getChildren().add(modal);
@@ -294,14 +298,20 @@ public class JuegoListar {
         }
     }
 
+
     @FXML
     public void volverAlMenuPrincipal() {
         try {
             BorderPane root = (BorderPane) tablaJuegos.getScene().getRoot();
             StackPane content = (StackPane) root.getCenter();
+
             content.getChildren().clear();
+
+            PaginaPrincipal.volverAlDashboard();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }

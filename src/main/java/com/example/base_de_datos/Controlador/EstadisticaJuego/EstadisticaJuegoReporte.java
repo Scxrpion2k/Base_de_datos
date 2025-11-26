@@ -14,10 +14,14 @@ import java.sql.*;
 
 public class EstadisticaJuegoReporte {
 
-    @FXML private AnchorPane rootReporte;
-    @FXML private TableView<ReporteRow> tablaReporte;
-    @FXML private Label lblTitulo;
-    @FXML private Label lblFecha;
+    @FXML
+    private AnchorPane rootReporte;
+    @FXML
+    private TableView<ReporteRow> tablaReporte;
+    @FXML
+    private Label lblTitulo;
+    @FXML
+    private Label lblFecha;
 
     public void cargarReporte(String idJuego) {
 
@@ -36,7 +40,7 @@ public class EstadisticaJuegoReporte {
 
             int columnas = md.getColumnCount();
 
-            // Crear columnas dinámicamente
+
             for (int i = 1; i <= columnas; i++) {
                 final int colIndex = i;
 
@@ -48,7 +52,7 @@ public class EstadisticaJuegoReporte {
                 tablaReporte.getColumns().add(col);
             }
 
-            // Llenar filas
+
             while (rs.next()) {
                 ReporteRow row = new ReporteRow(columnas);
 
@@ -74,7 +78,7 @@ public class EstadisticaJuegoReporte {
         fade.setOnFinished(e -> {
             StackPane parent = (StackPane) rootReporte.getParent();
             parent.getChildren().remove(rootReporte);
-            PaginaPrincipal.volverAlDashboard();   // 🔥 volver al inicio
+            PaginaPrincipal.volverAlDashboard();
         });
 
         fade.play();

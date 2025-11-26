@@ -16,10 +16,13 @@ import java.sql.PreparedStatement;
 
 public class CiudadEditar {
 
-    @FXML private TextField txtIdCiudad;
-    @FXML private TextField txtNombreCiudad;
+    @FXML
+    private TextField txtIdCiudad;
+    @FXML
+    private TextField txtNombreCiudad;
 
-    @FXML private AnchorPane rootEditarCiudad;
+    @FXML
+    private AnchorPane rootEditarCiudad;
 
     private String idOriginal;
 
@@ -39,10 +42,10 @@ public class CiudadEditar {
     public void guardarCambios() {
 
         String sql = """
-            UPDATE Ciudad
-            SET idCiudad = ?, nombreCiudad = ?
-            WHERE idCiudad = ?
-        """;
+                    UPDATE Ciudad
+                    SET idCiudad = ?, nombreCiudad = ?
+                    WHERE idCiudad = ?
+                """;
 
         try (Connection con = Conexion.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -66,16 +69,23 @@ public class CiudadEditar {
 
     @FXML
     public void cerrarVentana() {
+
         FadeTransition fade = new FadeTransition(Duration.millis(200), rootEditarCiudad);
         fade.setFromValue(1);
         fade.setToValue(0);
 
         fade.setOnFinished(e -> {
             StackPane parent = (StackPane) rootEditarCiudad.getParent();
+
             parent.getChildren().remove(rootEditarCiudad);
-            PaginaPrincipal.volverAlDashboard();
+
+
+            if (ciudadListarController != null) {
+                ciudadListarController.cargarCiudades();
+            }
         });
 
         fade.play();
     }
+
 }
