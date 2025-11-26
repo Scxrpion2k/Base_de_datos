@@ -100,9 +100,9 @@ public class InicioDashboard {
 
             Parent modal = loader.load();
 
-            // 👇 AQUÍ está el cambio importante
+
             EstadisticaJuegoReporte controller = loader.getController();
-            controller.cargarReporte(idJuego);   // 👈 usa el método correcto
+            controller.cargarReporte(idJuego);
 
             StackPane root = (StackPane) panelJuegos.getScene().lookup("#mainContent");
 
