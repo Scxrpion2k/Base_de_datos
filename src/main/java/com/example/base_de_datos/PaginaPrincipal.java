@@ -176,9 +176,6 @@ public class PaginaPrincipal extends Application {
         return btn;
     }
 
-    // ======================================================
-    //  SUBMENÚ HOVER
-    // ======================================================
 
     private void addHoverMenu(Button button, String... options) {
 
@@ -226,9 +223,6 @@ public class PaginaPrincipal extends Application {
         });
     }
 
-    // ======================================================
-    //    CAMBIO DE PANTALLA
-    // ======================================================
 
     private void handleMenuSelection(String option) {
 
@@ -258,9 +252,6 @@ public class PaginaPrincipal extends Application {
         }
     }
 
-    // ======================================================
-    //    MODAL
-    // ======================================================
 
     private void abrirModal(String fxml, String modalId) {
         try {
