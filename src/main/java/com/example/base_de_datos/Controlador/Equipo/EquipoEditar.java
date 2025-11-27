@@ -7,7 +7,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
@@ -28,9 +27,6 @@ public class EquipoEditar {
 
     private String idOriginal;
     private EquipoListar equipoListarController;
-
-
-
 
     @FXML
     public void initialize() {
@@ -60,35 +56,40 @@ public class EquipoEditar {
         idOriginal = item.getId();
         txtId.setText(item.getId());
         txtNombre.setText(item.getNombre());
-
         cmbCiudad.setValue(item.getCiudad());
+        txtId.setEditable(false);
     }
 
     @FXML
     public void guardarCambios() {
 
         String query = """
-                    UPDATE Equipo
-                    SET idEquipo = ?, nombreEquipo = ?, idCiudad =
-                        (SELECT idCiudad FROM Ciudad WHERE nombreCiudad = ?)
-                    WHERE idEquipo = ?
+                UPDATE Equipo
+                SET nombreEquipo = ?, idCiudad =
+                    (SELECT idCiudad FROM Ciudad WHERE nombreCiudad = ?)
+                WHERE idEquipo = ?
                 """;
 
         try (Connection con = Conexion.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
 
-            ps.setString(1, txtId.getText());
-            ps.setString(2, txtNombre.getText());
-            ps.setString(3, cmbCiudad.getValue());
-            ps.setString(4, idOriginal);
+            ps.setString(1, txtNombre.getText());
+            ps.setString(2, cmbCiudad.getValue());
+            ps.setString(3, idOriginal);
 
             ps.executeUpdate();
 
-            Alert ok = new Alert(Alert.AlertType.INFORMATION, "Actualizado con éxito.");
-            ok.show();
+            new Alert(Alert.AlertType.INFORMATION, "Actualizado con éxito.").show();
+
+            if (equipoListarController != null) {
+                equipoListarController.cargarEquiposAsync();
+            }
+
+            cerrarVentana();
 
         } catch (Exception e) {
             e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error al actualizar.").show();
         }
     }
 
@@ -102,12 +103,11 @@ public class EquipoEditar {
             StackPane parent = (StackPane) rootEditar.getParent();
             parent.getChildren().remove(rootEditar);
 
-            if (equipoListarController != null) return;
-
-            com.example.base_de_datos.PaginaPrincipal.volverAlDashboard();
+            if (equipoListarController != null) {
+                equipoListarController.cargarEquiposAsync();
+            }
         });
 
         fade.play();
     }
-
 }

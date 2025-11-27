@@ -7,7 +7,6 @@ import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
@@ -26,6 +25,7 @@ public class JugadorRegistrar {
     @FXML private ComboBox<CiudadItem> cmbCiudadNacimiento;
     @FXML private ComboBox<EquipoItem> cmbEquipo;
     @FXML private DatePicker dpFechaNacimiento;
+
     private JugadorListar jugadorListarController;
 
     @FXML
@@ -93,8 +93,7 @@ public class JugadorRegistrar {
 
             java.sql.Date fechaNacimiento = java.sql.Date.valueOf(dpFechaNacimiento.getValue());
 
-            String sql = "INSERT INTO Jugador (idJugador, nombreJugador, idciudadNacimiento, fechaNacimiento, numeroJugador, idEquipo) " +
-                    "VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Jugador (idJugador, nombreJugador, idciudadNacimiento, fechaNacimiento, numeroJugador, idEquipo) VALUES (?, ?, ?, ?, ?, ?)";
 
             try (Connection conn = Conexion.getConnection();
                  PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -114,7 +113,11 @@ public class JugadorRegistrar {
                 alert.setContentText("El jugador ha sido guardado correctamente.");
                 alert.showAndWait();
 
-                limpiar();
+                if (jugadorListarController != null) {
+                    jugadorListarController.cargarJugadoresAsync();
+                }
+
+                cerrarFormulario();
 
             }
 
@@ -127,6 +130,7 @@ public class JugadorRegistrar {
             alert.showAndWait();
         }
     }
+
     public void setJugadorListarController(JugadorListar controller) {
         this.jugadorListarController = controller;
     }
@@ -154,10 +158,9 @@ public class JugadorRegistrar {
             fadeOut.setOnFinished(ev -> {
                 parent.getChildren().remove(modal);
 
-
-                if (jugadorListarController != null) return;
-
-                com.example.base_de_datos.PaginaPrincipal.volverAlDashboard();
+                if (jugadorListarController != null) {
+                    jugadorListarController.cargarJugadoresAsync();
+                }
             });
 
             fadeOut.play();

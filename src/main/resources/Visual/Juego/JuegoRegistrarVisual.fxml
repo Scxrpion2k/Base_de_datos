@@ -13,13 +13,15 @@
             prefWidth="900" prefHeight="600"
             style="-fx-background-color: rgba(0,0,0,0.30);">
 
-    <VBox alignment="CENTER" spacing="30"
+    <VBox alignment="CENTER"
+          spacing="30"
+          translateY="-70"
           AnchorPane.topAnchor="0"
           AnchorPane.bottomAnchor="0"
           AnchorPane.leftAnchor="0"
           AnchorPane.rightAnchor="0">
 
-        <!-- CARD -->
+
         <VBox fx:id="cardFormulario"
               alignment="TOP_CENTER"
               spacing="25"

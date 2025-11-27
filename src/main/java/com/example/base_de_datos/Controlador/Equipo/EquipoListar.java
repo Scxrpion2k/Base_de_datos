@@ -58,7 +58,7 @@ public class EquipoListar {
         cargarEquiposAsync();
     }
 
-    private void cargarEquiposAsync() {
+    public void cargarEquiposAsync() {
 
         Task<ObservableList<EquipoItem>> task = new Task<>() {
             @Override

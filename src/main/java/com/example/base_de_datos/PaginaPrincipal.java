@@ -65,19 +65,19 @@ public class PaginaPrincipal extends Application {
         HBox headerBox = new HBox(15);
 
 
-        ImageView logo = createIcon("/Logo/basketball.png", 70);
+        //ImageView logo = createIcon("/Logo/basketball.png", 70);
         Label title = new Label("🏀 TORNEO BASKET");
         title.setStyle("""
-        -fx-text-fill: #F0B501;  
-        -fx-font-size: 28px;     
-        -fx-font-weight: bold;
-        
-""");
+                        -fx-text-fill: #F0B501;  
+                        -fx-font-size: 28px;     
+                        -fx-font-weight: bold;
+                
+                """);
 
-        headerBox.setTranslateX(-50);  // Mover 20px a la derecha (negativo para izquierda)
-        headerBox.setTranslateY(-10); // Mover 10px hacia arriba (negativo para arriba, positivo para abajo)
+        headerBox.setTranslateX(-50);
+        headerBox.setTranslateY(-10);
         headerBox.setAlignment(Pos.CENTER);
-        headerBox.getChildren().addAll(logo, title);
+//        headerBox.getChildren().addAll(logo, title);
 
 
         VBox formContainer = new VBox(25);
@@ -231,18 +231,17 @@ public class PaginaPrincipal extends Application {
 
         Scene mainScene = new Scene(root, 1400, 850);
 
-        // Configurar la aplicación principal
         primaryStage.setTitle("Sistema de Torneo de Baloncesto");
         primaryStage.setScene(mainScene);
 
-        // En lugar de setMaximized, establecer el tamaño manualmente a las dimensiones de la pantalla
+
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         primaryStage.setWidth(screenBounds.getWidth());
         primaryStage.setHeight(screenBounds.getHeight());
         primaryStage.setX(0);
         primaryStage.setY(0);
 
-        // Animación de transición
+
         FadeTransition fade = new FadeTransition(Duration.millis(400), root);
         fade.setFromValue(0);
         fade.setToValue(1);
@@ -258,7 +257,6 @@ public class PaginaPrincipal extends Application {
             return view;
         } catch (Exception e) {
             System.out.println("No se pudo cargar icono: " + file);
-            // Crear un icono de fallback
             ImageView fallback = new ImageView();
             fallback.setFitWidth(size);
             fallback.setFitHeight(size);
@@ -319,7 +317,6 @@ public class PaginaPrincipal extends Application {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        // Botón de cerrar sesión
         Button btnLogout = new Button("Cerrar Sesión");
         btnLogout.setStyle("""
             -fx-background-color: #DC3545;
@@ -329,7 +326,6 @@ public class PaginaPrincipal extends Application {
             -fx-padding: 8 20;
         """);
         btnLogout.setOnAction(e -> {
-            // Regresar a la pantalla de login en pantalla completa
             showLoginScreen();
         });
 
@@ -490,7 +486,6 @@ public class PaginaPrincipal extends Application {
         alert.setHeaderText(null);
         alert.setContentText(message);
 
-        // Estilo personalizado para la alerta
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.setStyle("""
             -fx-background-color: #1B1B1B;

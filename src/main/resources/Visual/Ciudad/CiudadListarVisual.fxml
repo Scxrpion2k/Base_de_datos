@@ -7,7 +7,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.base_de_datos.Controlador.Ciudad.CiudadListar"
-            prefWidth="1500" prefHeight="650"
+            prefWidth="1000" prefHeight="650"
             style="-fx-background-color: #F4F6F9;">
 
     <VBox spacing="10" alignment="TOP_CENTER"
@@ -15,26 +15,22 @@
           AnchorPane.leftAnchor="0"
           AnchorPane.rightAnchor="0">
 
-        <!-- 🔥 TÍTULO IGUAL A LISTAR JUEGOS -->
         <Label text="Listado de Ciudades"
                style="-fx-font-size: 30px;
                       -fx-font-weight: 700;
                       -fx-text-fill: #1F1F1F;" />
 
-        <!-- 📦 CARD PRINCIPAL -->
+        <!-- CARD IGUAL A EQUIPOS -->
         <VBox spacing="15"
-              alignment="CENTER"
-              prefWidth="1400"
-              maxWidth="Infinity"
-              minWidth="1200"
+              prefWidth="900"
+              maxWidth="900"
               style="-fx-background-color: white;
                      -fx-padding: 25;
                      -fx-background-radius: 18;
                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 4);">
 
-            <!-- 🔵 BARRA SUPERIOR (Registrar + X) -->
-            <HBox alignment="CENTER_LEFT" spacing="15"
-                  prefWidth="1400">
+            <!-- HEADER -->
+            <HBox alignment="CENTER_LEFT" spacing="15">
 
                 <Label text="Ciudades Registradas"
                        style="-fx-font-size: 20px;
@@ -64,11 +60,10 @@
 
             </HBox>
 
-            <!-- 📋 TABLA IGUAL A LISTAR JUEGOS -->
+            <!-- TABLA IGUAL A EQUIPOS -->
             <TableView fx:id="tablaCiudades"
                        prefHeight="450"
-                       prefWidth="1400"
-                       maxWidth="Infinity"
+                       maxHeight="450"
                        minHeight="350"
                        style="-fx-background-radius: 12;
                               -fx-border-color: #E0E0E0;
@@ -79,15 +74,15 @@
                 <columns>
 
                     <TableColumn fx:id="colId" text="ID Ciudad"
-                                 prefWidth="200"
+                                 prefWidth="120"
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
                     <TableColumn fx:id="colNombre" text="Nombre Ciudad"
-                                 prefWidth="600"
+                                 prefWidth="400"
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
                     <TableColumn fx:id="colAcciones" text="Acciones"
-                                 prefWidth="350"
+                                 prefWidth="200"
                                  style="-fx-font-size: 14px; -fx-font-weight: bold;" />
 
                 </columns>

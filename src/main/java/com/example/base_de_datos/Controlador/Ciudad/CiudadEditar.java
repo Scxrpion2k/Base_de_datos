@@ -1,7 +1,6 @@
 package com.example.base_de_datos.Controlador.Ciudad;
 
 import com.example.base_de_datos.Conexion.Conexion;
-import com.example.base_de_datos.PaginaPrincipal;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -25,7 +24,6 @@ public class CiudadEditar {
     private AnchorPane rootEditarCiudad;
 
     private String idOriginal;
-
     private CiudadListar ciudadListarController;
 
     public void setCiudadListarController(CiudadListar controller) {
@@ -36,34 +34,42 @@ public class CiudadEditar {
         idOriginal = item.getId();
         txtIdCiudad.setText(item.getId());
         txtNombreCiudad.setText(item.getNombre());
+
+        txtIdCiudad.setEditable(false);
     }
 
     @FXML
     public void guardarCambios() {
 
         String sql = """
-                    UPDATE Ciudad
-                    SET idCiudad = ?, nombreCiudad = ?
-                    WHERE idCiudad = ?
+                UPDATE Ciudad
+                SET nombreCiudad = ?
+                WHERE idCiudad = ?
                 """;
 
         try (Connection con = Conexion.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, txtIdCiudad.getText());
-            ps.setString(2, txtNombreCiudad.getText());
-            ps.setString(3, idOriginal);
+            ps.setString(1, txtNombreCiudad.getText());
+            ps.setString(2, idOriginal);
 
             ps.executeUpdate();
 
-            Alert ok = new Alert(Alert.AlertType.INFORMATION, "Ciudad actualizada correctamente.", ButtonType.OK);
-            ok.show();
+            new Alert(Alert.AlertType.INFORMATION,
+                    "Ciudad actualizada correctamente.",
+                    ButtonType.OK).show();
 
-            if (ciudadListarController != null) ciudadListarController.cargarCiudades();
+            if (ciudadListarController != null) {
+                ciudadListarController.cargarCiudades();
+            }
+
+            cerrarVentana();
 
         } catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Error al actualizar los datos.").show();
+            new Alert(Alert.AlertType.ERROR,
+                    "Error al actualizar los datos.",
+                    ButtonType.OK).show();
         }
     }
 
@@ -76,7 +82,6 @@ public class CiudadEditar {
 
         fade.setOnFinished(e -> {
             StackPane parent = (StackPane) rootEditarCiudad.getParent();
-
             parent.getChildren().remove(rootEditarCiudad);
 
 
@@ -87,5 +92,4 @@ public class CiudadEditar {
 
         fade.play();
     }
-
 }

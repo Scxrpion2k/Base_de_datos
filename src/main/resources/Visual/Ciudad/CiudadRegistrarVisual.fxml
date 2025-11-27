@@ -20,7 +20,6 @@
                  -fx-background-radius: 20;
                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0, 0, 6);">
 
-        <!-- Cerrar -->
         <HBox alignment="TOP_RIGHT" >
             <Button text="✖"
                     onAction="#cerrarFormulario"

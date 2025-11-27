@@ -21,6 +21,7 @@ public class CiudadRegistrar {
 
     @FXML
     private AnchorPane rootRegistrar;
+
     private CiudadListar ciudadListarController;
 
     @FXML
@@ -44,6 +45,11 @@ public class CiudadRegistrar {
             ps.executeUpdate();
 
             mostrar("Ciudad registrada correctamente.");
+
+            if (ciudadListarController != null) {
+                ciudadListarController.cargarCiudades();
+            }
+
             limpiar();
 
         } catch (Exception e) {
@@ -66,6 +72,7 @@ public class CiudadRegistrar {
     public void setCiudadListarController(CiudadListar controller) {
         this.ciudadListarController = controller;
     }
+
     @FXML
     public void cerrarFormulario() {
         try {
@@ -79,11 +86,9 @@ public class CiudadRegistrar {
             fade.setOnFinished(e -> {
                 parent.getChildren().remove(modal);
 
-
                 if (ciudadListarController != null) {
                     ciudadListarController.cargarCiudades();
                 } else {
-
                     PaginaPrincipal.volverAlDashboard();
                 }
             });

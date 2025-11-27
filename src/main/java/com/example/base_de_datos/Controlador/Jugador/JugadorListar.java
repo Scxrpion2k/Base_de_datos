@@ -72,7 +72,7 @@ public class JugadorListar {
         colAcciones.setStyle("-fx-alignment: CENTER;");
     }
 
-    private void cargarJugadoresAsync() {
+    public void cargarJugadoresAsync() {
 
         Task<ObservableList<JugadorItem>> task = new Task<>() {
             @Override
@@ -236,11 +236,10 @@ public class JugadorListar {
     @FXML
     public void volverAlMenuPrincipal() {
         try {
-            BorderPane root = (BorderPane) tablaJugadores.getScene().getRoot();
-            StackPane content = (StackPane) root.getCenter();
-            content.getChildren().clear();
+            com.example.base_de_datos.PaginaPrincipal.volverAlDashboard();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }
