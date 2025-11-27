@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -23,6 +25,7 @@ public class PaginaPrincipal extends Application {
     private static PaginaPrincipal instance;
     private StackPane content;
     private ContextMenu activeMenu = null;
+    private Stage primaryStage;
 
     public PaginaPrincipal() {
         instance = this;
@@ -34,11 +37,184 @@ public class PaginaPrincipal extends Application {
 
     @Override
     public void start(Stage stage) {
+        this.primaryStage = stage;
+        showLoginScreen();
+    }
 
+
+
+    private void showLoginScreen() {
+        BorderPane loginRoot = new BorderPane();
+        loginRoot.setStyle("-fx-background-color: #0A0A0A;");
+
+
+        VBox loginContainer = new VBox(40);
+        loginContainer.setAlignment(Pos.CENTER);
+        loginContainer.setPadding(new Insets(80));
+        loginContainer.setMaxWidth(550);
+        loginContainer.setMaxHeight(600);
+        loginContainer.setStyle("""
+        -fx-background-color: #1B1B1B;
+        -fx-background-radius: 25;
+        -fx-border-radius: 25;
+        -fx-border-color: #F0B501;
+        -fx-border-width: 3;
+        """);
+
+
+        HBox headerBox = new HBox(15);
+
+
+        ImageView logo = createIcon("/Logo/basketball.png", 70);
+        Label title = new Label("🏀 TORNEO BASKET");
+        title.setStyle("""
+        -fx-text-fill: #F0B501;  
+        -fx-font-size: 28px;     
+        -fx-font-weight: bold;
+        
+""");
+
+        headerBox.setTranslateX(-50);  // Mover 20px a la derecha (negativo para izquierda)
+        headerBox.setTranslateY(-10); // Mover 10px hacia arriba (negativo para arriba, positivo para abajo)
+        headerBox.setAlignment(Pos.CENTER);
+        headerBox.getChildren().addAll(logo, title);
+
+
+        VBox formContainer = new VBox(25);
+        formContainer.setAlignment(Pos.CENTER);
+        formContainer.setPadding(new Insets(40, 50, 40, 50));
+
+        Label loginTitle = new Label("INICIAR SESIÓN");
+        loginTitle.setStyle("""
+            -fx-text-fill: white;
+            -fx-font-size: 26px;
+            -fx-font-weight: bold;
+        """);
+
+
+        VBox userBox = new VBox(10);
+        userBox.setAlignment(Pos.CENTER_LEFT);
+
+        Label userLabel = new Label("Usuario:");
+        userLabel.setStyle("-fx-text-fill: #E5E5E5; -fx-font-size: 16px; -fx-font-weight: 600;");
+
+        TextField userField = new TextField();
+        userField.setStyle("""
+            -fx-background-color: #2D2D2D;
+            -fx-background-radius: 12;
+            -fx-border-radius: 12;
+            -fx-border-color: #444444;
+            -fx-text-fill: white;
+            -fx-font-size: 16px;
+            -fx-padding: 15 18;
+            -fx-pref-width: 300px;
+        """);
+        userField.setPromptText("Ingrese su usuario");
+
+        userBox.getChildren().addAll(userLabel, userField);
+
+
+        VBox passBox = new VBox(10);
+        passBox.setAlignment(Pos.CENTER_LEFT);
+
+        Label passLabel = new Label("Contraseña:");
+        passLabel.setStyle("-fx-text-fill: #E5E5E5; -fx-font-size: 16px; -fx-font-weight: 600;");
+
+        PasswordField passField = new PasswordField();
+        passField.setStyle("""
+            -fx-background-color: #2D2D2D;
+            -fx-background-radius: 12;
+            -fx-border-radius: 12;
+            -fx-border-color: #444444;
+            -fx-text-fill: white;
+            -fx-font-size: 16px;
+            -fx-padding: 15 18;
+            -fx-pref-width: 300px;
+        """);
+        passField.setPromptText("Ingrese su contraseña");
+
+        passBox.getChildren().addAll(passLabel, passField);
+
+
+        Button loginBtn = new Button("ACCEDER AL SISTEMA");
+        loginBtn.setStyle("""
+        -fx-background-color: #F0B501;
+        -fx-background-radius: 15;
+        -fx-text-fill: black;
+        -fx-font-weight: bold;
+        -fx-font-size: 16px;     
+        -fx-padding: 16 30;     
+        -fx-pref-width: 280px;   
+        """);
+
+
+        loginBtn.setOnMouseEntered(e -> loginBtn.setStyle("""
+        -fx-background-color: #FFD166;
+        -fx-background-radius: 15;
+        -fx-text-fill: black;
+        -fx-font-weight: bold;
+        -fx-font-size: 16px;
+        -fx-padding: 16 30;
+        -fx-pref-width: 280px;
+        """));
+
+        loginBtn.setOnMouseExited(e -> loginBtn.setStyle("""
+        -fx-background-color: #F0B501;
+        -fx-background-radius: 15;
+        -fx-text-fill: black;
+        -fx-font-weight: bold;
+        -fx-font-size: 16px;
+        -fx-padding: 16 30;
+        -fx-pref-width: 280px;
+        """));
+
+
+        loginBtn.setOnAction(e -> {
+            String username = userField.getText();
+            String password = passField.getText();
+
+            if (authenticate(username, password)) {
+                showMainApplication();
+            } else {
+                showAlert("Error de autenticación", "Usuario o contraseña incorrectos");
+                passField.clear();
+            }
+        });
+
+
+        userField.setOnAction(e -> loginBtn.fire());
+        passField.setOnAction(e -> loginBtn.fire());
+
+
+        Label demoLabel = new Label("Usuarios demo: admin/admin123 | user/user123");
+        demoLabel.setStyle("-fx-text-fill: #888888; -fx-font-size: 12px;");
+
+        formContainer.getChildren().addAll(loginTitle, userBox, passBox, loginBtn, demoLabel);
+        loginContainer.getChildren().addAll(headerBox, formContainer);
+
+
+        StackPane centerPane = new StackPane(loginContainer);
+        loginRoot.setCenter(centerPane);
+
+        Scene loginScene = new Scene(loginRoot, 1400, 850);
+
+
+        primaryStage.setTitle("Sistema de Torneo de Baloncesto - Login");
+        primaryStage.setScene(loginScene);
+        primaryStage.setMaximized(true);
+        primaryStage.show();
+    }
+
+    private boolean authenticate(String username, String password) {
+
+        return (username.equals("admin") && password.equals("admin123")) ||
+                (username.equals("user") && password.equals("user123"));
+    }
+
+    private void showMainApplication() {
         BorderPane root = new BorderPane();
 
-
-        HBox topMenu = createTopMenu(stage);
+        HBox topMenu = createTopMenu(primaryStage);
         root.setTop(topMenu);
 
         content = new StackPane();
@@ -53,17 +229,45 @@ public class PaginaPrincipal extends Application {
             e.printStackTrace();
         }
 
-        Scene scene = new Scene(root, 1400, 850);
+        Scene mainScene = new Scene(root, 1400, 850);
 
-        stage.setTitle("Sistema de Torneo de Baloncesto");
-        stage.setScene(scene);
-        stage.setMaximized(true);
-        stage.show();
+        // Configurar la aplicación principal
+        primaryStage.setTitle("Sistema de Torneo de Baloncesto");
+        primaryStage.setScene(mainScene);
+
+        // En lugar de setMaximized, establecer el tamaño manualmente a las dimensiones de la pantalla
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        primaryStage.setWidth(screenBounds.getWidth());
+        primaryStage.setHeight(screenBounds.getHeight());
+        primaryStage.setX(0);
+        primaryStage.setY(0);
+
+        // Animación de transición
+        FadeTransition fade = new FadeTransition(Duration.millis(400), root);
+        fade.setFromValue(0);
+        fade.setToValue(1);
+        fade.play();
     }
 
+    private ImageView createIcon(String file, int size) {
+        try {
+            Image img = new Image(getClass().getResourceAsStream(file));
+            ImageView view = new ImageView(img);
+            view.setFitWidth(size);
+            view.setFitHeight(size);
+            return view;
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar icono: " + file);
+            // Crear un icono de fallback
+            ImageView fallback = new ImageView();
+            fallback.setFitWidth(size);
+            fallback.setFitHeight(size);
+            fallback.setStyle("-fx-background-color: #F0B501; -fx-background-radius: 5;");
+            return fallback;
+        }
+    }
 
     private ImageView iconoLocal(String file, int size) {
-
         try {
             Image img = new Image(getClass().getResourceAsStream("/Logo/" + file));
             ImageView view = new ImageView(img);
@@ -73,38 +277,31 @@ public class PaginaPrincipal extends Application {
             adjust.setBrightness(1.0);
             adjust.setContrast(1.0);
             adjust.setSaturation(-1.0);
-
             view.setEffect(adjust);
-
             return view;
-
         } catch (Exception e) {
-            System.out.println(" No se pudo cargar icono: /Logo/" + file);
+            System.out.println("No se pudo cargar icono: /Logo/" + file);
             return new ImageView();
         }
     }
 
-
     private HBox createTopMenu(Stage stage) {
-
         HBox menu = new HBox(25);
         menu.setPadding(new Insets(12, 35, 12, 35));
         menu.setAlignment(Pos.CENTER_LEFT);
-
         menu.setStyle("""
-                        -fx-background-color: #0A0A0A;
-                        -fx-border-color: #1F1F1F;
-                        -fx-border-width: 0 0 2 0;
-                """);
-
+            -fx-background-color: #0A0A0A;
+            -fx-border-color: #1F1F1F;
+            -fx-border-width: 0 0 2 0;
+        """);
         menu.setEffect(new DropShadow(15, Color.rgb(0, 0, 0, 0.25)));
 
         Label title = new Label("🏀 TORNEO BASKET");
         title.setStyle("""
-                        -fx-text-fill: white;
-                        -fx-font-size: 19px;
-                        -fx-font-weight: bold;
-                """);
+            -fx-text-fill: white;
+            -fx-font-size: 19px;
+            -fx-font-weight: bold;
+        """);
 
         Button btnCiudad = createMenuButton("Ciudades", "city-buildings.png");
         Button btnEquipo = createMenuButton("Equipos", "groups.png");
@@ -122,14 +319,28 @@ public class PaginaPrincipal extends Application {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
+        // Botón de cerrar sesión
+        Button btnLogout = new Button("Cerrar Sesión");
+        btnLogout.setStyle("""
+            -fx-background-color: #DC3545;
+            -fx-background-radius: 12;
+            -fx-text-fill: white;
+            -fx-font-weight: bold;
+            -fx-padding: 8 20;
+        """);
+        btnLogout.setOnAction(e -> {
+            // Regresar a la pantalla de login en pantalla completa
+            showLoginScreen();
+        });
+
         Button btnSalir = new Button("Salir");
         btnSalir.setStyle("""
-                        -fx-background-color: #F0B501;
-                        -fx-background-radius: 12;
-                        -fx-text-fill: black;
-                        -fx-font-weight: bold;
-                        -fx-padding: 6 18;
-                """);
+            -fx-background-color: #F0B501;
+            -fx-background-radius: 12;
+            -fx-text-fill: black;
+            -fx-font-weight: bold;
+            -fx-padding: 8 20;
+        """);
         btnSalir.setOnAction(e -> stage.close());
 
         menu.getChildren().addAll(
@@ -137,63 +348,55 @@ public class PaginaPrincipal extends Application {
                 btnCiudad, btnEquipo, btnJugador, btnJuego, btnEstadistica,
                 spacer,
                 btnUser,
+                btnLogout,
                 btnSalir
         );
 
         return menu;
     }
 
-
     private Button createMenuButton(String text, String iconFile) {
-
         ImageView icon = iconoLocal(iconFile, 18);
-
         Button btn = new Button(text, icon);
         btn.setGraphicTextGap(10);
-
         btn.setStyle("""
-                    -fx-background-color: transparent;
-                    -fx-text-fill: #E5E5E5;
-                    -fx-font-size: 15px;
-                    -fx-font-weight: 600;
-                """);
-
+            -fx-background-color: transparent;
+            -fx-text-fill: #E5E5E5;
+            -fx-font-size: 15px;
+            -fx-font-weight: 600;
+        """);
         btn.setOnMouseEntered(e -> btn.setStyle("""
-                    -fx-background-color: transparent;
-                    -fx-text-fill: #F0B501;
-                    -fx-font-size: 15px;
-                    -fx-font-weight: 600;
-                """));
-
+            -fx-background-color: transparent;
+            -fx-text-fill: #F0B501;
+            -fx-font-size: 15px;
+            -fx-font-weight: 600;
+        """));
         btn.setOnMouseExited(e -> btn.setStyle("""
-                    -fx-background-color: transparent;
-                    -fx-text-fill: #E5E5E5;
-                    -fx-font-size: 15px;
-                    -fx-font-weight: 600;
-                """));
-
+            -fx-background-color: transparent;
+            -fx-text-fill: #E5E5E5;
+            -fx-font-size: 15px;
+            -fx-font-weight: 600;
+        """));
         return btn;
     }
 
-
     private void addHoverMenu(Button button, String... options) {
-
         ContextMenu menu = new ContextMenu();
         menu.setStyle("""
-                    -fx-background-color: #1B1B1B;
-                    -fx-text-fill: white;
-                    -fx-background-radius: 10;
-                    -fx-border-radius: 10;
-                    -fx-padding: 5 0;
-                """);
+            -fx-background-color: #1B1B1B;
+            -fx-text-fill: white;
+            -fx-background-radius: 10;
+            -fx-border-radius: 10;
+            -fx-padding: 5 0;
+        """);
 
         for (String option : options) {
             MenuItem item = new MenuItem(option);
             item.setStyle("""
-                        -fx-text-fill: white;
-                        -fx-padding: 8 12;
-                        -fx-font-size: 14px;
-                    """);
+                -fx-text-fill: white;
+                -fx-padding: 8 12;
+                -fx-font-size: 14px;
+            """);
             item.setOnAction(e -> handleMenuSelection(option));
             menu.getItems().add(item);
         }
@@ -201,7 +404,6 @@ public class PaginaPrincipal extends Application {
         button.setOnMouseEntered(e -> {
             if (activeMenu != null && activeMenu != menu) activeMenu.hide();
             activeMenu = menu;
-
             if (!menu.isShowing()) {
                 menu.show(button,
                         button.localToScreen(0, button.getHeight()).getX(),
@@ -222,12 +424,9 @@ public class PaginaPrincipal extends Application {
         });
     }
 
-
     private void handleMenuSelection(String option) {
-
         try {
             String path;
-
             switch (option) {
                 case "Registrar Ciudad" -> {
                     abrirModal("/Visual/Ciudad/CiudadRegistrarVisual.fxml", "modalCiudad");
@@ -245,49 +444,36 @@ public class PaginaPrincipal extends Application {
                     abrirModal("/Visual/Juego/JuegoRegistrarVisual.fxml", "modalRegistrarJuego");
                     return;
                 }
-
                 case "Listar Ciudades" -> path = "/Visual/Ciudad/CiudadListarVisual.fxml";
                 case "Listar Equipos" -> path = "/Visual/Equipo/EquipoListarVisual.fxml";
                 case "Listar Jugadores" -> path = "/Visual/Jugador/JugadorListarVisual.fxml";
                 case "Listar Juegos" -> path = "/Visual/Juego/JuegoListarVisual.fxml";
-                case "Registrar Estadísticas Por Juego" ->
-                        path = "/Visual/EstadisticaJuego/EstadisticaJuegoListarVisual.fxml";
-
-                default -> {
-                    return;
-                }
+                case "Registrar Estadísticas Por Juego" -> path = "/Visual/EstadisticaJuego/EstadisticaJuegoListarVisual.fxml";
+                default -> { return; }
             }
-
             Pane view = PageManager.get(path);
             content.getChildren().setAll(view);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     private void abrirModal(String fxml, String modalId) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             Parent modal = loader.load();
-
             modal.setId(modalId);
             modal.setOpacity(0);
-
             content.getChildren().removeIf(node -> modalId.equals(node.getId()));
             content.getChildren().add(modal);
-
             FadeTransition fade = new FadeTransition(Duration.millis(180), modal);
             fade.setFromValue(0);
             fade.setToValue(1);
             fade.play();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     public static void volverAlDashboard() {
         try {
@@ -296,5 +482,26 @@ public class PaginaPrincipal extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        // Estilo personalizado para la alerta
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setStyle("""
+            -fx-background-color: #1B1B1B;
+            -fx-text-fill: white;
+        """);
+        dialogPane.lookup(".content.label").setStyle("-fx-text-fill: white;");
+
+        alert.showAndWait();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
