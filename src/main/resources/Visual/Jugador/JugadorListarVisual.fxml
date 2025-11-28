@@ -57,7 +57,7 @@
 
             </HBox>
 
-            /Buscador
+            <!--Buscador-->
             <TextField fx:id="txtBuscar"
                        promptText="Buscar jugador..."
                        prefWidth="300"
