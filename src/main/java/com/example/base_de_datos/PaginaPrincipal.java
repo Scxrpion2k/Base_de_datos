@@ -37,179 +37,34 @@ public class PaginaPrincipal extends Application {
 
     @Override
     public void start(Stage stage) {
-        this.primaryStage = stage;
-        showLoginScreen();
+
+        BorderPane root = new BorderPane();
+
+
+        HBox topMenu = createTopMenu(stage);
+        root.setTop(topMenu);
+
+        content = new StackPane();
+        content.setId("mainContent");
+        content.setStyle("-fx-background-color: #F4F6F9;");
+        root.setCenter(content);
+
+        try {
+            Parent inicio = FXMLLoader.load(getClass().getResource("/Visual/Inicio/InicioDashboardVisual.fxml"));
+            content.getChildren().setAll(inicio);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Scene scene = new Scene(root, 1400, 850);
+
+        stage.setTitle("Sistema de Torneo de Baloncesto");
+        stage.setScene(scene);
+        stage.setMaximized(true);
+        stage.show();
     }
 
 
-
-    private void showLoginScreen() {
-        BorderPane loginRoot = new BorderPane();
-        loginRoot.setStyle("-fx-background-color: #0A0A0A;");
-
-
-        VBox loginContainer = new VBox(40);
-        loginContainer.setAlignment(Pos.CENTER);
-        loginContainer.setPadding(new Insets(80));
-        loginContainer.setMaxWidth(550);
-        loginContainer.setMaxHeight(600);
-        loginContainer.setStyle("""
-        -fx-background-color: #1B1B1B;
-        -fx-background-radius: 25;
-        -fx-border-radius: 25;
-        -fx-border-color: #F0B501;
-        -fx-border-width: 3;
-        """);
-
-
-        HBox headerBox = new HBox(15);
-
-
-        //ImageView logo = createIcon("/Logo/basketball.png", 70);
-        Label title = new Label("🏀 TORNEO BASKET");
-        title.setStyle("""
-                        -fx-text-fill: #F0B501;  
-                        -fx-font-size: 28px;     
-                        -fx-font-weight: bold;
-                
-                """);
-
-        headerBox.setTranslateX(-50);
-        headerBox.setTranslateY(-10);
-        headerBox.setAlignment(Pos.CENTER);
-//        headerBox.getChildren().addAll(logo, title);
-
-
-        VBox formContainer = new VBox(25);
-        formContainer.setAlignment(Pos.CENTER);
-        formContainer.setPadding(new Insets(40, 50, 40, 50));
-
-        Label loginTitle = new Label("INICIAR SESIÓN");
-        loginTitle.setStyle("""
-            -fx-text-fill: white;
-            -fx-font-size: 26px;
-            -fx-font-weight: bold;
-        """);
-
-
-        VBox userBox = new VBox(10);
-        userBox.setAlignment(Pos.CENTER_LEFT);
-
-        Label userLabel = new Label("Usuario:");
-        userLabel.setStyle("-fx-text-fill: #E5E5E5; -fx-font-size: 16px; -fx-font-weight: 600;");
-
-        TextField userField = new TextField();
-        userField.setStyle("""
-            -fx-background-color: #2D2D2D;
-            -fx-background-radius: 12;
-            -fx-border-radius: 12;
-            -fx-border-color: #444444;
-            -fx-text-fill: white;
-            -fx-font-size: 16px;
-            -fx-padding: 15 18;
-            -fx-pref-width: 300px;
-        """);
-        userField.setPromptText("Ingrese su usuario");
-
-        userBox.getChildren().addAll(userLabel, userField);
-
-
-        VBox passBox = new VBox(10);
-        passBox.setAlignment(Pos.CENTER_LEFT);
-
-        Label passLabel = new Label("Contraseña:");
-        passLabel.setStyle("-fx-text-fill: #E5E5E5; -fx-font-size: 16px; -fx-font-weight: 600;");
-
-        PasswordField passField = new PasswordField();
-        passField.setStyle("""
-            -fx-background-color: #2D2D2D;
-            -fx-background-radius: 12;
-            -fx-border-radius: 12;
-            -fx-border-color: #444444;
-            -fx-text-fill: white;
-            -fx-font-size: 16px;
-            -fx-padding: 15 18;
-            -fx-pref-width: 300px;
-        """);
-        passField.setPromptText("Ingrese su contraseña");
-
-        passBox.getChildren().addAll(passLabel, passField);
-
-
-        Button loginBtn = new Button("ACCEDER AL SISTEMA");
-        loginBtn.setStyle("""
-        -fx-background-color: #F0B501;
-        -fx-background-radius: 15;
-        -fx-text-fill: black;
-        -fx-font-weight: bold;
-        -fx-font-size: 16px;     
-        -fx-padding: 16 30;     
-        -fx-pref-width: 280px;   
-        """);
-
-
-        loginBtn.setOnMouseEntered(e -> loginBtn.setStyle("""
-        -fx-background-color: #FFD166;
-        -fx-background-radius: 15;
-        -fx-text-fill: black;
-        -fx-font-weight: bold;
-        -fx-font-size: 16px;
-        -fx-padding: 16 30;
-        -fx-pref-width: 280px;
-        """));
-
-        loginBtn.setOnMouseExited(e -> loginBtn.setStyle("""
-        -fx-background-color: #F0B501;
-        -fx-background-radius: 15;
-        -fx-text-fill: black;
-        -fx-font-weight: bold;
-        -fx-font-size: 16px;
-        -fx-padding: 16 30;
-        -fx-pref-width: 280px;
-        """));
-
-
-        loginBtn.setOnAction(e -> {
-            String username = userField.getText();
-            String password = passField.getText();
-
-            if (authenticate(username, password)) {
-                showMainApplication();
-            } else {
-                showAlert("Error de autenticación", "Usuario o contraseña incorrectos");
-                passField.clear();
-            }
-        });
-
-
-        userField.setOnAction(e -> loginBtn.fire());
-        passField.setOnAction(e -> loginBtn.fire());
-
-
-        Label demoLabel = new Label("Usuarios demo: admin/admin123 | user/user123");
-        demoLabel.setStyle("-fx-text-fill: #888888; -fx-font-size: 12px;");
-
-        formContainer.getChildren().addAll(loginTitle, userBox, passBox, loginBtn, demoLabel);
-        loginContainer.getChildren().addAll(headerBox, formContainer);
-
-
-        StackPane centerPane = new StackPane(loginContainer);
-        loginRoot.setCenter(centerPane);
-
-        Scene loginScene = new Scene(loginRoot, 1400, 850);
-
-
-        primaryStage.setTitle("Sistema de Torneo de Baloncesto - Login");
-        primaryStage.setScene(loginScene);
-        primaryStage.setMaximized(true);
-        primaryStage.show();
-    }
-
-    private boolean authenticate(String username, String password) {
-
-        return (username.equals("admin") && password.equals("admin123")) ||
-                (username.equals("user") && password.equals("user123"));
-    }
 
     private void showMainApplication() {
         BorderPane root = new BorderPane();
@@ -306,7 +161,7 @@ public class PaginaPrincipal extends Application {
         Button btnJugador = createMenuButton("Jugadores", "user.png");
         Button btnJuego = createMenuButton("Juegos", "timetable.png");
         Button btnEstadistica = createMenuButton("Estadísticas", "estadistica.png");
-        Button btnUser = createMenuButton("Usuario", "user-male-circle.png");
+
 
         addHoverMenu(btnCiudad, "Registrar Ciudad", "Lista Ciudades");
         addHoverMenu(btnEquipo, "Registrar Equipo", "Lista Equipos");
@@ -317,17 +172,6 @@ public class PaginaPrincipal extends Application {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        Button btnLogout = new Button("Cerrar Sesión");
-        btnLogout.setStyle("""
-            -fx-background-color: #DC3545;
-            -fx-background-radius: 12;
-            -fx-text-fill: white;
-            -fx-font-weight: bold;
-            -fx-padding: 8 20;
-        """);
-        btnLogout.setOnAction(e -> {
-            showLoginScreen();
-        });
 
         Button btnSalir = new Button("Salir");
         btnSalir.setStyle("""
@@ -344,8 +188,6 @@ public class PaginaPrincipal extends Application {
                 title,
                 btnCiudad, btnEquipo, btnJugador, btnJuego, btnEstadistica,
                 spacer,
-                btnUser,
-                btnLogout,
                 btnSalir
         );
 
