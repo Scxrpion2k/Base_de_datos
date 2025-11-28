@@ -35,6 +35,16 @@
                        style="-fx-font-size: 22px;
                               -fx-font-weight: 600;
                               -fx-text-fill:#212121;" />
+                <TextField fx:id="txtBuscar"
+                           promptText="Buscar jugador..."
+                           style="-fx-background-color: #F4F6F9;
+                  -fx-padding: 6 12;
+                  -fx-background-radius: 10;
+                  -fx-border-color: #D1D5DB;
+                  -fx-border-radius: 10;
+                  -fx-font-size: 14px;"
+                           prefWidth="240" />
+
 
                 <Region HBox.hgrow="ALWAYS"/>
 
@@ -57,15 +67,6 @@
 
             </HBox>
 
-
-            <TextField fx:id="txtBuscar"
-                       promptText="Buscar jugador..."
-                       prefWidth="300"
-                       style="-fx-background-radius:10;
-                              -fx-padding:10;
-                              -fx-font-size:15px;
-                              -fx-border-color:#C9C9C9;
-                              -fx-border-radius:10;" />
 
 
             <TableView fx:id="tablaJugadores"

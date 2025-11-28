@@ -32,6 +32,7 @@ public class EquipoListar {
     @FXML private TableColumn<EquipoItem, Void> colAcciones;
     @FXML private Button btnRegistrar;
     @FXML private Button btnCerrar;
+    @FXML private TextField txtBuscar;
     private EquipoListar equipoListarController;
 
 
@@ -56,6 +57,7 @@ public class EquipoListar {
         btnCerrar.setOnAction(e -> volverAlMenuPrincipal());
 
         cargarEquiposAsync();
+        //activarFiltro();
     }
 
     public void cargarEquiposAsync() {
@@ -196,6 +198,30 @@ public class EquipoListar {
         colCiudad.setStyle("-fx-alignment: CENTER;");
         colAcciones.setStyle("-fx-alignment: CENTER;");
     }
+
+//    private void activarFiltro() {
+//        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
+//            String filtro = newValue.toLowerCase().trim();
+//
+//            if (filtro.isEmpty()) {
+//                tablaEquipos.setItems(lista);
+//                return;
+//            }
+//
+//            ObservableList<EquipoItem> filtrada = FXCollections.observableArrayList();
+//
+//            for (EquipoItem item : lista) {
+//                if (item.getId().toLowerCase().contains(filtro)
+//                    || item.getNombre().toLowerCase().contains(filtro)
+//                    || item.getCiudad().toLowerCase().contains(filtro)) {
+//                    filtrada.add(item);
+//                }
+//            }
+//
+//            tablaEquipos.setItems(filtrada);
+//        });
+//    }
+
 
     private void abrirVentanaActualizar(EquipoItem item) {
         try {

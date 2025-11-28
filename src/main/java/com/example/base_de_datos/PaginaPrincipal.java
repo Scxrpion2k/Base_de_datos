@@ -169,7 +169,7 @@ public class PaginaPrincipal extends Application {
         addHoverMenu(btnEquipo, "Registrar Equipo", "Lista Equipos");
         addHoverMenu(btnJugador, "Registrar Jugador", "Lista Jugadores");
         addHoverMenu(btnJuego, "Registrar Juego", "Lista Juegos");
-        addHoverMenu(btnEstadistica, "Registrar Estadistica", "Lista de Estadisticas", "Registrar Estadísticas De Juego" ,"Lista de Estadísticas De Juego");
+        addHoverMenu(btnEstadistica, "Registrar Estadistica", "Lista de Estadisticas", "Registrar Estadísticas De Juego");
 
 
 
@@ -184,6 +184,7 @@ public class PaginaPrincipal extends Application {
             -fx-text-fill: black;
             -fx-font-weight: bold;
             -fx-padding: 8 20;
+            -fx-cursor: hand;
         """);
         btnSalir.setOnAction(e -> stage.close());
 
@@ -299,8 +300,6 @@ public class PaginaPrincipal extends Application {
                 case "Lista Juegos" -> path = "/Visual/Juego/JuegoListarVisual.fxml";
                 case "Lista de Estadisticas" -> path = "/Visual/Estadistica/EstadisticaListarVisual.fxml";
                 case "Registrar Estadísticas De Juego" -> path = "/Visual/EstadisticaJuego/EstadisticaJuegoListarVisual.fxml";
-                case "Lista de Estadísticas De Juego" -> path = "/Visual/EstadisticaJuego/EstadisticaJuegoListarVisual.fxml";
-
 
                 default -> { return; }
             }

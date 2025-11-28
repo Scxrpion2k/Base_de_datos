@@ -45,7 +45,7 @@ public class JuegoListar {
     private Button btnRegistrar;
     @FXML
     private Button btnCerrar;
-
+    @FXML private TextField txtBuscar;
     private final ObservableList<JuegoItem> lista = FXCollections.observableArrayList();
 
     @FXML
@@ -65,8 +65,8 @@ public class JuegoListar {
         hacerTablaResponsive();
         centrarColumnas();
         agregarBotones();
-
         cargarJuegosAsync();
+        //ctivarFiltro();
     }
 
 
@@ -247,6 +247,32 @@ public class JuegoListar {
             ex.printStackTrace();
         }
     }
+
+//    private void activarFiltro() {
+//        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
+//            String filtro = newValue.toLowerCase().trim();
+//
+//            if (filtro.isEmpty()) {
+//                tablaJuegos.setItems(lista);
+//                return;
+//            }
+//
+//            ObservableList<JuegoItem> filtrada = FXCollections.observableArrayList();
+//
+//            for (JuegoItem item : lista) {
+//                if (item.getIdJuego().toLowerCase().contains(filtro)
+//                        || item.getDescripcion().toLowerCase().contains(filtro)
+//                        || item.getEquipoA().toLowerCase().contains(filtro)
+//                        || item.getEquipoB().toLowerCase().contains(filtro)
+//                        || item.getFecha().toLowerCase().contains(filtro)) {
+//                    filtrada.add(item);
+//                }
+//            }
+//
+//            tablaJuegos.setItems(filtrada);
+//        });
+//    }
+
 
     private void abrirVentanaActualizar(JuegoItem item) {
         try {

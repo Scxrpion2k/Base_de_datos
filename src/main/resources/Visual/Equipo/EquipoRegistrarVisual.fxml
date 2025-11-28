@@ -15,7 +15,7 @@
 
     <VBox alignment="CENTER"
           spacing="30"
-          translateY="-70"
+          translateY="-10"
           AnchorPane.bottomAnchor="0"
           AnchorPane.leftAnchor="0"
           AnchorPane.rightAnchor="0"

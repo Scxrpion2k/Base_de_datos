@@ -61,7 +61,6 @@ public class EstadisticaJuegoListar {
         cargarJuegosAsync();
 
 
-        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> filtrarTabla(newValue));
     }
 
 
@@ -115,27 +114,6 @@ public class EstadisticaJuegoListar {
 
         new Thread(task).start();
     }
-
-
-    private void filtrarTabla(String filtro) {
-        if (filtro == null || filtro.trim().isEmpty()) {
-            tablaJuegos.setItems(lista);
-            return;
-        }
-
-        String lower = filtro.toLowerCase();
-        ObservableList<JuegoItem> filtrada = FXCollections.observableArrayList();
-
-        for (JuegoItem juego : lista) {
-            if (juego.getDescripcion().toLowerCase().contains(lower)) {
-                filtrada.add(juego);
-            }
-        }
-
-        tablaJuegos.setItems(filtrada);
-        tablaJuegos.refresh();
-    }
-
 
     private void agregarBotones() {
         colAcciones.setCellFactory(col -> new TableCell<>() {

@@ -27,6 +27,7 @@ public class EstadisticaListar {
     @FXML private TableColumn<EstadisticaItem, String> colDescripcion;
     @FXML private TableColumn<EstadisticaItem, Integer> colValor;
     @FXML private TableColumn<EstadisticaItem, Void> colAcciones;
+    @FXML private TextField txtBuscar;
 
     private ObservableList<EstadisticaItem> lista = FXCollections.observableArrayList();
 
@@ -42,6 +43,7 @@ public class EstadisticaListar {
         centrarColumnas();
         cargarEstadisticas();
         agregarBotones();
+       // activarFiltro();
     }
 
     void cargarEstadisticas() {
@@ -127,6 +129,30 @@ public class EstadisticaListar {
             }
         }
     }
+
+//    private void activarFiltro() {
+//        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
+//            String filtro = newValue.toLowerCase().trim();
+//
+//            if (filtro.isEmpty()) {
+//                tablaEstadisticas.setItems(lista);
+//                return;
+//            }
+//
+//            ObservableList<EstadisticaItem> filtrada = FXCollections.observableArrayList();
+//
+//            for (EstadisticaItem item : lista) {
+//                if (item.getIdEstadistica().toLowerCase().contains(filtro)
+//                        || item.getDescripcionEstadistica().toLowerCase().contains(filtro)
+//                        || String.valueOf(item.getValor()).contains(filtro)) {
+//                    filtrada.add(item);
+//                }
+//            }
+//
+//            tablaEstadisticas.setItems(filtrada);
+//        });
+//    }
+
 
     private void abrirVentanaActualizar(EstadisticaItem item) {
 

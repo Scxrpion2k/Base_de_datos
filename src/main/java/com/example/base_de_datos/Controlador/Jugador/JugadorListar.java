@@ -65,34 +65,12 @@ public class JugadorListar {
 
 
         cargarJugadoresAsync();
+     //   activarFiltro();
 
 
-        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> filtrarTabla(newValue));
     }
 
 
-    private void filtrarTabla(String filtro) {
-
-        if (filtro == null || filtro.trim().isEmpty()) {
-            tablaJugadores.setItems(lista);
-            return;
-        }
-
-        String lower = filtro.toLowerCase();
-
-        ObservableList<JugadorItem> filtrada = FXCollections.observableArrayList();
-
-        for (JugadorItem j : lista) {
-
-            if (j.getNombre().toLowerCase().contains(lower)
-) {
-
-                filtrada.add(j);
-            }
-        }
-
-        tablaJugadores.setItems(filtrada);
-    }
 
     private void centrarColumnas() {
         colId.setStyle("-fx-alignment: CENTER;");
@@ -234,6 +212,33 @@ public class JugadorListar {
             e.printStackTrace();
         }
     }
+
+//    private void activarFiltro() {
+//        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
+//            String filtro = newValue.toLowerCase().trim();
+//
+//            if (filtro.isEmpty()) {
+//                tablaJugadores.setItems(lista);
+//                return;
+//            }
+//
+//            ObservableList<JugadorItem> filtrada = FXCollections.observableArrayList();
+//
+//            for (JugadorItem item : lista) {
+//                if (item.getId().toLowerCase().contains(filtro)
+//                        || item.getNombre().toLowerCase().contains(filtro)
+//                        || item.getCiudadNacimiento().toLowerCase().contains(filtro)
+//                        || item.getFechaNacimiento().toLowerCase().contains(filtro)
+//                        || item.getNumero().toLowerCase().contains(filtro)
+//                        || item.getEquipo().toLowerCase().contains(filtro)) {
+//
+//                    filtrada.add(item);
+//                }
+//            }
+//
+//            tablaJugadores.setItems(filtrada);
+//        });
+//    }
 
 
     public void abrirFormularioRegistro() {

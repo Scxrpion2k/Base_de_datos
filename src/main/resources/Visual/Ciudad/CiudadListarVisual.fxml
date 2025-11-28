@@ -34,8 +34,19 @@
 
                 <Label text="Ciudades Registradas"
                        style="-fx-font-size: 20px;
-                              -fx-font-weight: 600;
-                              -fx-text-fill: #212121;" />
+                  -fx-font-weight: 600;
+                  -fx-text-fill: #212121;" />
+
+                <TextField fx:id="txtBuscar"
+                           promptText="Buscar ciudad..."
+                           style="-fx-background-color: #F4F6F9;
+                      -fx-padding: 6 12;
+                      -fx-background-radius: 10;
+                      -fx-border-color: #D1D5DB;
+                      -fx-border-radius: 10;
+                      -fx-font-size: 14px;"
+                           prefWidth="220" />
+
 
                 <Region HBox.hgrow="ALWAYS"/>
 
@@ -43,11 +54,11 @@
                         fx:id="btnRegistrar"
                         onAction="#abrirFormularioRegistro"
                         style="-fx-background-color: #0d6efd;
-                               -fx-text-fill: white;
-                               -fx-background-radius: 10;
-                               -fx-font-weight: bold;
-                               -fx-padding: 8 14;
-                               -fx-cursor: hand;" />
+                   -fx-text-fill: white;
+                   -fx-background-radius: 10;
+                   -fx-font-weight: bold;
+                   -fx-padding: 8 14;
+                   -fx-cursor: hand;" />
 
                 <Button fx:id="btnCerrar"
                         onAction="#volverAlMenuPrincipal"
@@ -59,21 +70,6 @@
                 </Button>
 
             </HBox>
-
-
-            <HBox alignment="CENTER_LEFT" spacing="10">
-                <Label text="Buscar Ciudad:"
-                       style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #212121;" />
-                <TextField fx:id="txtBuscar"
-                           promptText="Buscar ciudad..."
-                           prefWidth="300"
-                           style="-fx-background-radius:10;
-                                  -fx-padding:10;
-                                  -fx-font-size:15px;
-                                  -fx-border-color:#C9C9C9;
-                                  -fx-border-radius:10;" />
-            </HBox>
-
 
             <TableView fx:id="tablaCiudades"
                        prefHeight="450"
