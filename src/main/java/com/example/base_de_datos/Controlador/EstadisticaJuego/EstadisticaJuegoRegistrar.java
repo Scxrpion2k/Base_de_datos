@@ -26,6 +26,10 @@ public class EstadisticaJuegoRegistrar {
     private AnchorPane rootRegistrar;
 
     private JuegoItem juego;
+    private EstadisticaJuegoVer estadisticaJuegoVerController;
+    public void setEstadisticaJuegoVerController(EstadisticaJuegoVer controller) {
+        this.estadisticaJuegoVerController = controller;
+    }
 
 
     public void setJuego(JuegoItem juego) {
@@ -170,6 +174,9 @@ public class EstadisticaJuegoRegistrar {
 
             mostrar("Estadística guardada correctamente.");
 
+            if (estadisticaJuegoVerController != null) {
+                estadisticaJuegoVerController.refrescarTabla();
+            }
         } catch (Exception e) {
             mostrar("Error al guardar la estadística.");
             e.printStackTrace();
@@ -185,24 +192,17 @@ public class EstadisticaJuegoRegistrar {
     }
 
     @FXML
-    public void cerrar() {
-        try {
-            AnchorPane modal = rootRegistrar;
-            StackPane parent = (StackPane) modal.getParent();
+    private void cerrar() {
 
-            FadeTransition fade = new FadeTransition(Duration.millis(200), modal);
-            fade.setFromValue(1);
-            fade.setToValue(0);
+        FadeTransition fade = new FadeTransition(Duration.millis(200), rootRegistrar);
+        fade.setFromValue(1);
+        fade.setToValue(0);
 
-            fade.setOnFinished(e -> {
-                PaginaPrincipal.volverAlDashboard();
-                modal.setVisible(false);
-            });
+        fade.setOnFinished(e -> {
+            StackPane content = (StackPane) rootRegistrar.getParent();
+            content.getChildren().remove(rootRegistrar);
+        });
 
-            fade.play();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        fade.play();
     }
 }

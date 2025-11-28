@@ -33,7 +33,11 @@ public class EstadisticaJuegoListar {
     @FXML private Button btnCerrar;
 
     private final ObservableList<JuegoItem> lista = FXCollections.observableArrayList();
+    private EstadisticaJuegoVer estadisticaJuegoVerController;
 
+    public void setEstadisticaJuegoVerController(EstadisticaJuegoVer controller) {
+        this.estadisticaJuegoVerController = controller;
+    }
     @FXML
     public void initialize() {
 
@@ -144,6 +148,7 @@ public class EstadisticaJuegoListar {
 
             EstadisticaJuegoRegistrar controller = loader.getController();
             controller.setJuego(juego);
+           // controller.setEstadisticaJuegoVerController(this);
 
             BorderPane root = (BorderPane) tablaJuegos.getScene().getRoot();
             StackPane content = (StackPane) root.getCenter();

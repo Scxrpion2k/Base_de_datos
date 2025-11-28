@@ -20,6 +20,12 @@ public class EstadisticaJuegoEditar {
     @FXML private TextField txtCantidad;
 
     private String idJuego, idEquipo, idJugador, idEstadistica;
+    private EstadisticaJuegoVer estadisticaJuegoVerController;
+
+    public void setEstadisticaJuegoVerController(EstadisticaJuegoVer controller) {
+        this.estadisticaJuegoVerController = controller;
+    }
+
 
     public void cargarDatos(String idJuego, EstadisticaJuegoItem item) {
         this.idJuego = idJuego;
@@ -58,7 +64,9 @@ public class EstadisticaJuegoEditar {
             ps.setString(5, idEstadistica);
 
             ps.executeUpdate();
-
+            if (estadisticaJuegoVerController != null) {
+                estadisticaJuegoVerController.refrescarTabla();
+            }
             cerrar();
 
         } catch (Exception e) {
