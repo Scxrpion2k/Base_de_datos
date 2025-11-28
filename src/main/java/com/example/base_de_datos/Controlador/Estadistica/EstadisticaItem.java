@@ -1,19 +1,26 @@
 package com.example.base_de_datos.Controlador.Estadistica;
 
 public class EstadisticaItem {
-    private String id;
-    private String nombre;
 
-    public EstadisticaItem(String id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
+    private String idEstadistica;
+    private String descripcionEstadistica;
+    private int valor;
+
+    public EstadisticaItem(String idEstadistica, String descripcionEstadistica, int valor) {
+        this.idEstadistica = idEstadistica;
+        this.descripcionEstadistica = descripcionEstadistica;
+        this.valor = valor;
     }
 
-    public String getId() { return id; }
-    public String getNombre() { return nombre; }
+    public String getIdEstadistica() {
+        return idEstadistica;
+    }
 
-    @Override
-    public String toString() {
-        return nombre;
+    public String getDescripcionEstadistica() {
+        return descripcionEstadistica;
+    }
+
+    public int getValor() {
+        return valor;
     }
 }

@@ -81,28 +81,32 @@ public class JuegoRegistrar {
         try (Connection con = Conexion.getConnection()) {
 
             String sql = """
-                INSERT INTO Juego (idJuego, descripcionJuego, idEquipoA, idEquipoB, fechaJuego)
-                VALUES (?, ?, ?, ?, ?)
-            """;
+            INSERT INTO Juego (idJuego, descripcionJuego, idEquipoA, idEquipoB, fechaJuego)
+            VALUES (?, ?, ?, ?, ?)
+        """;
 
             PreparedStatement ps = con.prepareStatement(sql);
-
             ps.setString(1, id);
             ps.setString(2, desc);
             ps.setString(3, equipoA.getId());
             ps.setString(4, equipoB.getId());
             ps.setString(5, fecha);
-
             ps.executeUpdate();
 
             mostrar("Juego registrado correctamente.");
-            limpiar();
+
+            if (juegoListarController != null) {
+                juegoListarController.cargarJuegosAsync();
+            }
+
+            cerrarFormulario();
 
         } catch (Exception e) {
             e.printStackTrace();
             mostrar("Error al registrar juego.");
         }
     }
+
 
     @FXML
     private void limpiar() {

@@ -49,6 +49,7 @@ public class EstadisticaJuegoVer {
         colCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
 
         agregarBotonesAcciones();
+        centrarColumna();
     }
 
     public void cargarJuego(JuegoItem juego) {
@@ -150,6 +151,7 @@ public class EstadisticaJuegoVer {
 
             EstadisticaJuegoEditar controller = loader.getController();
             controller.cargarDatos(idJuegoActual, item);
+            controller.setEstadisticaJuegoVerController(this);
 
             StackPane content = (StackPane) rootEstadisticas.getParent();
             modal.setOpacity(0);
@@ -194,8 +196,26 @@ public class EstadisticaJuegoVer {
         }
     }
 
+    public void refrescarTabla() {
+        if (idJuegoActual != null) {
+            cargarEstadisticas(idJuegoActual);
+        }
+    }
+
+    private void centrarColumna() {
+        tablaEstadisticas.setStyle("-fx-alignment: CENTER;");
+        colEquipo.setStyle("-fx-alignment: CENTER;");
+        colJugador.setStyle("-fx-alignment: CENTER;");
+        colEstadistica.setStyle("-fx-alignment: CENTER;");
+        colCantidad.setStyle("-fx-alignment: CENTER;");
+        colAcciones.setStyle("-fx-alignment: CENTER;");
+    }
+
+
+
     @FXML
     private void cerrar() {
+
         FadeTransition fade = new FadeTransition(Duration.millis(200), rootEstadisticas);
         fade.setFromValue(1);
         fade.setToValue(0);
@@ -203,11 +223,11 @@ public class EstadisticaJuegoVer {
         fade.setOnFinished(e -> {
             StackPane parent = (StackPane) rootEstadisticas.getParent();
             parent.getChildren().remove(rootEstadisticas);
-            PaginaPrincipal.volverAlDashboard();
         });
 
         fade.play();
     }
+
 
 
 }

@@ -2,9 +2,16 @@
   <dictionary name="project">
     <words>
       <w>Equipo</w>
+      <w>ciudades</w>
+      <w>equipos</w>
       <w>estadistica</w>
+      <w>estadísticas</w>
       <w>juego</w>
+      <w>juegos</w>
       <w>jugador</w>
+      <w>jugadores</w>
+      <w>lista</w>
+      <w>listar</w>
     </words>
   </dictionary>
 </component>

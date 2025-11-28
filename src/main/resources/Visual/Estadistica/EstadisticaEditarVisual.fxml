@@ -7,16 +7,20 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.base_de_datos.Controlador.Ciudad.CiudadEditar"
-            fx:id="rootEditarCiudad"
+            fx:controller="com.example.base_de_datos.Controlador.Estadistica.EstadisticaEditar"
+            fx:id="rootEditar"
             style="-fx-background-color: rgba(0,0,0,0.45);">
 
     <VBox alignment="CENTER"
           translateY="-70"
           translateX="-30"
-          prefWidth="1500" prefHeight="800">
+          maxWidth="Infinity"
+          maxHeight="Infinity"
+          AnchorPane.topAnchor="0"
+          AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0">
 
-        <!-- CARD -->
         <VBox spacing="18"
               alignment="TOP_CENTER"
               style="-fx-background-color: white;
@@ -24,7 +28,6 @@
                      -fx-padding: 25;
                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0, 0, 5);"
               maxWidth="450">
-
 
             <HBox alignment="CENTER_RIGHT" prefWidth="400">
                 <Region HBox.hgrow="ALWAYS"/>
@@ -37,24 +40,29 @@
                 </Button>
             </HBox>
 
-            <Label text="Editar Ciudad"
+            <Label text="Editar Estadística"
                    style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill:#222;"/>
 
             <VBox spacing="12" alignment="CENTER_LEFT" prefWidth="380">
 
-                <Label text="ID Ciudad" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
-                <TextField fx:id="txtIdCiudad"
-                           promptText="ID Ciudad"
+                <Label text="ID Estadística" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                <TextField fx:id="txtIdEstadistica"
+                           promptText="ID Estadística"
                            style="-fx-background-radius: 10; -fx-padding: 8;"
-                            disable="true"/>
+                           disable="true"/>
 
-                <Label text="Nombre Ciudad" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
-                <TextField fx:id="txtNombreCiudad"
-                           promptText="Nombre Ciudad"
+                <Label text="Descripción" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                <TextField fx:id="txtDescripcion"
+                           promptText="Descripción"
                            style="-fx-background-radius: 10; -fx-padding: 8;"/>
+
+                <Label text="Valor" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                <TextField fx:id="txtValor"
+                           promptText="Valor"
+                           style="-fx-background-radius: 10; -fx-padding: 8;"/>
+
             </VBox>
 
-            <!-- BOTONES -->
             <HBox spacing="12" alignment="CENTER">
 
                 <Button text="Guardar Cambios"
@@ -76,6 +84,7 @@
             </HBox>
 
         </VBox>
+
     </VBox>
 
 </AnchorPane>

@@ -12,9 +12,13 @@
             prefWidth="1200" prefHeight="700"
             style="-fx-background-color: rgba(0,0,0,0.35);">
 
-    <VBox spacing="25" alignment="TOP_CENTER"
-          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
-          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0">
+    <VBox spacing="25"
+          alignment="TOP_CENTER"
+          translateY="-70"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0"
+          AnchorPane.topAnchor="0"
+          AnchorPane.bottomAnchor="0">
 
         <VBox spacing="18"
               alignment="TOP_CENTER"
@@ -24,7 +28,6 @@
                      -fx-background-radius: 20;
                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18),22,0,0,5);">
 
-            <!-- CERRAR -->
             <HBox alignment="TOP_RIGHT">
                 <Button onAction="#cerrar"
                         style="-fx-background-color: transparent; -fx-cursor: hand;">
@@ -35,14 +38,12 @@
                 </Button>
             </HBox>
 
-            <!-- TITULO -->
             <Label fx:id="lblJuego"
                    style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill:#222;" />
 
             <Label fx:id="lblEquipos"
                    style="-fx-font-size: 22px; -fx-font-weight: 600; -fx-text-fill:#333;" />
 
-            <!-- TABLA -->
             <TableView fx:id="tablaEstadisticas"
                        prefHeight="500"
                        prefWidth="1000"

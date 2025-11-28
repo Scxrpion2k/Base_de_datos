@@ -308,11 +308,11 @@ public class PaginaPrincipal extends Application {
         Button btnEstadistica = createMenuButton("Estadísticas", "estadistica.png");
         Button btnUser = createMenuButton("Usuario", "user-male-circle.png");
 
-        addHoverMenu(btnCiudad, "Registrar Ciudad", "Listar Ciudades");
-        addHoverMenu(btnEquipo, "Registrar Equipo", "Listar Equipos");
-        addHoverMenu(btnJugador, "Registrar Jugador", "Listar Jugadores");
-        addHoverMenu(btnJuego, "Registrar Juego", "Listar Juegos");
-        addHoverMenu(btnEstadistica, "Registrar Estadísticas Por Juego");
+        addHoverMenu(btnCiudad, "Registrar Ciudad", "Lista Ciudades");
+        addHoverMenu(btnEquipo, "Registrar Equipo", "Lista Equipos");
+        addHoverMenu(btnJugador, "Registrar Jugador", "Lista Jugadores");
+        addHoverMenu(btnJuego, "Registrar Juego", "Lista Juegos");
+        addHoverMenu(btnEstadistica, "Registrar Estadistica", "Registrar Estadísticas Por Juego" , "Lista de Estadisticas");
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -338,6 +338,7 @@ public class PaginaPrincipal extends Application {
             -fx-padding: 8 20;
         """);
         btnSalir.setOnAction(e -> stage.close());
+
 
         menu.getChildren().addAll(
                 title,
@@ -440,10 +441,17 @@ public class PaginaPrincipal extends Application {
                     abrirModal("/Visual/Juego/JuegoRegistrarVisual.fxml", "modalRegistrarJuego");
                     return;
                 }
-                case "Listar Ciudades" -> path = "/Visual/Ciudad/CiudadListarVisual.fxml";
-                case "Listar Equipos" -> path = "/Visual/Equipo/EquipoListarVisual.fxml";
-                case "Listar Jugadores" -> path = "/Visual/Jugador/JugadorListarVisual.fxml";
-                case "Listar Juegos" -> path = "/Visual/Juego/JuegoListarVisual.fxml";
+
+                case "Registrar Estadistica" -> {
+                    abrirModal( "/Visual/Estadistica/EstadisticaRegistrarVisual.fxml", "modalEstadistica");
+                    return;
+                }
+
+                case "Lista Ciudades" -> path = "/Visual/Ciudad/CiudadListarVisual.fxml";
+                case "Lista Equipos" -> path = "/Visual/Equipo/EquipoListarVisual.fxml";
+                case "Lista Jugadores" -> path = "/Visual/Jugador/JugadorListarVisual.fxml";
+                case "Lista Juegos" -> path = "/Visual/Juego/JuegoListarVisual.fxml";
+                case "Lista de Estadisticas" -> path = "/Visual/Estadistica/EstadisticaListarVisual.fxml";
                 case "Registrar Estadísticas Por Juego" -> path = "/Visual/EstadisticaJuego/EstadisticaJuegoListarVisual.fxml";
                 default -> { return; }
             }

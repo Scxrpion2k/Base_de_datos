@@ -92,11 +92,11 @@ public class JuegoEditar {
     @FXML
     public void guardarCambios() {
 
-        if (txtIdJuego.getText().isEmpty() ||
-                txtDescripcion.getText().isEmpty() ||
-                cmbEquipoA.getValue() == null ||
-                cmbEquipoB.getValue() == null ||
-                dpFecha.getValue() == null) {
+        if (txtIdJuego.getText().isEmpty()
+                || txtDescripcion.getText().isEmpty()
+                || cmbEquipoA.getValue() == null
+                || cmbEquipoB.getValue() == null
+                || dpFecha.getValue() == null) {
 
             mostrar("Todos los campos son obligatorios.");
             return;
@@ -111,9 +111,9 @@ public class JuegoEditar {
         }
 
         String sql = """
-            UPDATE Juego
-            SET idJuego = ?, descripcionJuego = ?, idEquipoA = ?, idEquipoB = ?, fechaJuego = ?
-            WHERE idJuego = ?
+        UPDATE Juego
+        SET idJuego = ?, descripcionJuego = ?, idEquipoA = ?, idEquipoB = ?, fechaJuego = ?
+        WHERE idJuego = ?
         """;
 
         try (Connection con = Conexion.getConnection();
@@ -130,11 +130,18 @@ public class JuegoEditar {
 
             mostrar("Juego actualizado con éxito.");
 
+            if (juegoListarController != null) {
+                juegoListarController.cargarJuegosAsync();
+            }
+
+            cerrarVentana();
+
         } catch (Exception e) {
             e.printStackTrace();
             mostrar("Error al actualizar el juego.");
         }
     }
+
 
     private void mostrar(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK);

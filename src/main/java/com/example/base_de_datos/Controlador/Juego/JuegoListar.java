@@ -89,7 +89,7 @@ public class JuegoListar {
     }
 
 
-    private void cargarJuegosAsync() {
+    public void cargarJuegosAsync() {
 
         Task<ObservableList<JuegoItem>> task = new Task<>() {
             @Override
