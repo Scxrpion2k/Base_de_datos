@@ -14,7 +14,12 @@
     <VBox alignment="CENTER"
           translateY="-70"
           translateX="-30"
-          prefWidth="1500" prefHeight="800">
+          maxWidth="Infinity"
+          maxHeight="Infinity"
+          AnchorPane.topAnchor="0"
+          AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0">
 
         <!-- CARD -->
         <VBox spacing="18"

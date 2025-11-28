@@ -35,11 +35,10 @@
                 </Button>
             </HBox>
 
-            <!-- TÍTULO -->
+
             <Label text="Registrar Estadística del Juego"
                    style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill:#222;" />
 
-            <!-- FORMULARIO -->
             <GridPane hgap="25" vgap="20">
 
                 <columnConstraints>
@@ -47,7 +46,6 @@
                     <ColumnConstraints halignment="LEFT" minWidth="260" />
                 </columnConstraints>
 
-                <!-- FILA 0: Juego -->
                 <Label text="Juego:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
                 <TextField fx:id="txtIdJuego"
                            editable="false"
@@ -55,7 +53,7 @@
                                   -fx-opacity: 1; -fx-background-color: #E9ECEF;"
                            GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
-                <!-- FILA 1: Equipo -->
+
                 <Label text="Equipo:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
                 <ComboBox fx:id="cmbEquipo"
                           promptText="Seleccione equipo"

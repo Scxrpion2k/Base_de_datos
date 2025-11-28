@@ -122,7 +122,7 @@ public class EstadisticaJuegoListar {
 
             {
                 contenedor.setAlignment(Pos.CENTER);
-                btnRegistrar.setStyle("-fx-background-color:#198754; -fx-text-fill:white; -fx-background-radius:8;");
+                btnRegistrar.setStyle("-fx-background-color:#198754; -fx-text-fill:white; -fx-background-radius:8; -fx-cursor:hand;");
 
                 btnRegistrar.setOnAction(e -> {
                     JuegoItem item = getTableView().getItems().get(getIndex());

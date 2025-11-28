@@ -18,7 +18,8 @@
         <Label text="Registrar Estadísticas por Juego"
                style="-fx-font-size: 30px;
                       -fx-font-weight: 700;
-                      -fx-text-fill: #1F1F1F;" />
+                      -fx-text-fill: #1F1F1F;
+                        -fx-cursor: hand" />
 
         <VBox spacing="15"
               prefWidth="900"

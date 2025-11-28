@@ -8,8 +8,7 @@
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.base_de_datos.Controlador.EstadisticaJuego.EstadisticaJuegoEditar"
-            prefWidth="600" prefHeight="400"
-            style="-fx-background-color: rgba(0,0,0,0.30);">
+            prefWidth="600" prefHeight="400">
 
     <VBox spacing="20" alignment="CENTER"
           AnchorPane.topAnchor="0"
@@ -28,7 +27,9 @@
 
             <HBox alignment="TOP_RIGHT">
                 <Button onAction="#cerrar"
-                        style="-fx-background-color: transparent;">
+                        style="-fx-background-color: transparent;
+                         -fx-cursor: hand">
+
                     <graphic>
                         <SVGPath content="M4 4 L16 16 M16 4 L4 16"
                                  style="-fx-stroke:#444; -fx-stroke-width:2"/>
