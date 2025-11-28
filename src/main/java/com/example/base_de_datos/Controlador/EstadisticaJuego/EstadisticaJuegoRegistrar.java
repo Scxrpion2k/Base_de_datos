@@ -95,7 +95,7 @@ public class EstadisticaJuegoRegistrar {
 
             while (rs.next()) {
                 cmbJugador.getItems().add(
-                        rs.getString("idJugador") + " - " + rs.getString("nombre_jugador")
+                        rs.getString("idjugador") + " - " + rs.getString("nombre_jugador")
                 );
             }
 
@@ -156,7 +156,7 @@ public class EstadisticaJuegoRegistrar {
             String idEstadistica = estadistica.split(" - ")[0];
 
             String sql = """
-                INSERT INTO EstadisticaDeJuego(idjuego, idestadistica, idequipo, idjugador, cantidad)
+                INSERT INTO Estadistica_Juego(idjuego, idestadistica, idequipo, idjugador, cantidad)
                 VALUES (?, ?, ?, ?, ?)
                 """;
 
