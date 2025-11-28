@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.SVGPath?>
+
+<AnchorPane fx:id="rootEditar"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.base_de_datos.Controlador.EstadisticaJuego.EstadisticaJuegoEditar"
+            prefWidth="600" prefHeight="400">
+
+    <VBox spacing="20" alignment="CENTER"
+          AnchorPane.topAnchor="0"
+          translateY="-70"
+          AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0">
+
+        <VBox spacing="15"
+              maxWidth="450"
+              alignment="TOP_CENTER"
+              style="-fx-background-color: white;
+                     -fx-padding: 25;
+                     -fx-background-radius: 18;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 20, 0, 0, 5);">
+
+            <HBox alignment="TOP_RIGHT">
+                <Button onAction="#cerrar"
+                        style="-fx-background-color: transparent;
+                         -fx-cursor: hand">
+
+                    <graphic>
+                        <SVGPath content="M4 4 L16 16 M16 4 L4 16"
+                                 style="-fx-stroke:#444; -fx-stroke-width:2"/>
+                    </graphic>
+                </Button>
+            </HBox>
+
+            <Label text="Editar Estadística"
+                   style="-fx-font-size:22px; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="25" vgap="15">
+
+                <Label text="Equipo:" />
+                <TextField fx:id="txtEquipo" GridPane.columnIndex="1"/>
+
+                <Label text="Jugador:" GridPane.rowIndex="1"/>
+                <TextField fx:id="txtJugador" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                <Label text="Estadística:" GridPane.rowIndex="2"/>
+                <TextField fx:id="txtEstadistica" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                <Label text="Cantidad:" GridPane.rowIndex="3"/>
+                <TextField fx:id="txtCantidad" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+            </GridPane>
+
+            <Button text="Guardar Cambios"
+                    onAction="#guardarCambios"
+                    style="-fx-background-color:#0d6efd; -fx-text-fill:white; -fx-padding:10 20; -fx-background-radius:10;"/>
+
+        </VBox>
+
+    </VBox>
+</AnchorPane>

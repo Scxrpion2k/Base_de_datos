@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.base_de_datos.Controlador.Inicio.InicioDashboard"
+            style="-fx-background-color:#F4F6F9;">
+
+    <VBox alignment="TOP_CENTER"
+          spacing="5"
+          AnchorPane.topAnchor="20"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0">
+
+
+        <Label text="Últimos Juegos"
+               style="-fx-font-size: 36px;
+                      -fx-font-weight: bold;
+                      -fx-text-fill:#0D0D0D;" />
+
+
+        <HBox alignment="CENTER" spacing="15">
+            <TextField fx:id="txtBuscarJuego"
+                       promptText="Buscar juego por ID (ej: 76)"
+                       style="-fx-background-radius: 16;
+                              -fx-padding: 12 20;
+                              -fx-font-size: 15px;"
+                       prefWidth="360"/>
+
+            <Button fx:id="btnBuscarJuego"
+                    text="Buscar"
+                    style="-fx-background-color: #0d6efd;
+                           -fx-text-fill: white;
+                           -fx-font-size: 14px;
+                           -fx-font-weight: bold;
+                           -fx-background-radius: 14;
+                           -fx-padding: 10 25;"/>
+        </HBox>
+
+
+        <Region prefHeight="10"/>
+
+
+        <ScrollPane fx:id="scrollJuegos"
+                    prefHeight="420"
+                    hbarPolicy="ALWAYS"
+                    vbarPolicy="NEVER"
+                    fitToHeight="false"
+                    fitToWidth="true"
+                    pannable="true"
+                    style="-fx-background-color: transparent;
+                   -fx-border-color: transparent;
+                   -fx-padding: 0;">
+
+            <HBox fx:id="contenedorJuegos"
+                  alignment="CENTER"
+                  spacing="45"
+                  style="-fx-padding: 10 40;" />
+        </ScrollPane>
+    </VBox>
+</AnchorPane>

@@ -6,6 +6,12 @@ public class EquipoItem {
     private String nombre;
     private String ciudad;
 
+    public EquipoItem(String id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+        this.ciudad = null;
+    }
+
     public EquipoItem(String id, String nombre, String ciudad) {
         this.id = id;
         this.nombre = nombre;
@@ -20,5 +26,4 @@ public class EquipoItem {
     public String toString() {
         return nombre;
     }
-
 }

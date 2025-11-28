@@ -1,20 +1,28 @@
 package com.example.base_de_datos.Controlador.Ciudad;
 
 import com.example.base_de_datos.Conexion.Conexion;
+import com.example.base_de_datos.PaginaPrincipal;
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class CiudadRegistrar {
 
-    @FXML private TextField txtIdCiudad;
-    @FXML private TextField txtNombreCiudad;
+    @FXML
+    private TextField txtIdCiudad;
+    @FXML
+    private TextField txtNombreCiudad;
+
+    @FXML
+    private AnchorPane rootRegistrar;
+
+    private CiudadListar ciudadListarController;
 
     @FXML
     private void guardarCiudad() {
@@ -23,7 +31,7 @@ public class CiudadRegistrar {
         String nombre = txtNombreCiudad.getText().trim();
 
         if (id.isEmpty() || nombre.isEmpty()) {
-            showAlert("Todos los campos son obligatorios.");
+            mostrar("Todos los campos son obligatorios.");
             return;
         }
 
@@ -32,23 +40,27 @@ public class CiudadRegistrar {
         try (Connection con = Conexion.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            if (con == null) {
-                showAlert("No se puede conectar a la base de datos.");
-                return;
-            }
-
             ps.setString(1, id);
             ps.setString(2, nombre);
-
             ps.executeUpdate();
 
-            showAlert("Ciudad registrada correctamente.");
+            mostrar("Ciudad registrada correctamente.");
+
+            if (ciudadListarController != null) {
+                ciudadListarController.cargarCiudades();
+            }
+
             limpiar();
 
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Error al registrar la ciudad. Verifica que el ID no exista.");
+            mostrar("Error al registrar la ciudad. Verifica que el ID no exista.");
         }
+    }
+
+    private void mostrar(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, mensaje, ButtonType.OK);
+        alert.show();
     }
 
     @FXML
@@ -57,21 +69,35 @@ public class CiudadRegistrar {
         txtNombreCiudad.clear();
     }
 
-    private void showAlert(String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, mensaje, ButtonType.OK);
-        alert.show();
+    public void setCiudadListarController(CiudadListar controller) {
+        this.ciudadListarController = controller;
     }
 
-    public void volverAlMenuPrincipal() {
+    @FXML
+    public void cerrarFormulario() {
         try {
-            BorderPane root = (BorderPane) txtIdCiudad.getScene().getRoot();
+            AnchorPane modal = rootRegistrar;
+            StackPane parent = (StackPane) modal.getParent();
 
-            StackPane content = (StackPane) root.getCenter();
+            FadeTransition fade = new FadeTransition(Duration.millis(200), modal);
+            fade.setFromValue(1);
+            fade.setToValue(0);
 
-            content.getChildren().clear();
+            fade.setOnFinished(e -> {
+                parent.getChildren().remove(modal);
+
+                if (ciudadListarController != null) {
+                    ciudadListarController.cargarCiudades();
+                } else {
+                    PaginaPrincipal.volverAlDashboard();
+                }
+            });
+
+            fade.play();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }

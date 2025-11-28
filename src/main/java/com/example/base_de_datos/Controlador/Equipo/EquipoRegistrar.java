@@ -4,7 +4,6 @@ import com.example.base_de_datos.Conexion.Conexion;
 import com.example.base_de_datos.Controlador.Ciudad.CiudadItem;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -16,22 +15,24 @@ import java.sql.ResultSet;
 
 public class EquipoRegistrar {
 
-
     @FXML
     private TextField txtIdEquipo;
-
     @FXML
     private TextField txtNombreEquipo;
-
     @FXML
     private ComboBox<CiudadItem> cmbCiudad;
-
     @FXML
     private AnchorPane rootRegistrar;
+
+    private EquipoListar equipoListarController;
 
     @FXML
     public void initialize() {
         cargarCiudades();
+    }
+
+    public void setEquipoListarController(EquipoListar controller) {
+        this.equipoListarController = controller;
     }
 
     private void cargarCiudades() {
@@ -48,7 +49,6 @@ public class EquipoRegistrar {
             }
 
         } catch (Exception e) {
-            System.out.println("ERROR en cargarCiudades:");
             e.printStackTrace();
         }
     }
@@ -76,7 +76,12 @@ public class EquipoRegistrar {
             ps.executeUpdate();
 
             showAlert("Equipo registrado correctamente.");
-            limpiar();
+
+            if (equipoListarController != null) {
+                equipoListarController.cargarEquiposAsync();
+            }
+
+            volverAlMenuPrincipal();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,31 +101,23 @@ public class EquipoRegistrar {
         alert.show();
     }
 
-
     @FXML
     public void volverAlMenuPrincipal() {
-        try {
+        FadeTransition fade = new FadeTransition(Duration.millis(200), rootRegistrar);
+        fade.setFromValue(1);
+        fade.setToValue(0);
 
-            AnchorPane modal = rootRegistrar;
+        fade.setOnFinished(ev -> {
+            StackPane parent = (StackPane) rootRegistrar.getParent();
+            parent.getChildren().remove(rootRegistrar);
 
-            StackPane content = (StackPane) modal.getParent();
+            if (equipoListarController != null) {
+                equipoListarController.cargarEquiposAsync();
+            } else {
+                com.example.base_de_datos.PaginaPrincipal.volverAlDashboard();
+            }
+        });
 
-            FadeTransition fade = new FadeTransition(Duration.millis(200), modal);
-            fade.setFromValue(1);
-            fade.setToValue(0);
-
-            fade.setOnFinished(e -> content.getChildren().remove(modal));
-
-            fade.play();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        fade.play();
     }
-
-
 }
-
-
-
-

@@ -7,7 +7,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
@@ -17,16 +16,25 @@ import java.sql.ResultSet;
 
 public class EquipoEditar {
 
-    @FXML private TextField txtId;
-    @FXML private TextField txtNombre;
-    @FXML private ComboBox<String> cmbCiudad;
-    @FXML private AnchorPane rootEditar;
+    @FXML
+    private TextField txtId;
+    @FXML
+    private TextField txtNombre;
+    @FXML
+    private ComboBox<String> cmbCiudad;
+    @FXML
+    private AnchorPane rootEditar;
 
     private String idOriginal;
+    private EquipoListar equipoListarController;
 
     @FXML
     public void initialize() {
-        cargarCiudades();   // ← NECESARIO
+        cargarCiudades();
+    }
+
+    public void setEquipoListarController(EquipoListar controller) {
+        this.equipoListarController = controller;
     }
 
     private void cargarCiudades() {
@@ -48,53 +56,58 @@ public class EquipoEditar {
         idOriginal = item.getId();
         txtId.setText(item.getId());
         txtNombre.setText(item.getNombre());
-
         cmbCiudad.setValue(item.getCiudad());
+        txtId.setEditable(false);
     }
 
     @FXML
     public void guardarCambios() {
 
         String query = """
-            UPDATE Equipo
-            SET idEquipo = ?, nombreEquipo = ?, idCiudad =
-                (SELECT idCiudad FROM Ciudad WHERE nombreCiudad = ?)
-            WHERE idEquipo = ?
-        """;
+                UPDATE Equipo
+                SET nombreEquipo = ?, idCiudad =
+                    (SELECT idCiudad FROM Ciudad WHERE nombreCiudad = ?)
+                WHERE idEquipo = ?
+                """;
 
         try (Connection con = Conexion.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
 
-            ps.setString(1, txtId.getText());
-            ps.setString(2, txtNombre.getText());
-            ps.setString(3, cmbCiudad.getValue());
-            ps.setString(4, idOriginal);
+            ps.setString(1, txtNombre.getText());
+            ps.setString(2, cmbCiudad.getValue());
+            ps.setString(3, idOriginal);
 
             ps.executeUpdate();
 
-            Alert ok = new Alert(Alert.AlertType.INFORMATION, "Actualizado con éxito.");
-            ok.show();
+            new Alert(Alert.AlertType.INFORMATION, "Actualizado con éxito.").show();
+
+            if (equipoListarController != null) {
+                equipoListarController.cargarEquiposAsync();
+            }
+
+            cerrarVentana();
 
         } catch (Exception e) {
             e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error al actualizar.").show();
         }
     }
 
     @FXML
     public void cerrarVentana() {
-        try {
-            BorderPane root = (BorderPane) rootEditar.getScene().getRoot();
-            StackPane content = (StackPane) root.getCenter();
+        FadeTransition fade = new FadeTransition(Duration.millis(200), rootEditar);
+        fade.setFromValue(1);
+        fade.setToValue(0);
 
-            FadeTransition fade = new FadeTransition(Duration.millis(200), rootEditar);
-            fade.setFromValue(1);
-            fade.setToValue(0);
+        fade.setOnFinished(e -> {
+            StackPane parent = (StackPane) rootEditar.getParent();
+            parent.getChildren().remove(rootEditar);
 
-            fade.setOnFinished(e -> content.getChildren().remove(rootEditar));
-            fade.play();
+            if (equipoListarController != null) {
+                equipoListarController.cargarEquiposAsync();
+            }
+        });
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        fade.play();
     }
 }

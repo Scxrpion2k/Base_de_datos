@@ -4,10 +4,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.SVGPath?>
 
-<AnchorPane fx:id="rootEditar"
+<AnchorPane fx:id="rootEditarJugador"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.base_de_datos.Controlador.Equipo.EquipoEditar"
+            fx:controller="com.example.base_de_datos.Controlador.Jugador.JugadorEditar"
             prefWidth="900" prefHeight="600"
             style="-fx-background-color: rgba(0,0,0,0.45);">
 
@@ -41,7 +41,8 @@
                 </Button>
             </HBox>
 
-            <Label text="Editar Equipo"
+
+            <Label text="Editar Jugador"
                    style="-fx-font-size: 28px;
                           -fx-font-weight: bold;
                           -fx-text-fill: #222;" />
@@ -52,37 +53,69 @@
                     <ColumnConstraints minWidth="280" halignment="LEFT"/>
                 </columnConstraints>
 
-                <Label text="ID Equipo:"
+                <!-- ID -->
+                <Label text="ID Jugador:"
                        GridPane.rowIndex="0" GridPane.columnIndex="0"
                        style="-fx-font-size: 15px; -fx-text-fill: #444;" />
 
-                <TextField fx:id="txtId"
-                           promptText="Ej: EQ001"
+                <TextField fx:id="txtIdJugador"
+                           promptText="Ej: 01"
                            GridPane.rowIndex="0" GridPane.columnIndex="1"
                            style="-fx-background-radius: 8;
                                   -fx-padding: 8 12;"
-                             disable="true"/>
+                            disable="true"/>
 
                 <Label text="Nombre:"
                        GridPane.rowIndex="1" GridPane.columnIndex="0"
                        style="-fx-font-size: 15px; -fx-text-fill: #444;" />
 
                 <TextField fx:id="txtNombre"
-                           promptText="Ej: Tigres del Norte"
+                           promptText="Ej: Carlos Méndez"
                            GridPane.rowIndex="1" GridPane.columnIndex="1"
                            style="-fx-background-radius: 8;
                                   -fx-padding: 8 12;" />
 
-                <Label text="Ciudad:"
+                <Label text="Ciudad de Nacimiento:"
                        GridPane.rowIndex="2" GridPane.columnIndex="0"
                        style="-fx-font-size: 15px; -fx-text-fill: #444;" />
 
                 <ComboBox fx:id="cmbCiudad"
                           prefWidth="240"
-                          promptText="Seleccione una ciudad"
+                          promptText="Seleccione ciudad"
                           GridPane.rowIndex="2" GridPane.columnIndex="1"
                           style="-fx-background-radius: 8;
                                  -fx-padding: 6 10;" />
+
+                <Label text="Fecha Nacimiento:"
+                       GridPane.rowIndex="3" GridPane.columnIndex="0"
+                       style="-fx-font-size: 15px; -fx-text-fill: #444;" />
+
+                <DatePicker fx:id="dpFecha"
+                            GridPane.rowIndex="3" GridPane.columnIndex="1"
+                            style="-fx-background-radius: 8;
+                                   -fx-padding: 6 10;" />
+
+                <Label text="Número:"
+                       GridPane.rowIndex="4" GridPane.columnIndex="0"
+                       style="-fx-font-size: 15px; -fx-text-fill: #444;" />
+
+                <TextField fx:id="txtNumero"
+                           promptText="Ej: 23"
+                           GridPane.rowIndex="4" GridPane.columnIndex="1"
+                           style="-fx-background-radius: 8;
+                                  -fx-padding: 8 12;" />
+
+                <Label text="Equipo:"
+                       GridPane.rowIndex="5" GridPane.columnIndex="0"
+                       style="-fx-font-size: 15px; -fx-text-fill: #444;" />
+
+                <ComboBox fx:id="cmbEquipo"
+                          prefWidth="240"
+                          promptText="Seleccione equipo"
+                          GridPane.rowIndex="5" GridPane.columnIndex="1"
+                          style="-fx-background-radius: 8;
+                                 -fx-padding: 6 10;" />
+
             </GridPane>
 
             <HBox alignment="CENTER">

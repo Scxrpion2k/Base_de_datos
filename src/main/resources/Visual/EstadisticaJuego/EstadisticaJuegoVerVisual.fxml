@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.SVGPath?>
+
+<AnchorPane fx:id="rootEstadisticas"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.base_de_datos.Controlador.EstadisticaJuego.EstadisticaJuegoVer"
+            prefWidth="1200" prefHeight="700"
+            style="-fx-background-color: rgba(0,0,0,0.35);">
+
+    <VBox spacing="25"
+          alignment="TOP_CENTER"
+          translateY="-70"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0"
+          AnchorPane.topAnchor="0"
+          AnchorPane.bottomAnchor="0">
+
+        <VBox spacing="18"
+              alignment="TOP_CENTER"
+              maxWidth="1000"
+              style="-fx-background-color: white;
+                     -fx-padding: 30;
+                     -fx-background-radius: 20;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18),22,0,0,5);">
+
+            <HBox alignment="TOP_RIGHT">
+                <Button onAction="#cerrar"
+                        style="-fx-background-color: transparent; -fx-cursor: hand;">
+                    <graphic>
+                        <SVGPath content="M4 4 L16 16 M16 4 L4 16"
+                                 style="-fx-stroke:#444; -fx-stroke-width:2;" />
+                    </graphic>
+                </Button>
+            </HBox>
+
+            <Label fx:id="lblJuego"
+                   style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill:#222;" />
+
+            <Label fx:id="lblEquipos"
+                   style="-fx-font-size: 22px; -fx-font-weight: 600; -fx-text-fill:#333;" />
+
+            <TableView fx:id="tablaEstadisticas"
+                       prefHeight="500"
+                       prefWidth="1000"
+                       style="-fx-background-radius: 10;
+                              -fx-border-color: #E0E0E0;
+                              -fx-border-radius: 10;
+                              -fx-padding: 10;">
+
+                <columns>
+                    <TableColumn fx:id="colEquipo" text="Equipo" prefWidth="240"/>
+                    <TableColumn fx:id="colJugador" text="Jugador" prefWidth="300"/>
+                    <TableColumn fx:id="colEstadistica" text="Estadística" prefWidth="300"/>
+                    <TableColumn fx:id="colCantidad" text="Cantidad" prefWidth="160"/>
+                    <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="180"/>
+                </columns>
+            </TableView>
+
+        </VBox>
+    </VBox>
+
+</AnchorPane>

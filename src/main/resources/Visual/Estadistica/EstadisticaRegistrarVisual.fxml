@@ -7,20 +7,21 @@
 <AnchorPane fx:id="rootRegistrar"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.base_de_datos.Controlador.Ciudad.CiudadRegistrar"
+            fx:controller="com.example.base_de_datos.Controlador.Estadistica.EstadisticaRegistrar"
             style="-fx-background-color: rgba(0,0,0,0.45);">
 
     <VBox alignment="TOP_CENTER"
           spacing="18"
           prefWidth="450"
-          prefHeight="340"
+          prefHeight="360"
           layoutX="475"
           layoutY="140"
-          style="-fx-background-color: white; -fx-padding: 25;
+          style="-fx-background-color: white;
+                 -fx-padding: 25;
                  -fx-background-radius: 20;
                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0, 0, 6);">
 
-        <HBox alignment="TOP_RIGHT" >
+        <HBox alignment="TOP_RIGHT">
             <Button text="✖"
                     onAction="#cerrarFormulario"
                     style="-fx-background-color: transparent;
@@ -29,19 +30,25 @@
                            -fx-cursor: hand;" />
         </HBox>
 
-        <Label text="Registrar Ciudad"
-               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill:#111;" />
+        <Label text="Registrar Estadística"
+               style="-fx-font-size: 22px;
+                      -fx-font-weight: bold;
+                      -fx-text-fill:#111;" />
 
-        <TextField fx:id="txtIdCiudad"
-                   promptText="ID de la Ciudad"
+        <TextField fx:id="txtIdEstadistica"
+                   promptText="ID Estadística"
                    style="-fx-background-radius: 12; -fx-padding: 10 14;" />
 
-        <TextField fx:id="txtNombreCiudad"
-                   promptText="Nombre de la Ciudad"
+        <TextField fx:id="txtDescripcion"
+                   promptText="Descripción"
+                   style="-fx-background-radius: 12; -fx-padding: 10 14;" />
+
+        <TextField fx:id="txtValor"
+                   promptText="Valor"
                    style="-fx-background-radius: 12; -fx-padding: 10 14;" />
 
         <Button text="Guardar"
-                onAction="#guardarCiudad"
+                onAction="#guardar"
                 style="-fx-background-color:#0d6efd;
                        -fx-background-radius:12;
                        -fx-text-fill:white;

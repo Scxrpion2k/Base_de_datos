@@ -4,10 +4,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.SVGPath?>
 
-<AnchorPane fx:id="rootEditar"
+<AnchorPane fx:id="rootEditarJuego"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.base_de_datos.Controlador.Equipo.EquipoEditar"
+            fx:controller="com.example.base_de_datos.Controlador.Juego.JuegoEditar"
             prefWidth="900" prefHeight="600"
             style="-fx-background-color: rgba(0,0,0,0.45);">
 
@@ -41,7 +41,7 @@
                 </Button>
             </HBox>
 
-            <Label text="Editar Equipo"
+            <Label text="Editar Juego"
                    style="-fx-font-size: 28px;
                           -fx-font-weight: bold;
                           -fx-text-fill: #222;" />
@@ -52,37 +52,58 @@
                     <ColumnConstraints minWidth="280" halignment="LEFT"/>
                 </columnConstraints>
 
-                <Label text="ID Equipo:"
+                <Label text="ID Juego:"
                        GridPane.rowIndex="0" GridPane.columnIndex="0"
                        style="-fx-font-size: 15px; -fx-text-fill: #444;" />
 
-                <TextField fx:id="txtId"
-                           promptText="Ej: EQ001"
+                <TextField fx:id="txtIdJuego"
+                           promptText="Ej: JG001"
                            GridPane.rowIndex="0" GridPane.columnIndex="1"
                            style="-fx-background-radius: 8;
                                   -fx-padding: 8 12;"
-                             disable="true"/>
+                           disable="true"/>
 
-                <Label text="Nombre:"
+                <Label text="Descripción:"
                        GridPane.rowIndex="1" GridPane.columnIndex="0"
                        style="-fx-font-size: 15px; -fx-text-fill: #444;" />
 
-                <TextField fx:id="txtNombre"
-                           promptText="Ej: Tigres del Norte"
+                <TextField fx:id="txtDescripcion"
+                           promptText="Ej: Partido semifinal"
                            GridPane.rowIndex="1" GridPane.columnIndex="1"
                            style="-fx-background-radius: 8;
                                   -fx-padding: 8 12;" />
 
-                <Label text="Ciudad:"
+                <Label text="Equipo A:"
                        GridPane.rowIndex="2" GridPane.columnIndex="0"
                        style="-fx-font-size: 15px; -fx-text-fill: #444;" />
 
-                <ComboBox fx:id="cmbCiudad"
+                <ComboBox fx:id="cmbEquipoA"
                           prefWidth="240"
-                          promptText="Seleccione una ciudad"
+                          promptText="Seleccione equipo A"
                           GridPane.rowIndex="2" GridPane.columnIndex="1"
                           style="-fx-background-radius: 8;
                                  -fx-padding: 6 10;" />
+
+                <Label text="Equipo B:"
+                       GridPane.rowIndex="3" GridPane.columnIndex="0"
+                       style="-fx-font-size: 15px; -fx-text-fill: #444;" />
+
+                <ComboBox fx:id="cmbEquipoB"
+                          prefWidth="240"
+                          promptText="Seleccione equipo B"
+                          GridPane.rowIndex="3" GridPane.columnIndex="1"
+                          style="-fx-background-radius: 8;
+                                 -fx-padding: 6 10;" />
+
+                <Label text="Fecha:"
+                       GridPane.rowIndex="4" GridPane.columnIndex="0"
+                       style="-fx-font-size: 15px; -fx-text-fill: #444;" />
+
+                <DatePicker fx:id="dpFecha"
+                            GridPane.rowIndex="4" GridPane.columnIndex="1"
+                            style="-fx-background-radius: 8;
+                                   -fx-padding: 6 10;" />
+
             </GridPane>
 
             <HBox alignment="CENTER">
