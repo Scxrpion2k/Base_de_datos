@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
@@ -24,6 +23,7 @@ import java.sql.ResultSet;
 
 public class CiudadListar {
 
+    @FXML private TextField txtBuscar;
     @FXML private TableView<CiudadItem> tablaCiudades;
     @FXML private TableColumn<CiudadItem, String> colId;
     @FXML private TableColumn<CiudadItem, String> colNombre;
@@ -33,8 +33,6 @@ public class CiudadListar {
 
     @FXML
     public void initialize() {
-
-
         tablaCiudades.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -42,12 +40,34 @@ public class CiudadListar {
         centrarColumnas();
         cargarCiudades();
         agregarBotones();
+
+
+        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> filtrarTabla(newValue));
     }
 
+
+    private void filtrarTabla(String filtro) {
+        if (filtro == null || filtro.trim().isEmpty()) {
+            tablaCiudades.setItems(lista);
+            return;
+        }
+
+        String lower = filtro.toLowerCase();
+
+        ObservableList<CiudadItem> filtrada = FXCollections.observableArrayList();
+
+        for (CiudadItem c : lista) {
+            if (c.getNombre().toLowerCase().contains(lower)) {
+                filtrada.add(c);
+            }
+        }
+
+        tablaCiudades.setItems(filtrada);
+    }
+
+
     void cargarCiudades() {
-
         lista.clear();
-
         String query = "SELECT idCiudad, nombreCiudad FROM Ciudad";
 
         try (Connection con = Conexion.getConnection();
@@ -67,6 +87,7 @@ public class CiudadListar {
         }
     }
 
+
     private void agregarBotones() {
         colAcciones.setCellFactory(col -> new TableCell<>() {
 
@@ -81,10 +102,12 @@ public class CiudadListar {
                 btnUpdate.setStyle("-fx-background-color: #0d6efd; -fx-text-fill: white; -fx-background-radius: 8;");
                 btnDelete.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-background-radius: 8;");
 
+
                 btnDelete.setOnAction(e -> {
                     CiudadItem item = getTableView().getItems().get(getIndex());
                     eliminarCiudad(item.getId());
                 });
+
 
                 btnUpdate.setOnAction(e -> {
                     CiudadItem item = getTableView().getItems().get(getIndex());
@@ -104,14 +127,12 @@ public class CiudadListar {
 
 
     private void eliminarCiudad(String id) {
-
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmación");
         alert.setHeaderText("Eliminar Ciudad");
-        alert.setContentText("¿Desea eliminar la ciudad " + id + "?");
+        alert.setContentText("¿Desea eliminar la ciudad con ID " + id + "?");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
-
             String query = "DELETE FROM Ciudad WHERE idCiudad = ?";
 
             try (Connection con = Conexion.getConnection();
@@ -128,8 +149,8 @@ public class CiudadListar {
         }
     }
 
-    private void abrirVentanaActualizar(CiudadItem item) {
 
+    private void abrirVentanaActualizar(CiudadItem item) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Ciudad/CiudadEditarVisual.fxml"));
             Parent modal = loader.load();
@@ -141,13 +162,11 @@ public class CiudadListar {
             BorderPane root = (BorderPane) tablaCiudades.getScene().getRoot();
             StackPane content = (StackPane) root.getCenter();
 
-
             content.getChildren().removeIf(n -> "modalEditarCiudad".equals(n.getId()));
 
             modal.setId("modalEditarCiudad");
             modal.setOpacity(0);
             content.getChildren().add(modal);
-
 
             FadeTransition fade = new FadeTransition(Duration.millis(200), modal);
             fade.setFromValue(0);
@@ -159,11 +178,14 @@ public class CiudadListar {
         }
     }
 
+
     private void centrarColumnas() {
         colId.setStyle("-fx-alignment: CENTER;");
         colNombre.setStyle("-fx-alignment: CENTER;");
         colAcciones.setStyle("-fx-alignment: CENTER;");
     }
+
+
     public void abrirFormularioRegistro() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Ciudad/CiudadRegistrarVisual.fxml"));
@@ -200,8 +222,4 @@ public class CiudadListar {
             e.printStackTrace();
         }
     }
-
-
-
-
 }

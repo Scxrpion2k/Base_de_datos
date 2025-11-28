@@ -19,7 +19,7 @@
                style="-fx-font-size: 30px;
                       -fx-font-weight: 700;
                       -fx-text-fill: #1F1F1F;
-                        -fx-cursor: hand" />
+                      -fx-cursor: hand" />
 
         <VBox spacing="15"
               prefWidth="900"
@@ -48,6 +48,16 @@
                 </Button>
 
             </HBox>
+
+
+            <TextField fx:id="txtBuscar"
+                       promptText="Buscar juego..."
+                       prefWidth="300"
+                       style="-fx-background-radius:10;
+                              -fx-padding:10;
+                              -fx-font-size:15px;
+                              -fx-border-color:#C9C9C9;
+                              -fx-border-radius:10;" />
 
             <TableView fx:id="tablaJuegos"
                        prefHeight="450"

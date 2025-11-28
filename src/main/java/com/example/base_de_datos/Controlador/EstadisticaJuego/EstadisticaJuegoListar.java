@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 
 public class EstadisticaJuegoListar {
 
+    @FXML private TextField txtBuscar; // Buscador
     @FXML private TableView<JuegoItem> tablaJuegos;
     @FXML private TableColumn<JuegoItem, String> colIdJuego;
     @FXML private TableColumn<JuegoItem, String> colDescripcion;
@@ -32,17 +33,18 @@ public class EstadisticaJuegoListar {
     @FXML private TableColumn<JuegoItem, Void> colAcciones;
     @FXML private Button btnCerrar;
 
-    private final ObservableList<JuegoItem> lista = FXCollections.observableArrayList();
+    private final ObservableList<JuegoItem> lista = FXCollections.observableArrayList(); // Lista global
     private EstadisticaJuegoVer estadisticaJuegoVerController;
 
     public void setEstadisticaJuegoVerController(EstadisticaJuegoVer controller) {
         this.estadisticaJuegoVerController = controller;
     }
+
     @FXML
     public void initialize() {
-
         tablaJuegos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
+        // Configuración de las columnas de la tabla
         colIdJuego.setCellValueFactory(new PropertyValueFactory<>("idJuego"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         colEquipoA.setCellValueFactory(new PropertyValueFactory<>("equipoA"));
@@ -52,17 +54,21 @@ public class EstadisticaJuegoListar {
         centrarColumnas();
         agregarBotones();
 
+
         btnCerrar.setOnAction(e -> volverAlMenuPrincipal());
 
+
         cargarJuegosAsync();
+
+
+        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> filtrarTabla(newValue));
     }
 
-    private void cargarJuegosAsync() {
 
+    private void cargarJuegosAsync() {
         Task<ObservableList<JuegoItem>> task = new Task<>() {
             @Override
             protected ObservableList<JuegoItem> call() throws Exception {
-
                 ObservableList<JuegoItem> temp = FXCollections.observableArrayList();
 
                 String sql = """
@@ -80,25 +86,23 @@ public class EstadisticaJuegoListar {
                      ResultSet rs = con.createStatement().executeQuery(sql)) {
 
                     while (rs.next()) {
-                        temp.add(new JuegoItem(
+                        JuegoItem juegoItem = new JuegoItem(
                                 rs.getString("idJuego"),
                                 rs.getString("descripcionJuego"),
                                 rs.getString("equipoA"),
                                 rs.getString("equipoB"),
                                 rs.getString("fechaJuego").split(" ")[0]
-                        ));
+                        );
+                        temp.add(juegoItem);
+                        lista.add(juegoItem); // Asegúrate de llenar la lista global
                     }
                 }
-
                 return temp;
             }
         };
 
         task.setOnSucceeded(e -> {
-
             tablaJuegos.setItems(task.getValue());
-
-
             tablaJuegos.layout();
 
             javafx.application.Platform.runLater(() -> {
@@ -113,8 +117,27 @@ public class EstadisticaJuegoListar {
     }
 
 
-    private void agregarBotones() {
+    private void filtrarTabla(String filtro) {
+        if (filtro == null || filtro.trim().isEmpty()) {
+            tablaJuegos.setItems(lista);
+            return;
+        }
 
+        String lower = filtro.toLowerCase();
+        ObservableList<JuegoItem> filtrada = FXCollections.observableArrayList();
+
+        for (JuegoItem juego : lista) {
+            if (juego.getDescripcion().toLowerCase().contains(lower)) {
+                filtrada.add(juego);
+            }
+        }
+
+        tablaJuegos.setItems(filtrada);
+        tablaJuegos.refresh();
+    }
+
+
+    private void agregarBotones() {
         colAcciones.setCellFactory(col -> new TableCell<>() {
 
             private final Button btnRegistrar = new Button("Registrar Estadísticas");
@@ -140,6 +163,7 @@ public class EstadisticaJuegoListar {
         });
     }
 
+
     private void abrirFormularioEstadistica(JuegoItem juego) {
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -148,7 +172,6 @@ public class EstadisticaJuegoListar {
 
             EstadisticaJuegoRegistrar controller = loader.getController();
             controller.setJuego(juego);
-           // controller.setEstadisticaJuegoVerController(this);
 
             BorderPane root = (BorderPane) tablaJuegos.getScene().getRoot();
             StackPane content = (StackPane) root.getCenter();
@@ -166,6 +189,7 @@ public class EstadisticaJuegoListar {
         }
     }
 
+
     private void centrarColumnas() {
         colIdJuego.setStyle("-fx-alignment: CENTER;");
         colDescripcion.setStyle("-fx-alignment: CENTER;");
@@ -175,8 +199,8 @@ public class EstadisticaJuegoListar {
         colAcciones.setStyle("-fx-alignment: CENTER;");
     }
 
-    @FXML
 
+    @FXML
     public void volverAlMenuPrincipal() {
         try {
             PaginaPrincipal.volverAlDashboard();
@@ -184,6 +208,4 @@ public class EstadisticaJuegoListar {
             e.printStackTrace();
         }
     }
-
 }
-

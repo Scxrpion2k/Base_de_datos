@@ -24,7 +24,7 @@ import static javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY;
 
 public class JugadorListar {
 
-    //buscador
+
     @FXML private TextField txtBuscar;
 
 
@@ -49,7 +49,7 @@ public class JugadorListar {
 
         tablaJugadores.setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);
 
-        // Vincular columnas
+
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudadNacimiento"));
@@ -63,14 +63,14 @@ public class JugadorListar {
         btnRegistrar.setOnAction(e -> abrirFormularioRegistro());
         btnCerrar.setOnAction(e -> volverAlMenuPrincipal());
 
-        // Cargar datos desde BD
+
         cargarJugadoresAsync();
 
-        //buscador
+
         txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> filtrarTabla(newValue));
     }
 
-    //Buscador
+
     private void filtrarTabla(String filtro) {
 
         if (filtro == null || filtro.trim().isEmpty()) {

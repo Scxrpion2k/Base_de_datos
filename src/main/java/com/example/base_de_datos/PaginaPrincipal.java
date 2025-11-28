@@ -163,11 +163,15 @@ public class PaginaPrincipal extends Application {
         Button btnEstadistica = createMenuButton("Estadísticas", "estadistica.png");
 
 
+
+
         addHoverMenu(btnCiudad, "Registrar Ciudad", "Lista Ciudades");
         addHoverMenu(btnEquipo, "Registrar Equipo", "Lista Equipos");
         addHoverMenu(btnJugador, "Registrar Jugador", "Lista Jugadores");
         addHoverMenu(btnJuego, "Registrar Juego", "Lista Juegos");
-        addHoverMenu(btnEstadistica, "Registrar Estadistica", "Registrar Estadísticas Por Juego" , "Lista de Estadisticas");
+        addHoverMenu(btnEstadistica, "Registrar Estadistica", "Lista de Estadisticas", "Registrar Estadísticas De Juego" ,"Lista de Estadísticas De Juego");
+
+
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -294,7 +298,10 @@ public class PaginaPrincipal extends Application {
                 case "Lista Jugadores" -> path = "/Visual/Jugador/JugadorListarVisual.fxml";
                 case "Lista Juegos" -> path = "/Visual/Juego/JuegoListarVisual.fxml";
                 case "Lista de Estadisticas" -> path = "/Visual/Estadistica/EstadisticaListarVisual.fxml";
-                case "Registrar Estadísticas Por Juego" -> path = "/Visual/EstadisticaJuego/EstadisticaJuegoListarVisual.fxml";
+                case "Registrar Estadísticas De Juego" -> path = "/Visual/EstadisticaJuego/EstadisticaJuegoListarVisual.fxml";
+                case "Lista de Estadísticas De Juego" -> path = "/Visual/EstadisticaJuego/EstadisticaJuegoListarVisual.fxml";
+
+
                 default -> { return; }
             }
             Pane view = PageManager.get(path);

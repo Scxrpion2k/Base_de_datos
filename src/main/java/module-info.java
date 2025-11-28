@@ -7,6 +7,7 @@ module com.example.base_de_datos {
     requires javafx.base;
 
 
+
     opens com.example.base_de_datos to javafx.fxml;
     exports com.example.base_de_datos;
 
