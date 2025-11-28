@@ -33,7 +33,7 @@ public class CiudadEditar {
 
         String query = """
             UPDATE Ciudad
-            SET idCiudad = ?, nombreCiudad = ?
+            SET idciudad = ?, nombre_iudad = ?
             WHERE idCiudad = ?
         """;
 

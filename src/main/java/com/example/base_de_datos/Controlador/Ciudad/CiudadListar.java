@@ -43,15 +43,15 @@ public class CiudadListar {
 
         lista.clear();
 
-        String query = "SELECT idCiudad, nombreCiudad FROM Ciudad";
+        String query = "SELECT idCiudad, nombre_ciudad FROM Ciudad";
 
         try (Connection con = Conexion.getConnection();
              ResultSet rs = con.createStatement().executeQuery(query)) {
 
             while (rs.next()) {
                 lista.add(new CiudadItem(
-                        rs.getString("idCiudad"),
-                        rs.getString("nombreCiudad")
+                        rs.getString("id_ciudad"),
+                        rs.getString("nombre_ciudad")
                 ));
             }
 
