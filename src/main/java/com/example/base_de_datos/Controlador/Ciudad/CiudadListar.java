@@ -40,7 +40,7 @@ public class CiudadListar {
         centrarColumnas();
         cargarCiudades();
         agregarBotones();
-        // activarFiltro();
+        activarFiltro();
 
     }
 
@@ -167,27 +167,27 @@ public class CiudadListar {
         colAcciones.setStyle("-fx-alignment: CENTER;");
     }
 
-//    private void activarFiltro() {
-//        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
-//            String filtro = newValue.toLowerCase().trim();
-//
-//            if (filtro.isEmpty()) {
-//                tablaCiudades.setItems(lista);
-//                return;
-//            }
-//
-//            ObservableList<CiudadItem> filtrada = FXCollections.observableArrayList();
-//
-//            for (CiudadItem item : lista) {
-//                if (item.getId().toLowerCase().contains(filtro)
-//                        || item.getNombre().toLowerCase().contains(filtro)) {
-//                    filtrada.add(item);
-//                }
-//            }
-//
-//            tablaCiudades.setItems(filtrada);
-//        });
-//    }
+    private void activarFiltro() {
+        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
+            String filtro = newValue.toLowerCase().trim();
+
+            if (filtro.isEmpty()) {
+                tablaCiudades.setItems(lista);
+                return;
+            }
+
+            ObservableList<CiudadItem> filtrada = FXCollections.observableArrayList();
+
+            for (CiudadItem item : lista) {
+                if (item.getId().toLowerCase().contains(filtro)
+                        || item.getNombre().toLowerCase().contains(filtro)) {
+                    filtrada.add(item);
+                }
+            }
+
+            tablaCiudades.setItems(filtrada);
+        });
+    }
 
 
     public void abrirFormularioRegistro() {
