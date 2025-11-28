@@ -57,7 +57,7 @@ public class EquipoListar {
         btnCerrar.setOnAction(e -> volverAlMenuPrincipal());
 
         cargarEquiposAsync();
-        //activarFiltro();
+        activarFiltro();
     }
 
     public void cargarEquiposAsync() {
@@ -199,28 +199,28 @@ public class EquipoListar {
         colAcciones.setStyle("-fx-alignment: CENTER;");
     }
 
-//    private void activarFiltro() {
-//        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
-//            String filtro = newValue.toLowerCase().trim();
-//
-//            if (filtro.isEmpty()) {
-//                tablaEquipos.setItems(lista);
-//                return;
-//            }
-//
-//            ObservableList<EquipoItem> filtrada = FXCollections.observableArrayList();
-//
-//            for (EquipoItem item : lista) {
-//                if (item.getId().toLowerCase().contains(filtro)
-//                    || item.getNombre().toLowerCase().contains(filtro)
-//                    || item.getCiudad().toLowerCase().contains(filtro)) {
-//                    filtrada.add(item);
-//                }
-//            }
-//
-//            tablaEquipos.setItems(filtrada);
-//        });
-//    }
+    private void activarFiltro() {
+        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
+            String filtro = newValue.toLowerCase().trim();
+
+            if (filtro.isEmpty()) {
+                tablaEquipos.setItems(lista);
+                return;
+            }
+
+            ObservableList<EquipoItem> filtrada = FXCollections.observableArrayList();
+
+            for (EquipoItem item : lista) {
+                if (item.getId().toLowerCase().contains(filtro)
+                    || item.getNombre().toLowerCase().contains(filtro)
+                    || item.getCiudad().toLowerCase().contains(filtro)) {
+                    filtrada.add(item);
+                }
+            }
+
+            tablaEquipos.setItems(filtrada);
+        });
+    }
 
 
     private void abrirVentanaActualizar(EquipoItem item) {
