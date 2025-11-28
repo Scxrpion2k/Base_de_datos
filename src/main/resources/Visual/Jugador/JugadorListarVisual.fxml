@@ -28,8 +28,8 @@
                      -fx-background-radius: 18;
                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 20, 0, 0, 4);">
 
-            <HBox alignment="CENTER_LEFT" spacing="15"
-                  prefWidth="1150">
+
+            <HBox alignment="CENTER_LEFT" spacing="15" prefWidth="1150">
 
                 <Label text="Jugadores Registrados"
                        style="-fx-font-size: 22px;
@@ -57,7 +57,16 @@
 
             </HBox>
 
-            <!-- ******* AQUÍ VIENE LA SOLUCIÓN ******** -->
+            /Buscador
+            <TextField fx:id="txtBuscar"
+                       promptText="Buscar jugador..."
+                       prefWidth="300"
+                       style="-fx-background-radius:10;
+                              -fx-padding:10;
+                              -fx-font-size:15px;
+                              -fx-border-color:#C9C9C9;
+                              -fx-border-radius:10;" />
+
 
             <TableView fx:id="tablaJugadores"
                        prefHeight="450"
@@ -72,36 +81,28 @@
 
                 <columns>
 
-                    <TableColumn fx:id="colId" text="ID"
-                                 prefWidth="90"
+                    <TableColumn fx:id="colId" text="ID" prefWidth="90"
                                  style="-fx-font-size:15px; -fx-font-weight:bold; -fx-alignment:CENTER;" />
 
-                    <TableColumn fx:id="colNombre" text="Nombre"
-                                 prefWidth="210"
+                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="210"
                                  style="-fx-font-size:15px; -fx-font-weight:bold; -fx-alignment:CENTER;" />
 
-                    <TableColumn fx:id="colCiudad" text="Ciudad Nac."
-                                 prefWidth="180"
+                    <TableColumn fx:id="colCiudad" text="Ciudad Nac." prefWidth="180"
                                  style="-fx-font-size:15px; -fx-font-weight:bold; -fx-alignment:CENTER;" />
 
-                    <TableColumn fx:id="colFecha" text="Fecha Nac."
-                                 prefWidth="160"
+                    <TableColumn fx:id="colFecha" text="Fecha Nac." prefWidth="160"
                                  style="-fx-font-size:15px; -fx-font-weight:bold; -fx-alignment:CENTER;" />
 
-                    <TableColumn fx:id="colNumero" text="Número"
-                                 prefWidth="120"
+                    <TableColumn fx:id="colNumero" text="Número" prefWidth="120"
                                  style="-fx-font-size:15px; -fx-font-weight:bold; -fx-alignment:CENTER;" />
 
-                    <TableColumn fx:id="colEquipo" text="Equipo"
-                                 prefWidth="220"
+                    <TableColumn fx:id="colEquipo" text="Equipo" prefWidth="220"
                                  style="-fx-font-size:15px; -fx-font-weight:bold; -fx-alignment:CENTER;" />
 
-                    <TableColumn fx:id="colAcciones" text="Acciones"
-                                 prefWidth="160"
+                    <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="160"
                                  style="-fx-font-size:15px; -fx-font-weight:bold; -fx-alignment:CENTER;" />
 
                 </columns>
-
             </TableView>
 
         </VBox>

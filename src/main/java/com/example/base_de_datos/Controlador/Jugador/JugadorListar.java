@@ -24,19 +24,24 @@ import static javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY;
 
 public class JugadorListar {
 
-    @FXML private TableView<JugadorItem> tablaJugadores;
+    //buscador
+    @FXML private TextField txtBuscar;
 
+
+    @FXML private TableView<JugadorItem> tablaJugadores;
     @FXML private TableColumn<JugadorItem, String> colId;
     @FXML private TableColumn<JugadorItem, String> colNombre;
     @FXML private TableColumn<JugadorItem, String> colCiudad;
     @FXML private TableColumn<JugadorItem, String> colFecha;
     @FXML private TableColumn<JugadorItem, String> colNumero;
     @FXML private TableColumn<JugadorItem, String> colEquipo;
-
     @FXML private TableColumn<JugadorItem, Void> colAcciones;
+
 
     @FXML private Button btnRegistrar;
     @FXML private Button btnCerrar;
+
+
     private final ObservableList<JugadorItem> lista = FXCollections.observableArrayList();
 
     @FXML
@@ -44,6 +49,7 @@ public class JugadorListar {
 
         tablaJugadores.setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);
 
+        // Vincular columnas
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudadNacimiento"));
@@ -51,16 +57,42 @@ public class JugadorListar {
         colNumero.setCellValueFactory(new PropertyValueFactory<>("numero"));
         colEquipo.setCellValueFactory(new PropertyValueFactory<>("equipo"));
 
-        btnRegistrar.setOnAction(e -> abrirFormularioRegistro());
-        btnCerrar.setOnAction(e -> volverAlMenuPrincipal());
-
         centrarColumnas();
         agregarBotones();
 
+        btnRegistrar.setOnAction(e -> abrirFormularioRegistro());
+        btnCerrar.setOnAction(e -> volverAlMenuPrincipal());
+
+        // Cargar datos desde BD
         cargarJugadoresAsync();
+
+        //buscador
+        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> filtrarTabla(newValue));
     }
 
+    //Buscador
+    private void filtrarTabla(String filtro) {
 
+        if (filtro == null || filtro.trim().isEmpty()) {
+            tablaJugadores.setItems(lista);
+            return;
+        }
+
+        String lower = filtro.toLowerCase();
+
+        ObservableList<JugadorItem> filtrada = FXCollections.observableArrayList();
+
+        for (JugadorItem j : lista) {
+
+            if (j.getNombre().toLowerCase().contains(lower)
+) {
+
+                filtrada.add(j);
+            }
+        }
+
+        tablaJugadores.setItems(filtrada);
+    }
 
     private void centrarColumnas() {
         colId.setStyle("-fx-alignment: CENTER;");
@@ -71,6 +103,7 @@ public class JugadorListar {
         colEquipo.setStyle("-fx-alignment: CENTER;");
         colAcciones.setStyle("-fx-alignment: CENTER;");
     }
+
 
     public void cargarJugadoresAsync() {
 
@@ -112,15 +145,7 @@ public class JugadorListar {
         task.setOnSucceeded(e -> {
             lista.setAll(task.getValue());
             tablaJugadores.setItems(lista);
-
-            tablaJugadores.layout();
-
-            javafx.application.Platform.runLater(() -> {
-                tablaJugadores.refresh();
-                tablaJugadores.layout();
-            });
         });
-
 
         task.setOnFailed(e -> task.getException().printStackTrace());
 
@@ -160,6 +185,7 @@ public class JugadorListar {
         });
     }
 
+
     private void editarJugador(JugadorItem item) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Jugador/JugadorEditarVisual.fxml"));
@@ -179,6 +205,7 @@ public class JugadorListar {
             fade.setFromValue(0);
             fade.setToValue(1);
             fade.play();
+            txtBuscar.setText("");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -207,6 +234,7 @@ public class JugadorListar {
             e.printStackTrace();
         }
     }
+
 
     public void abrirFormularioRegistro() {
         try {
@@ -241,5 +269,4 @@ public class JugadorListar {
             e.printStackTrace();
         }
     }
-
 }
