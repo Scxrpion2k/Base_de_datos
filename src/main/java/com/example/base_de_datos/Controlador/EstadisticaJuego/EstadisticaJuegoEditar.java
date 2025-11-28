@@ -49,9 +49,9 @@ public class EstadisticaJuegoEditar {
         int nuevaCantidad = Integer.parseInt(txtCantidad.getText());
 
         String sql = """
-            UPDATE EstadisticaDeJuego
+            UPDATE Estadistica_Juego
             SET cantidad = ?
-            WHERE idJuego = ? AND idEquipo = ? AND idJugador = ? AND idEstadisticaRegistrar = ?
+            WHERE idjuego = ? AND idequipo = ? AND idjugador = ? AND idestadistica = ?
         """;
 
         try (Connection con = Conexion.getConnection();

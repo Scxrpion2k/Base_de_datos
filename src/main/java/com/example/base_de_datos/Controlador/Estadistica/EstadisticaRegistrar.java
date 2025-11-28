@@ -30,7 +30,7 @@ public class EstadisticaRegistrar {
     private void guardar() {
         try (Connection con = Conexion.getConnection()) {
 
-            String sql = "INSERT INTO Estadistica (idEstadistica, descripcionEstadistica, valor) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO Estadistica (idestadistica, descripcion_estadistica, valor) VALUES (?, ?, ?)";
 
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, txtIdEstadistica.getText().trim());

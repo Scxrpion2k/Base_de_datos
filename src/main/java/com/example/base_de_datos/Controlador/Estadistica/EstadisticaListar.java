@@ -43,22 +43,22 @@ public class EstadisticaListar {
         centrarColumnas();
         cargarEstadisticas();
         agregarBotones();
-       // activarFiltro();
+        activarFiltro();
     }
 
     void cargarEstadisticas() {
 
         lista.clear();
 
-        String query = "SELECT idEstadistica, descripcionEstadistica, valor FROM Estadistica";
+        String query = "SELECT idestadistica, descripcion_estadistica, valor FROM Estadistica";
 
         try (Connection con = Conexion.getConnection();
              ResultSet rs = con.createStatement().executeQuery(query)) {
 
             while (rs.next()) {
                 lista.add(new EstadisticaItem(
-                        rs.getString("idEstadistica"),
-                        rs.getString("descripcionEstadistica"),
+                        rs.getString("idestadistica"),
+                        rs.getString("descripcion_estadistica"),
                         rs.getInt("valor")
                 ));
             }
@@ -114,7 +114,7 @@ public class EstadisticaListar {
 
         if (alert.showAndWait().get() == ButtonType.OK) {
 
-            String query = "DELETE FROM Estadistica WHERE idEstadistica = ?";
+            String query = "DELETE FROM Estadistica WHERE idestadistica = ?";
 
             try (Connection con = Conexion.getConnection();
                  PreparedStatement ps = con.prepareStatement(query)) {
@@ -130,28 +130,28 @@ public class EstadisticaListar {
         }
     }
 
-//    private void activarFiltro() {
-//        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
-//            String filtro = newValue.toLowerCase().trim();
-//
-//            if (filtro.isEmpty()) {
-//                tablaEstadisticas.setItems(lista);
-//                return;
-//            }
-//
-//            ObservableList<EstadisticaItem> filtrada = FXCollections.observableArrayList();
-//
-//            for (EstadisticaItem item : lista) {
-//                if (item.getIdEstadistica().toLowerCase().contains(filtro)
-//                        || item.getDescripcionEstadistica().toLowerCase().contains(filtro)
-//                        || String.valueOf(item.getValor()).contains(filtro)) {
-//                    filtrada.add(item);
-//                }
-//            }
-//
-//            tablaEstadisticas.setItems(filtrada);
-//        });
-//    }
+    private void activarFiltro() {
+        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
+            String filtro = newValue.toLowerCase().trim();
+
+            if (filtro.isEmpty()) {
+                tablaEstadisticas.setItems(lista);
+                return;
+            }
+
+            ObservableList<EstadisticaItem> filtrada = FXCollections.observableArrayList();
+
+            for (EstadisticaItem item : lista) {
+                if (item.getIdEstadistica().toLowerCase().contains(filtro)
+                        || item.getDescripcionEstadistica().toLowerCase().contains(filtro)
+                        || String.valueOf(item.getValor()).contains(filtro)) {
+                    filtrada.add(item);
+                }
+            }
+
+            tablaEstadisticas.setItems(filtrada);
+        });
+    }
 
 
     private void abrirVentanaActualizar(EstadisticaItem item) {

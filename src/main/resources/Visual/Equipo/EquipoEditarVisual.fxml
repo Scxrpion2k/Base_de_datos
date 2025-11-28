@@ -61,7 +61,7 @@
                            GridPane.rowIndex="0" GridPane.columnIndex="1"
                            style="-fx-background-radius: 8;
                                   -fx-padding: 8 12;"
-                             disable="true"/>
+                           disable="true"/>
 
                 <Label text="Nombre:"
                        GridPane.rowIndex="1" GridPane.columnIndex="0"

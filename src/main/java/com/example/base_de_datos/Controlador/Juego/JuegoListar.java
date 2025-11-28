@@ -66,7 +66,7 @@ public class JuegoListar {
         centrarColumnas();
         agregarBotones();
         cargarJuegosAsync();
-        //ctivarFiltro();
+        activarFiltro();
     }
 
 
@@ -99,15 +99,15 @@ public class JuegoListar {
 
                 String query = """
                     SELECT 
-                        j.idJuego,
-                        j.descripcionJuego,
-                        A.nombreEquipo AS equipoA,
-                        B.nombreEquipo AS equipoB,
-                        j.fechaJuego
+                        j.idjuego,
+                        j.descripcion_juego,
+                        A.nombre_equipo AS equipoA,
+                        B.nombre_equipo AS equipoB,
+                        j.fecha_juego
                     FROM Juego j
-                    INNER JOIN Equipo A ON j.idEquipoA = A.idEquipo
-                    INNER JOIN Equipo B ON j.idEquipoB = B.idEquipo
-                    ORDER BY j.fechaJuego DESC
+                    INNER JOIN Equipo A ON j.idequipoA = A.idequipo
+                    INNER JOIN Equipo B ON j.idequipoB = B.idequipo
+                    ORDER BY j.fecha_juego DESC
                     """;
 
                 try (Connection con = Conexion.getConnection();
@@ -115,11 +115,11 @@ public class JuegoListar {
 
                     while (rs.next()) {
                         temp.add(new JuegoItem(
-                                rs.getString("idJuego"),
-                                rs.getString("descripcionJuego"),
+                                rs.getString("idjuego"),
+                                rs.getString("descripcion_juego"),
                                 rs.getString("equipoA"),
                                 rs.getString("equipoB"),
-                                soloFecha(rs.getString("fechaJuego"))
+                                soloFecha(rs.getString("fecha_juego"))
                         ));
                     }
                 }
@@ -193,7 +193,7 @@ public class JuegoListar {
 
         if (alert.showAndWait().get() == ButtonType.OK) {
 
-            String query = "DELETE FROM Juego WHERE idJuego = ?";
+            String query = "DELETE FROM Juego WHERE idjuego = ?";
 
             try (Connection con = Conexion.getConnection(); PreparedStatement ps = con.prepareStatement(query)) {
 
@@ -248,30 +248,65 @@ public class JuegoListar {
         }
     }
 
-//    private void activarFiltro() {
-//        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
-//            String filtro = newValue.toLowerCase().trim();
-//
-//            if (filtro.isEmpty()) {
-//                tablaJuegos.setItems(lista);
-//                return;
-//            }
-//
-//            ObservableList<JuegoItem> filtrada = FXCollections.observableArrayList();
-//
-//            for (JuegoItem item : lista) {
-//                if (item.getIdJuego().toLowerCase().contains(filtro)
-//                        || item.getDescripcion().toLowerCase().contains(filtro)
-//                        || item.getEquipoA().toLowerCase().contains(filtro)
-//                        || item.getEquipoB().toLowerCase().contains(filtro)
-//                        || item.getFecha().toLowerCase().contains(filtro)) {
-//                    filtrada.add(item);
-//                }
-//            }
-//
-//            tablaJuegos.setItems(filtrada);
-//        });
-//    }
+    private void activarFiltro() {
+        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
+            String filtro = newValue.trim().toLowerCase();
+
+            if (filtro.isEmpty()) {
+                tablaJuegos.setItems(lista);
+                return;
+            }
+
+            ObservableList<JuegoItem> filtrada = FXCollections.observableArrayList();
+
+            for (JuegoItem item : lista) {
+                if (item.getIdJuego().trim().toLowerCase().equals(filtro)) {
+                    filtrada.add(item);
+                }
+            }
+
+            tablaJuegos.setItems(filtrada);
+
+            colAcciones.setCellFactory(col -> new TableCell<>() {
+
+                private final Button btnUpdate = new Button("Actualizar");
+                private final Button btnDelete = new Button("Eliminar");
+                private final Button btnStats = new Button("Ver Estadísticas");
+
+                private final HBox contenedor = new HBox(8);
+
+                {
+                    contenedor.setAlignment(Pos.CENTER);
+
+                    btnUpdate.setStyle("-fx-background-color: #0d6efd; -fx-text-fill: white; -fx-background-radius: 8;");
+                    btnDelete.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-background-radius: 8;");
+                    btnStats.setStyle("-fx-background-color: #28a745; -fx-text-fill: white; -fx-background-radius: 8;");
+
+                    btnStats.setOnAction(e ->
+                            abrirVentanaEstadisticas(getTableView().getItems().get(getIndex()))
+                    );
+                    btnUpdate.setOnAction(e ->
+                            abrirVentanaActualizar(getTableView().getItems().get(getIndex()))
+                    );
+                    btnDelete.setOnAction(e ->
+                            eliminarJuego(getTableView().getItems().get(getIndex()).getIdJuego())
+                    );
+
+                    contenedor.getChildren().addAll(btnUpdate, btnDelete, btnStats);
+                }
+
+                @Override
+                protected void updateItem(Void unused, boolean empty) {
+                    super.updateItem(unused, empty);
+                    setGraphic(empty ? null : contenedor);
+                }
+            });
+
+        });
+    }
+
+
+
 
 
     private void abrirVentanaActualizar(JuegoItem item) {

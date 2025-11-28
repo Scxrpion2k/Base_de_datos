@@ -117,9 +117,9 @@ public class JugadorEditar {
 
         String sql = """
                 UPDATE Jugador
-                SET nombreJugador = ?, idCiudadNacimiento = ?, 
-                    fechaNacimiento = ?, numeroJugador = ?, idEquipo = ?
-                WHERE idJugador = ?
+                SET nombre_jugador = ?, idciudad = ?, 
+                    fecha_de_nacimiento = ?, num_jugador = ?, idequipo = ?
+                WHERE idjugador = ?
                 """;
 
         try (Connection con = Conexion.getConnection();

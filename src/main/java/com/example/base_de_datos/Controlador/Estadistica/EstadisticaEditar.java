@@ -37,7 +37,7 @@ public class EstadisticaEditar {
     private void guardarCambios() {
         try (Connection con = Conexion.getConnection()) {
 
-            String sql = "UPDATE Estadistica SET descripcionEstadistica=?, valor=? WHERE idEstadistica=?";
+            String sql = "UPDATE Estadistica SET descripcion_estadistica=?, valor=? WHERE idestadistica=?";
 
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, txtDescripcion.getText().trim());

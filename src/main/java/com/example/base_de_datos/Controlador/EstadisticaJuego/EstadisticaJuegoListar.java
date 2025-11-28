@@ -33,7 +33,7 @@ public class EstadisticaJuegoListar {
     @FXML private TableColumn<JuegoItem, Void> colAcciones;
     @FXML private Button btnCerrar;
 
-    private final ObservableList<JuegoItem> lista = FXCollections.observableArrayList(); // Lista global
+    private final ObservableList<JuegoItem> lista = FXCollections.observableArrayList();
     private EstadisticaJuegoVer estadisticaJuegoVerController;
 
     public void setEstadisticaJuegoVerController(EstadisticaJuegoVer controller) {
@@ -44,7 +44,6 @@ public class EstadisticaJuegoListar {
     public void initialize() {
         tablaJuegos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // Configuración de las columnas de la tabla
         colIdJuego.setCellValueFactory(new PropertyValueFactory<>("idJuego"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         colEquipoA.setCellValueFactory(new PropertyValueFactory<>("equipoA"));
@@ -71,14 +70,14 @@ public class EstadisticaJuegoListar {
                 ObservableList<JuegoItem> temp = FXCollections.observableArrayList();
 
                 String sql = """
-                    SELECT j.idJuego, j.descripcionJuego,
-                           A.nombreEquipo AS equipoA,
-                           B.nombreEquipo AS equipoB,
-                           j.fechaJuego
+                    SELECT j.idjuego, j.descripcion_juego,
+                           A.nombre_equipo AS EquipoA,
+                           B.nombre_equipo AS EquipoB,
+                           j.fecha_juego
                     FROM Juego j
-                    INNER JOIN Equipo A ON j.idEquipoA = A.idEquipo
-                    INNER JOIN Equipo B ON j.idEquipoB = B.idEquipo
-                    ORDER BY j.fechaJuego DESC
+                    INNER JOIN Equipo A ON j.idequipoA = A.idEquipo
+                    INNER JOIN Equipo B ON j.idequipoB = B.idEquipo
+                    ORDER BY j.fecha_juego DESC
                     """;
 
                 try (Connection con = Conexion.getConnection();
@@ -86,14 +85,14 @@ public class EstadisticaJuegoListar {
 
                     while (rs.next()) {
                         JuegoItem juegoItem = new JuegoItem(
-                                rs.getString("idJuego"),
-                                rs.getString("descripcionJuego"),
-                                rs.getString("equipoA"),
-                                rs.getString("equipoB"),
-                                rs.getString("fechaJuego").split(" ")[0]
+                                rs.getString("idjuego"),
+                                rs.getString("descripcion_juego"),
+                                rs.getString("EquipoA"),
+                                rs.getString("EquipoB"),
+                                rs.getString("fecha_juego").split(" ")[0]
                         );
                         temp.add(juegoItem);
-                        lista.add(juegoItem); // Asegúrate de llenar la lista global
+                        lista.add(juegoItem);
                     }
                 }
                 return temp;

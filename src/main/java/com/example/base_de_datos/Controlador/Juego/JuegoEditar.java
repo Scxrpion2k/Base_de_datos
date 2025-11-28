@@ -45,15 +45,15 @@ public class JuegoEditar {
 
         try (Connection con = Conexion.getConnection();
              ResultSet rs = con.createStatement().executeQuery(
-                     "SELECT idEquipo, nombreEquipo, " +
-                             "(SELECT nombreCiudad FROM Ciudad WHERE Ciudad.idCiudad = Equipo.idCiudad) AS ciudad " +
+                     "SELECT idequipo, nombre_equipo, " +
+                             "(SELECT nombre_ciudad FROM Ciudad WHERE Ciudad.idciudad = Equipo.idciudad) AS ciudad " +
                              "FROM Equipo"
              )) {
 
             while (rs.next()) {
                 EquipoItem equipo = new EquipoItem(
-                        rs.getString("idEquipo"),
-                        rs.getString("nombreEquipo"),
+                        rs.getString("id_equipo"),
+                        rs.getString("nombre_equipo"),
                         rs.getString("ciudad")
                 );
 
@@ -112,8 +112,8 @@ public class JuegoEditar {
 
         String sql = """
         UPDATE Juego
-        SET idJuego = ?, descripcionJuego = ?, idEquipoA = ?, idEquipoB = ?, fechaJuego = ?
-        WHERE idJuego = ?
+        SET idjuego = ?, descripcion_juego = ?, idequipoA = ?, idequipoB = ?, fecha_juego = ?
+        WHERE idjuego = ?
         """;
 
         try (Connection con = Conexion.getConnection();

@@ -37,17 +37,17 @@ public class JuegoRegistrar {
     }
 
     private void cargarEquipos() {
-        String sql = "SELECT idEquipo, nombreEquipo, c.nombreCiudad " +
-                "FROM Equipo e INNER JOIN Ciudad c ON e.idCiudad = c.idCiudad";
+        String sql = "SELECT idequipo, nombre_equipo, c.nombre_ciudad " +
+                "FROM Equipo e INNER JOIN Ciudad c ON e.idciudad = c.idciudad";
 
         try (Connection con = Conexion.getConnection();
              ResultSet rs = con.createStatement().executeQuery(sql)) {
 
             while (rs.next()) {
                 EquipoItem equipo = new EquipoItem(
-                        rs.getString("idEquipo"),
-                        rs.getString("nombreEquipo"),
-                        rs.getString("nombreCiudad")
+                        rs.getString("idequipo"),
+                        rs.getString("nombre_equipo"),
+                        rs.getString("nombre_ciudad")
                 );
 
                 cmbEquipoA.getItems().add(equipo);
@@ -81,7 +81,7 @@ public class JuegoRegistrar {
         try (Connection con = Conexion.getConnection()) {
 
             String sql = """
-            INSERT INTO Juego (idJuego, descripcionJuego, idEquipoA, idEquipoB, fechaJuego)
+            INSERT INTO Juego (idjuego, descripcion_juego, idequipoA, idequipoB, fecha_juego)
             VALUES (?, ?, ?, ?, ?)
         """;
 

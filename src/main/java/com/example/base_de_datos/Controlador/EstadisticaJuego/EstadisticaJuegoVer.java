@@ -68,23 +68,23 @@ public class EstadisticaJuegoVer {
 
         String sql = """
             SELECT 
-                ej.idEquipo,
-                ej.idJugador,
-                ej.idEstadisticaRegistrar,
-                e.nombreEquipo,
-                j.nombreJugador,
-                es.descripcionEstadistica,
+                ej.idequipo,
+                ej.idjugador,
+                ej.idestadistica,
+                e.nombre_equipo,
+                j.nombre_jugador,
+                es.descripcion_estadistica,
                 ej.cantidad,
                 CASE 
-                    WHEN ej.idEquipo = (SELECT idEquipoA FROM Juego WHERE idJuego = ?) THEN 1
+                    WHEN ej.idequipo = (SELECT idequipoA FROM Juego WHERE idjuego = ?) THEN 1
                     ELSE 2
                 END AS ordenEquipo
-            FROM EstadisticaDeJuego ej
-            INNER JOIN Equipo e ON ej.idEquipo = e.idEquipo
-            INNER JOIN Jugador j ON ej.idJugador = j.idJugador
-            INNER JOIN Estadistica es ON ej.idEstadisticaRegistrar = es.idEstadistica
-            WHERE ej.idJuego = ?
-            ORDER BY ordenEquipo, e.nombreEquipo, j.nombreJugador, es.descripcionEstadistica
+            FROM Estadistica_Juego ej
+            INNER JOIN Equipo e ON ej.idequipo = e.idequipo
+            INNER JOIN Jugador j ON ej.idjugador = j.idjugador
+            INNER JOIN Estadistica es ON ej.idestadistica = es.idestadistica
+            WHERE ej.idjuego = ?
+            ORDER BY ordenEquipo, e.nombre_equipo, j.nombre_jugador, es.descripcion_estadistica
             """;
 
         try (Connection con = Conexion.getConnection();
@@ -98,13 +98,13 @@ public class EstadisticaJuegoVer {
             while (rs.next()) {
 
                 lista.add(new EstadisticaJuegoItem(
-                        rs.getString("nombreEquipo"),
-                        rs.getString("nombreJugador"),
-                        rs.getString("descripcionEstadistica"),
+                        rs.getString("nombre_equipo"),
+                        rs.getString("nombre_jugador"),
+                        rs.getString("descripcion_estadistica"),
                         rs.getInt("cantidad"),
-                        rs.getString("idEquipo"),
-                        rs.getString("idJugador"),
-                        rs.getString("idEstadisticaRegistrar")
+                        rs.getString("idequipo"),
+                        rs.getString("idjugador"),
+                        rs.getString("idestadistica")
                 ));
             }
 
@@ -176,8 +176,8 @@ public class EstadisticaJuegoVer {
         if (alert.showAndWait().get() != ButtonType.OK) return;
 
         String sql = """
-            DELETE FROM EstadisticaDeJuego
-            WHERE idJuego = ? AND idEquipo = ? AND idJugador = ? AND idEstadisticaRegistrar = ?
+            DELETE FROM Estadistica_Juego
+            WHERE idjuego = ? AND idequipo = ? AND idjugador = ? AND idestadistica = ?
             """;
 
         try (Connection con = Conexion.getConnection();

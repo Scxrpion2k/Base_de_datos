@@ -65,7 +65,7 @@ public class JugadorListar {
 
 
         cargarJugadoresAsync();
-     //   activarFiltro();
+          activarFiltro();
 
 
     }
@@ -92,13 +92,13 @@ public class JugadorListar {
                 ObservableList<JugadorItem> temp = FXCollections.observableArrayList();
 
                 String sql = """
-                    SELECT j.idJugador, j.nombreJugador,
-                           c.nombreCiudad, j.fechaNacimiento,
-                           j.numeroJugador, e.nombreEquipo
+                    SELECT j.idjugador, j.nombre_jugador,
+                           c.nombre_ciudad, j.fecha_de_nacimiento,
+                           j.num_jugador, e.nombre_equipo
                     FROM Jugador j
-                    INNER JOIN Ciudad c ON j.idCiudadNacimiento = c.idCiudad
-                    INNER JOIN Equipo e ON j.idEquipo = e.idEquipo
-                    ORDER BY j.nombreJugador ASC
+                    INNER JOIN Ciudad c ON j.idciudad = c.idCiudad
+                    INNER JOIN Equipo e ON j.idequipo = e.idequipo
+                    ORDER BY j.nombre_jugador ASC
                 """;
 
                 try (Connection con = Conexion.getConnection();
@@ -106,12 +106,12 @@ public class JugadorListar {
 
                     while (rs.next()) {
                         temp.add(new JugadorItem(
-                                rs.getString("idJugador"),
-                                rs.getString("nombreJugador"),
-                                rs.getString("nombreCiudad"),
-                                rs.getString("fechaNacimiento"),
-                                rs.getString("numeroJugador"),
-                                rs.getString("nombreEquipo")
+                                rs.getString("idjugador"),
+                                rs.getString("nombre_jugador"),
+                                rs.getString("nombre_ciudad"),
+                                rs.getString("fecha_de_nacimiento"),
+                                rs.getString("num_jugador"),
+                                rs.getString("nombre_equipo")
                         ));
                     }
                 }
@@ -201,7 +201,7 @@ public class JugadorListar {
         if (alert.showAndWait().get() != ButtonType.OK) return;
 
         try (Connection con = Conexion.getConnection();
-             PreparedStatement ps = con.prepareStatement("DELETE FROM Jugador WHERE idJugador = ?")) {
+             PreparedStatement ps = con.prepareStatement("DELETE FROM Jugador WHERE idjugador = ?")) {
 
             ps.setString(1, id);
             ps.executeUpdate();
@@ -213,32 +213,32 @@ public class JugadorListar {
         }
     }
 
-//    private void activarFiltro() {
-//        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
-//            String filtro = newValue.toLowerCase().trim();
-//
-//            if (filtro.isEmpty()) {
-//                tablaJugadores.setItems(lista);
-//                return;
-//            }
-//
-//            ObservableList<JugadorItem> filtrada = FXCollections.observableArrayList();
-//
-//            for (JugadorItem item : lista) {
-//                if (item.getId().toLowerCase().contains(filtro)
-//                        || item.getNombre().toLowerCase().contains(filtro)
-//                        || item.getCiudadNacimiento().toLowerCase().contains(filtro)
-//                        || item.getFechaNacimiento().toLowerCase().contains(filtro)
-//                        || item.getNumero().toLowerCase().contains(filtro)
-//                        || item.getEquipo().toLowerCase().contains(filtro)) {
-//
-//                    filtrada.add(item);
-//                }
-//            }
-//
-//            tablaJugadores.setItems(filtrada);
-//        });
-//    }
+    private void activarFiltro() {
+        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
+            String filtro = newValue.toLowerCase().trim();
+
+            if (filtro.isEmpty()) {
+                tablaJugadores.setItems(lista);
+                return;
+            }
+
+            ObservableList<JugadorItem> filtrada = FXCollections.observableArrayList();
+
+            for (JugadorItem item : lista) {
+                if (item.getId().toLowerCase().contains(filtro)
+                        || item.getNombre().toLowerCase().contains(filtro)
+                        || item.getCiudadNacimiento().toLowerCase().contains(filtro)
+                        || item.getFechaNacimiento().toLowerCase().contains(filtro)
+                        || item.getNumero().toLowerCase().contains(filtro)
+                        || item.getEquipo().toLowerCase().contains(filtro)) {
+
+                    filtrada.add(item);
+                }
+            }
+
+            tablaJugadores.setItems(filtrada);
+        });
+    }
 
 
     public void abrirFormularioRegistro() {

@@ -41,10 +41,10 @@ public class EquipoEditar {
         cmbCiudad.getItems().clear();
 
         try (Connection con = Conexion.getConnection();
-             ResultSet rs = con.createStatement().executeQuery("SELECT nombreCiudad FROM Ciudad")) {
+             ResultSet rs = con.createStatement().executeQuery("SELECT nombre_ciudad FROM Ciudad")) {
 
             while (rs.next()) {
-                cmbCiudad.getItems().add(rs.getString("nombreCiudad"));
+                cmbCiudad.getItems().add(rs.getString("nombre_ciudad"));
             }
 
         } catch (Exception e) {
@@ -65,9 +65,9 @@ public class EquipoEditar {
 
         String query = """
                 UPDATE Equipo
-                SET nombreEquipo = ?, idCiudad =
-                    (SELECT idCiudad FROM Ciudad WHERE nombreCiudad = ?)
-                WHERE idEquipo = ?
+                SET nombre_equipo = ?, idciudad =
+                    (SELECT idCiudad FROM Ciudad WHERE nombre_ciudad = ?)
+                WHERE idequipo = ?
                 """;
 
         try (Connection con = Conexion.getConnection();

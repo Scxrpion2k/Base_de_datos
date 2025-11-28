@@ -1,18 +1,21 @@
 package com.example.base_de_datos.Controlador.Ciudad;
 
 import com.example.base_de_datos.Conexion.Conexion;
+import com.example.base_de_datos.PaginaPrincipal;
+import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,6 +23,7 @@ import java.sql.ResultSet;
 
 public class CiudadListar {
 
+    @FXML private TextField txtBuscar;
     @FXML private TableView<CiudadItem> tablaCiudades;
     @FXML private TableColumn<CiudadItem, String> colId;
     @FXML private TableColumn<CiudadItem, String> colNombre;
@@ -29,28 +33,31 @@ public class CiudadListar {
 
     @FXML
     public void initialize() {
-
         tablaCiudades.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-
+        centrarColumnas();
         cargarCiudades();
         agregarBotones();
+        // activarFiltro();
+
     }
 
+
+
+
+
     void cargarCiudades() {
-
         lista.clear();
-
-        String query = "SELECT idCiudad, nombre_ciudad FROM Ciudad";
+        String query = "SELECT idciudad, nombre_ciudad FROM Ciudad";
 
         try (Connection con = Conexion.getConnection();
              ResultSet rs = con.createStatement().executeQuery(query)) {
 
             while (rs.next()) {
                 lista.add(new CiudadItem(
-                        rs.getString("id_ciudad"),
+                        rs.getString("idciudad"),
                         rs.getString("nombre_ciudad")
                 ));
             }
@@ -62,50 +69,52 @@ public class CiudadListar {
         }
     }
 
+
     private void agregarBotones() {
         colAcciones.setCellFactory(col -> new TableCell<>() {
 
             private final Button btnUpdate = new Button("Actualizar");
             private final Button btnDelete = new Button("Eliminar");
 
-            private final HBox contenedor = new HBox(10, btnUpdate, btnDelete);
+            private final HBox contenedor = new HBox(10);
 
             {
+                contenedor.setAlignment(Pos.CENTER);
+
                 btnUpdate.setStyle("-fx-background-color: #0d6efd; -fx-text-fill: white; -fx-background-radius: 8;");
                 btnDelete.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-background-radius: 8;");
 
-                // Botón Eliminar
+
                 btnDelete.setOnAction(e -> {
                     CiudadItem item = getTableView().getItems().get(getIndex());
                     eliminarCiudad(item.getId());
                 });
 
-                // Botón Actualizar
+
                 btnUpdate.setOnAction(e -> {
                     CiudadItem item = getTableView().getItems().get(getIndex());
                     abrirVentanaActualizar(item);
                 });
+
+                contenedor.getChildren().addAll(btnUpdate, btnDelete);
             }
 
             @Override
             protected void updateItem(Void unused, boolean empty) {
                 super.updateItem(unused, empty);
-
-                if (empty) setGraphic(null);
-                else setGraphic(contenedor);
+                setGraphic(empty ? null : contenedor);
             }
         });
     }
 
-    private void eliminarCiudad(String id) {
 
+    private void eliminarCiudad(String id) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmación");
         alert.setHeaderText("Eliminar Ciudad");
-        alert.setContentText("¿Desea eliminar la ciudad " + id + "?");
+        alert.setContentText("¿Desea eliminar la ciudad con ID " + id + "?");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
-
             String query = "DELETE FROM Ciudad WHERE idCiudad = ?";
 
             try (Connection con = Conexion.getConnection();
@@ -122,36 +131,99 @@ public class CiudadListar {
         }
     }
 
-    private void abrirVentanaActualizar(CiudadItem item) {
 
+    private void abrirVentanaActualizar(CiudadItem item) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Ciudad/CiudadEditarVisual.fxml"));
-            Parent root = loader.load();
+            Parent modal = loader.load();
 
-            // Pasar datos a la ventana de edición
             CiudadEditar controller = loader.getController();
             controller.cargarCiudad(item);
-
-            // PASAR REFERENCIA AL LISTADO PARA REFRESCAR
             controller.setCiudadListarController(this);
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Actualizar Ciudad");
-            stage.setResizable(false);
-            stage.show();
+            BorderPane root = (BorderPane) tablaCiudades.getScene().getRoot();
+            StackPane content = (StackPane) root.getCenter();
+
+            content.getChildren().removeIf(n -> "modalEditarCiudad".equals(n.getId()));
+
+            modal.setId("modalEditarCiudad");
+            modal.setOpacity(0);
+            content.getChildren().add(modal);
+
+            FadeTransition fade = new FadeTransition(Duration.millis(200), modal);
+            fade.setFromValue(0);
+            fade.setToValue(1);
+            fade.play();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    @FXML
-    private void volverAlMenuPrincipal() {
-        BorderPane root = (BorderPane) tablaCiudades.getScene().getRoot();
-        StackPane content = (StackPane) root.getCenter();
-        content.getChildren().clear();
+
+
+    private void centrarColumnas() {
+        colId.setStyle("-fx-alignment: CENTER;");
+        colNombre.setStyle("-fx-alignment: CENTER;");
+        colAcciones.setStyle("-fx-alignment: CENTER;");
+    }
+
+//    private void activarFiltro() {
+//        txtBuscar.textProperty().addListener((obs, oldValue, newValue) -> {
+//            String filtro = newValue.toLowerCase().trim();
+//
+//            if (filtro.isEmpty()) {
+//                tablaCiudades.setItems(lista);
+//                return;
+//            }
+//
+//            ObservableList<CiudadItem> filtrada = FXCollections.observableArrayList();
+//
+//            for (CiudadItem item : lista) {
+//                if (item.getId().toLowerCase().contains(filtro)
+//                        || item.getNombre().toLowerCase().contains(filtro)) {
+//                    filtrada.add(item);
+//                }
+//            }
+//
+//            tablaCiudades.setItems(filtrada);
+//        });
+//    }
+
+
+    public void abrirFormularioRegistro() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Visual/Ciudad/CiudadRegistrarVisual.fxml"));
+            Parent modal = loader.load();
+
+            CiudadRegistrar controller = loader.getController();
+            controller.setCiudadListarController(this);
+
+            BorderPane root = (BorderPane) tablaCiudades.getScene().getRoot();
+            StackPane content = (StackPane) root.getCenter();
+
+            content.getChildren().removeIf(node -> "modalRegistrarCiudad".equals(node.getId()));
+
+            modal.setId("modalRegistrarCiudad");
+            modal.setOpacity(0);
+            content.getChildren().add(modal);
+
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(200), modal);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+            fadeIn.play();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
-
+    @FXML
+    private void volverAlMenuPrincipal() {
+        try {
+            PaginaPrincipal.volverAlDashboard();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -69,9 +69,9 @@ public class EquipoListar {
                 ObservableList<EquipoItem> tempList = FXCollections.observableArrayList();
 
                 String query = """
-                        SELECT e.idEquipo, e.nombre_equipo, c.nombre_ciudad
+                        SELECT e.idequipo, e.nombre_equipo, c.nombre_ciudad
                         FROM Equipo e
-                        INNER JOIN Ciudad c ON e.idCiudad = c.idCiudad
+                        INNER JOIN Ciudad c ON e.idciudad = c.idciudad
                         """;
 
                 try (Connection con = Conexion.getConnection();
@@ -79,7 +79,7 @@ public class EquipoListar {
 
                     while (rs.next()) {
                         tempList.add(new EquipoItem(
-                                rs.getString("idEquipo"),
+                                rs.getString("idequipo"),
                                 rs.getString("nombre_equipo"),
                                 rs.getString("nombre_ciudad")
                         ));
@@ -176,7 +176,7 @@ public class EquipoListar {
 
         if (alert.showAndWait().get() == ButtonType.OK) {
 
-            String query = "DELETE FROM Equipo WHERE idEquipo = ?";
+            String query = "DELETE FROM Equipo WHERE idequipo = ?";
 
             try (Connection con = Conexion.getConnection();
                  PreparedStatement ps = con.prepareStatement(query)) {

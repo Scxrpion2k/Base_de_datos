@@ -89,15 +89,15 @@ public class InicioDashboard {
         contenedorJuegos.getChildren().clear();
 
         String sql = """
-    SELECT j.idJuego,
-           j.descripcionJuego,
-           RTRIM(A.nombreEquipo) AS equipoA,
-           RTRIM(B.nombreEquipo) AS equipoB,
-           CONVERT(VARCHAR(10), j.fechaJuego, 105) AS fecha
+    SELECT j.idjuego,
+           j.descripcion_juego,
+           RTRIM(A.nombre_equipo) AS equipoA,
+           RTRIM(B.nombre_equipo) AS equipoB,
+           CONVERT(VARCHAR(10), j.fecha_juego, 105) AS fecha
     FROM Juego j
-    INNER JOIN Equipo A ON j.idEquipoA = A.idEquipo
-    INNER JOIN Equipo B ON j.idEquipoB = B.idEquipo
-    ORDER BY j.fechaJuego DESC
+    INNER JOIN Equipo A ON j.idequipoA = A.idequipo
+    INNER JOIN Equipo B ON j.idequipoB = B.idequipo
+    ORDER BY j.fecha_juego DESC
 """;
 
 
@@ -107,8 +107,8 @@ public class InicioDashboard {
 
             while (rs.next()) {
 
-                String id = rs.getString("idJuego");
-                String desc = rs.getString("descripcionJuego").trim();
+                String id = rs.getString("idjuego");
+                String desc = rs.getString("descripcion_juego").trim();
                 String equipoA = rs.getString("equipoA").trim();
                 String equipoB = rs.getString("equipoB").trim();
                 String fecha = rs.getString("fecha");
@@ -219,7 +219,7 @@ public class InicioDashboard {
     -fx-padding:8 22;
 """));
 
-        ver.setOnAction(e -> abrirReporteTabJueg(id));
+        ver.setOnAction(e -> abrirSpEstadisticas(id));
 
         ScaleTransition grow = new ScaleTransition(Duration.millis(150), card);
         grow.setToX(1.04);
@@ -256,7 +256,7 @@ public class InicioDashboard {
             return;
         }
 
-        String sql = "SELECT idJuego FROM Juego WHERE idJuego = ?";
+        String sql = "SELECT idjuego FROM Juego WHERE idjuego = ?";
 
         try (Connection con = Conexion.getConnection();
              var ps = con.prepareStatement(sql)) {
@@ -265,7 +265,7 @@ public class InicioDashboard {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                abrirReporteTabJueg(id);
+                abrirSpEstadisticas(id);
                 txtBuscarJuego.clear();
             } else {
                 alerta("No existe un juego con ID: " + id);
@@ -284,7 +284,7 @@ public class InicioDashboard {
         a.show();
     }
 
-    private void abrirReporteTabJueg(String idJuego) {
+    private void abrirSpEstadisticas(String idJuego) {
         try {
 
             FXMLLoader loader = new FXMLLoader(

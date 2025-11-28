@@ -32,7 +32,7 @@ public class EstadisticaJuegoReporte {
 
         try (Connection con = Conexion.getConnection()) {
 
-            CallableStatement cs = con.prepareCall("{call tabJueg(?)}");
+            CallableStatement cs = con.prepareCall("{call sp_EstadisticasPorJuego(?)}");
             cs.setString(1, idJuego);
 
             ResultSet rs = cs.executeQuery();

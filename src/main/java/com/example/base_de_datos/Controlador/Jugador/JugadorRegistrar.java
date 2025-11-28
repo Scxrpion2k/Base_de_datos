@@ -37,11 +37,11 @@ public class JugadorRegistrar {
     private void cargarCiudades() {
         try (Connection conn = Conexion.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT idCiudad, nombreCiudad FROM Ciudad")) {
+             ResultSet rs = stmt.executeQuery("SELECT idciudad, nombre_ciudad FROM Ciudad")) {
 
             while (rs.next()) {
                 cmbCiudadNacimiento.getItems().add(
-                        new CiudadItem(rs.getString("idCiudad"), rs.getString("nombreCiudad"))
+                        new CiudadItem(rs.getString("idciudad"), rs.getString("nombre_ciudad"))
                 );
             }
 
@@ -53,14 +53,14 @@ public class JugadorRegistrar {
     private void cargarEquipos() {
         try (Connection conn = Conexion.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT idEquipo, nombreEquipo, idCiudad FROM Equipo")) {
+             ResultSet rs = stmt.executeQuery("SELECT idequipo, nombre_equipo, idciudad FROM Equipo")) {
 
             while (rs.next()) {
                 cmbEquipo.getItems().add(
                         new EquipoItem(
-                                rs.getString("idEquipo"),
-                                rs.getString("nombreEquipo"),
-                                rs.getString("idCiudad")
+                                rs.getString("idequipo"),
+                                rs.getString("nombre_equipo"),
+                                rs.getString("idciudad")
                         )
                 );
             }
@@ -93,7 +93,7 @@ public class JugadorRegistrar {
 
             java.sql.Date fechaNacimiento = java.sql.Date.valueOf(dpFechaNacimiento.getValue());
 
-            String sql = "INSERT INTO Jugador (idJugador, nombreJugador, idciudadNacimiento, fechaNacimiento, numeroJugador, idEquipo) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Jugador (idjugador, nombre_jugador, idciudad, fecha_de_nacimiento, num_jugador, idequipo) VALUES (?, ?, ?, ?, ?, ?)";
 
             try (Connection conn = Conexion.getConnection();
                  PreparedStatement ps = conn.prepareStatement(sql)) {

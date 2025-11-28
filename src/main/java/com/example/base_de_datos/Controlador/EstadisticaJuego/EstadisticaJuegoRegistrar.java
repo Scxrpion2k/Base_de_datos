@@ -44,9 +44,9 @@ public class EstadisticaJuegoRegistrar {
         cmbEquipo.getItems().clear();
 
         String sql = """
-                SELECT idEquipo, nombreEquipo
+                SELECT idequipo, nombre_equipo
                 FROM Equipo
-                WHERE nombreEquipo = ? OR nombreEquipo = ?
+                WHERE nombre_equipo = ? OR nombre_equipo = ?
                 """;
 
         try (Connection con = Conexion.getConnection();
@@ -60,8 +60,8 @@ public class EstadisticaJuegoRegistrar {
             while (rs.next()) {
                 cmbEquipo.getItems().add(
                         new EquipoItem(
-                                rs.getString("idEquipo"),
-                                rs.getString("nombreEquipo")
+                                rs.getString("idequipo"),
+                                rs.getString("nombre_equipo")
                         )
                 );
             }
@@ -81,10 +81,10 @@ public class EstadisticaJuegoRegistrar {
         cmbJugador.getItems().clear();
 
         String sql = """
-                SELECT j.idJugador, j.nombreJugador
+                SELECT j.idjugador, j.nombre_jugador
                 FROM Jugador j
-                WHERE j.idEquipo = ?
-                ORDER BY j.nombreJugador
+                WHERE j.idequipo = ?
+                ORDER BY j.nombre_jugador
                 """;
 
         try (Connection con = Conexion.getConnection();
@@ -95,7 +95,7 @@ public class EstadisticaJuegoRegistrar {
 
             while (rs.next()) {
                 cmbJugador.getItems().add(
-                        rs.getString("idJugador") + " - " + rs.getString("nombreJugador")
+                        rs.getString("idJugador") + " - " + rs.getString("nombre_jugador")
                 );
             }
 
@@ -109,9 +109,9 @@ public class EstadisticaJuegoRegistrar {
         cmbEstadistica.getItems().clear();
 
         String sql = """
-                SELECT idEstadistica, descripcionEstadistica, valor
+                SELECT idestadistica, descripcion_estadistica, valor
                 FROM Estadistica
-                ORDER BY descripcionEstadistica
+                ORDER BY descripcion_estadistica
                 """;
 
         try (Connection con = Conexion.getConnection();
@@ -119,8 +119,8 @@ public class EstadisticaJuegoRegistrar {
 
             while (rs.next()) {
                 cmbEstadistica.getItems().add(
-                        rs.getString("idEstadistica") +
-                                " - " + rs.getString("descripcionEstadistica") +
+                        rs.getString("idestadistica") +
+                                " - " + rs.getString("descripcion_estadistica") +
                                 " (" + rs.getInt("valor") + ")"
                 );
             }
@@ -156,7 +156,7 @@ public class EstadisticaJuegoRegistrar {
             String idEstadistica = estadistica.split(" - ")[0];
 
             String sql = """
-                INSERT INTO EstadisticaDeJuego(idJuego, idEstadisticaRegistrar, idEquipo, idJugador, cantidad)
+                INSERT INTO EstadisticaDeJuego(idjuego, idestadistica, idequipo, idjugador, cantidad)
                 VALUES (?, ?, ?, ?, ?)
                 """;
 
