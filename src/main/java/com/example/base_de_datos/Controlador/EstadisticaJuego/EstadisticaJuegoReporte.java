@@ -45,7 +45,7 @@ public class EstadisticaJuegoReporte {
                 final int colIndex = i;
 
                 TableColumn<ReporteRow, String> col =
-                        new TableColumn<>(md.getColumnName(i));
+                        new TableColumn<>("");
 
                 col.setCellValueFactory(data -> data.getValue().get(colIndex));
 
